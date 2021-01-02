@@ -1,0 +1,27 @@
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+  <display-name>Archetype Created Web Application</display-name>
+
+  <!-- 过滤器声明 -->
+  <filter>
+    <!-- 过滤器的名称 -->
+    <filter-name>CountFilter</filter-name>
+    <!-- 过滤器的完整类名 -->
+    <filter-class>myFilter.CountFilter</filter-class>
+    <init-param>
+      <param-name>count</param-name>
+      <param-value>5000</param-value>
+    </init-param>
+  </filter>
+  <!-- 过滤器的映射 -->
+  <filter-mapping>
+    <!-- 过滤器的名称 -->
+    <filter-name>CountFilter</filter-name>
+    <!-- 过滤器的URL映射 -->
+    <url-pattern>/login.jsp</url-pattern>
+  </filter-mapping>
+
+</web-app>

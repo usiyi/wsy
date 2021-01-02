@@ -1,0 +1,334 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	background-color: #f1f1f1;
+}
+
+.w {
+	width: 1620px;
+	margin: auto;
+}
+
+li {
+	list-style: none;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover{
+	text-decoration: none;
+}
+
+
+/*头部样式开始啦*/
+
+.header {
+	box-shadow: 1px 1px 65px black;
+}
+
+.header .list {
+	height: 45px;
+	width: auto;
+	background-color: #3c3c3c;
+}
+
+.header .list .w {
+	height: 45px;
+}
+
+.header .list .w .leftList {
+	float: left;
+}
+
+.header .list .w .leftList ul li {
+	float: left;
+}
+
+.header .list .w .leftList ul li a {
+	display: block;
+	height: 45px;
+	padding: 0 20px;
+	padding-left: 0;
+	line-height: 45px;
+	font-size: 18px;
+	color: white;
+}
+
+.header .list .w .leftList ul li a:hover {
+	/*text-decoration: none;*/
+	border-bottom: 4px solid darkgray;
+}
+
+.header .list .w .rightList {
+	float: left;
+	margin-left: 1170px;
+}
+
+.header .list .w .rightList ul li {
+	float: left;
+}
+
+.header .list .w .rightList ul li a {
+	display: block;
+	height: 45px;
+	line-height: 45px;
+	font-size: 18px;
+	color: white;
+}
+
+
+/*菜单栏end*/
+.header .h-container {
+	height: 135px;
+	background-color: white;
+}
+
+.header .h-container .w {
+	height: auto;
+	margin-top: 2px;
+}
+
+.header .h-container .w .logo {
+	float: left;
+	margin-top: 32px;
+	margin-bottom: 32px;
+}
+
+.header .h-container .w .name {
+	float: left;
+	line-height: 135px;
+	font-size: 25px;
+	color: #666666;
+}
+
+.header .h-container .w .search {
+	float: left;
+	margin-top: 50px;
+	margin-left: 1000px;
+}
+
+.header .search input {
+	float: left;
+	width: 400px;
+	height: 40px;
+	border: 1px solid #d8d8d8;
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+	outline: medium;
+	font-size: 16px;
+	padding-left: 10px;
+	line-height: 135px;
+}
+
+.header .search .cion {
+	float: left;
+	width: 50px;
+	height: 40px;
+	text-align: center;
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+	background-color: #d8d8d8;
+}
+
+.header .search .cion i {
+	line-height: 40px;
+}
+/*头部样式结束啦*/
+
+
+/*轮播样式start*/
+.container-fluid{
+	margin-top: 30px;
+	margin-left: 30px;
+}
+
+.container-fluid .w{
+	height: auto;
+}
+/*轮播样式end*/
+
+
+/*内容区域样式start*/
+
+.banner .w {
+	height: auto;
+}
+
+.banner .w table td {
+	width: 324px;
+	height: 420px;
+	text-align: center;
+	background-color: white;
+}
+
+.banner .w table td:hover {
+	border: 0.5px solid lightgrey;
+}
+
+.banner .w table td p {
+	width: 260px;
+	height: 25px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	margin-left: 25px;
+}
+
+.banner .w table td .price {
+	font-weight: 900;
+	font-size: 20px;
+	color: black;
+}
+
+.banner .w table td a {
+	font-size: 24px;
+	color: black;
+}
+
+.banner .w .content1 {
+	font-size: 23px;
+	color: gray;
+	margin-top: 40px;
+	margin-bottom: 10px;
+}
+
+.banner .w .content2 {
+	font-size: 23px;
+	color: gray;
+	margin-top: 40px;
+	margin-bottom: 10px;
+}
+
+.banner .w table td a img {
+	width: 260px;
+	height: 260px;
+}
+
+
+.banner .w .more{
+	float: left;
+	width: 170px;
+	height: 60px;
+	margin-top: 30px;
+	margin-left: 725px;
+	text-align: center;
+	line-height: 60px;
+	background-color: black;
+	border-radius: 5px;
+}
+
+.banner .more a{
+	font-size: 28px;
+	color: white;
+	
+}
+/*内容区域样式end*/
+
+
+/*尾部区域样式start*/
+
+.tail {
+	margin-top: 200px;
+	height: 580px;
+	background-color: #1a1a1a;
+}
+
+.tail a,
+p {
+	color: #888888;
+	font-size: 18px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.tail .top {
+	background-color: white;
+	border-bottom: 1px solid darkgray;
+}
+
+.tail .top .w {
+	height: auto;
+}
+
+.tail .top .w img {
+	height: 70px;
+	width: 1730px;
+}
+
+.tail .top .problem {
+padding-top: 5px;
+	height: 175px;
+	/*background-color: width;*/
+	/*border-top: 1px solid darkgray;*/
+}
+
+.tail .top .problem .w {
+	height: 175px;
+	margin-top: 20px;
+}
+
+.tail .top .problem .w dl {
+	float: left;
+	font-size: 20px;
+	/*border: 2px solid red;*/
+	margin-left: 70px;
+	margin-right: 160px;
+}
+
+.tail .top .problem .w dl dd {
+	margin-bottom: 15px;
+	/*margin-left: 0;*/
+	margin-top: 15px;
+}
+
+.tail .top .problem .w dl dd a {
+	display: block;
+	margin: 0;
+	clear: both;
+	margin: 5px;
+	text-align: left;
+}
+
+.tail .botten{
+	/*float: left;*/
+}
+
+.tail .botten .w .b-top {
+	float: left;
+	height: 85px;
+	line-height: 85px;
+	width: 1620px;
+	border-bottom: 1px solid #3a3a3a;
+}
+
+.tail .botten .t-container .left {
+	float:left;
+	margin-top: 30px;
+}
+
+.tail .botten .t-container .right {
+	float: left;
+	margin-top: 30px;
+	margin-left: 262px;
+}
+
+.tail .botten .t-container .right .QRcode1,
+.QRcode2,
+.QRcode3 {
+	float: left;
+	margin-left: 30px;
+	text-align: center;
+}
+
+.tail .botten .t-container .right .QRcode1 img,
+.QRcode2 img,
+.QRcode3 img {
+	width: 150px;
+	height: 150px;
+}
+/*尾部区域样式end*/
