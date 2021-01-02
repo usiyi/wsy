@@ -32,6 +32,7 @@ public class RegisterServlet extends HttpServlet {
 
         String username = req.getParameter("uid");
         String password=req.getParameter("pwd");
+        System.out.println(username+password);
         String tselect=req.getParameter("tselect");//tselect:“管理员”管理员 或 “客户”
         int type;
         if("管理员".equals(tselect)||tselect==null){//0是管理员，1是客户
@@ -39,55 +40,25 @@ public class RegisterServlet extends HttpServlet {
         } else {type=1;}
         boolean flag = userDao.checkUname(username);
 
-        Integer msg ;//1表示注册失败；0表示注册成功
+        Integer msg=0 ;//1表示注册失败；0表示注册成功
         if (flag) {
             msg = 1;
         }
         else{
             if(username==""||password==""){
-                out.println("<script  type='text/javascript'>");
+                out.println("<script type='text/javascript'>");
                 out.println("alert('该字段不能为空！');");
                 out.println("window.location='register.jsp';");
                 out.println("</script>");
+            }else{
+                //将注册的信息写入数据库
+                User user = new User(username,password,type);
+                userDao.regUser(user);
+//                msg = 0;
             }
-            //将注册的信息写入数据库
-            User user = new User(username,password,type);
-            userDao.regUser(user);
-            msg = 0;
         }
         String s = msg.toString();
         System.out.println(s);
         resp.getWriter().print(s);
     }
-
-        /*response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-
-        request.setCharacterEncoding("UTF-8");
-        response.setCharacterEncoding("UTF-8");
-
-        String username=request.getParameter("username");
-        String password=request.getParameter("password");
-       String tselect=request.getParameter("tselect");//tselect:“管理员”管理员 或 “客户”
-        int type;
-        if("管理员".equals(tselect)){//0是管理员，1是客户
-            type=0;
-        } else {type=1;}
-
-        boolean flag =false;//true：账号已注册；flase：可以注册
-        flag=userDao.checkUname(username);
-
-        if(flag){
-            out.println("<script  type='text/javascript'>");
-            out.println("alert('该账户已被注册，请重新输入！');");
-            out.println("window.location='register.jsp';");
-            out.println("</script>");
-        }else{
-            //将注册的信息写入数据库
-            User user = new User(username,password,type);
-            userDao.regUser(user);
-            //请求转发到登录页面
-            request.getRequestDispatcher("login.jsp").forward(request, response);
-        }
-    }*/
 }
