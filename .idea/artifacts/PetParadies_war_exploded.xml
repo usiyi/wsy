@@ -4,7 +4,7 @@
     <root id="root">
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
-          <element id="module-output" name="PetParadies" />
+          <element id="module-output" name="宠物乐园" />
         </element>
         <element id="directory" name="lib">
           <element id="library" level="project" name="java" />
@@ -17,7 +17,7 @@
           <element id="library" level="project" name="Maven: com.google.protobuf:protobuf-java:3.6.1" />
         </element>
       </element>
-      <element id="javaee-facet-resources" facet="PetParadies/web/Web" />
+      <element id="javaee-facet-resources" facet="宠物乐园/web/Web" />
     </root>
   </artifact>
 </component>
