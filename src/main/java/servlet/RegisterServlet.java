@@ -45,7 +45,7 @@ public class RegisterServlet extends HttpServlet {
             msg = 1;
         }
         else{
-            if(username==""||password==""){
+            if(username.equals("")||password.equals("")){
                 out.println("<script type='text/javascript'>");
                 out.println("alert('该字段不能为空！');");
                 out.println("window.location='register.jsp';");
