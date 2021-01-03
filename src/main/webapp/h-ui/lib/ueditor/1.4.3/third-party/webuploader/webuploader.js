@@ -5157,7 +5157,7 @@
                 function computeHuffmanTbl(nrcodes, std_table){
                     var codevalue = 0;
                     var pos_in_table = 0;
-                    var HT = new Array();
+                    var HT = [];
                     for (var k = 1; k <= 16; k++) {
                         for (var j = 1; j <= nrcodes[k]; j++) {
                             HT[std_table[pos_in_table]] = [];
@@ -5514,7 +5514,8 @@
                     }
                     //Encode ACs
                     var end0pos = 63; // was const... which is crazy
-                    for (; (end0pos>0)&&(DU[end0pos]==0); end0pos--) {};
+                    for (; (end0pos > 0) && (DU[end0pos] == 0); end0pos--) {
+                    }
                     //end0pos = first element in reverse order !=0
                     if ( end0pos == 0) {
                         writeBits(EOB);
@@ -5557,8 +5558,8 @@
                     if(quality) setQuality(quality);
     
                     // Initialize bit writer
-                    byteout = new Array();
-                    bytenew=0;
+                    byteout = [];
+                    bytenew = 0;
                     bytepos=7;
     
                     // Add JPEG headers
@@ -5650,36 +5651,36 @@
                     }
     
                     writeWord(0xFFD9); //EOI
-    
+
                     var jpegDataUri = 'data:image/jpeg;base64,' + btoa(byteout.join(''));
-    
+
                     byteout = [];
-    
+
                     // benchmarking
                     // var duration = new Date().getTime() - time_start;
                     // console.log('Encoding time: '+ currentQuality + 'ms');
                     //
-    
+
                     return jpegDataUri
-            }
+                };
     
-            function setQuality(quality){
+            function setQuality(quality) {
                 if (quality <= 0) {
                     quality = 1;
                 }
                 if (quality > 100) {
                     quality = 100;
                 }
-    
-                if(currentQuality == quality) return // don't recalc if unchanged
-    
+
+                if (currentQuality == quality) return; // don't recalc if unchanged
+
                 var sf = 0;
                 if (quality < 50) {
                     sf = Math.floor(5000 / quality);
                 } else {
-                    sf = Math.floor(200 - quality*2);
+                    sf = Math.floor(200 - quality * 2);
                 }
-    
+
                 initQuantTables(sf);
                 currentQuality = quality;
                 // console.log('Quality set to: '+quality +'%');
@@ -5689,7 +5690,7 @@
                 // var time_start = new Date().getTime();
                 if(!quality) quality = 50;
                 // Create tables
-                initCharLookupTable()
+                initCharLookupTable();
                 initHuffmanTbl();
                 initCategoryNumber();
                 initRGBYUVTable();
@@ -5700,14 +5701,14 @@
             }
     
             init();
-    
-        };
-    
-        JPEGEncoder.encode = function( data, quality ) {
-            var encoder = new JPEGEncoder( quality );
-    
-            return encoder.encode( data );
+
         }
+
+        JPEGEncoder.encode = function (data, quality) {
+            var encoder = new JPEGEncoder(quality);
+
+            return encoder.encode(data);
+        };
     
         return JPEGEncoder;
     });

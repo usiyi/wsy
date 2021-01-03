@@ -283,17 +283,17 @@ var apiContent = {
 
 	},
 	bindEvent: function() {
-		$(document).bind("keydown", this.listenKeyDown)
-		this.overlayCloseBtn.bind("click", apiContent.overlayClose);
-		this.searchResultInput.bind("click", function(e) {
-			$(this).prev().get(0).focus();
-			this.blur();
-		}).bind("focus", function(e) {
-			this.blur();
-		});
-		this.searchKey.bind("focus", this.focusKey)
-			.bind("blur", this.blurKey)
-			.bind("propertychange", this.searchNode)
+        $(document).bind("keydown", this.listenKeyDown);
+        this.overlayCloseBtn.bind("click", apiContent.overlayClose);
+        this.searchResultInput.bind("click", function (e) {
+            $(this).prev().get(0).focus();
+            this.blur();
+        }).bind("focus", function (e) {
+            this.blur();
+        });
+        this.searchKey.bind("focus", this.focusKey)
+            .bind("blur", this.blurKey)
+            .bind("propertychange", this.searchNode)
 			.bind("input", this.searchNode);
 		this.searchPrevBtn.bind("click", this.searchPrev);
 		this.searchNextBtn.bind("click", this.searchNext);
@@ -567,26 +567,26 @@ var apiContent = {
 			dataType: "text",
 			success: function(msg) {
 				if (!apiContent.tmpDiv) {
-					var tmpDiv = $(document.createElement("div"));
-					tmpDiv.addClass("baby_overlay_tmp");
-					$("body").append(tmpDiv)
-					apiContent.tmpDiv = $(document.createElement("div"));
-					apiContent.tmpDiv.addClass("details");
-					tmpDiv.append(apiContent.tmpDiv);
+                    var tmpDiv = $(document.createElement("div"));
+                    tmpDiv.addClass("baby_overlay_tmp");
+                    $("body").append(tmpDiv);
+                    apiContent.tmpDiv = $(document.createElement("div"));
+                    apiContent.tmpDiv.addClass("details");
+                    tmpDiv.append(apiContent.tmpDiv);
 
-				} else {
+                } else {
 					apiContent.tmpDiv.empty();
 				}
 				apiContent.tmpDiv.html(msg);
 				apiContent.overlayShow(o, false);
-				apiContent.apiCache[node.tId] = msg;
-				node.isAjax = false;
-			},
-			error: function(XMLHttpRequest, textStatus, errorThrown) {
-				alert(ajaxMsg)
-				if (apiContent.tmpDiv) apiContent.tmpDiv.empty();
-				node.isAjax = false;
-			}
-		});
-	}
-}
+                apiContent.apiCache[node.tId] = msg;
+                node.isAjax = false;
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert(ajaxMsg);
+                if (apiContent.tmpDiv) apiContent.tmpDiv.empty();
+                node.isAjax = false;
+            }
+        });
+    }
+};

@@ -231,7 +231,7 @@ function RGBColor(color_string)
     // some getters
     this.toRGB = function () {
         return 'rgb(' + this.r + ', ' + this.g + ', ' + this.b + ')';
-    }
+    };
     this.toHex = function () {
         var r = this.r.toString(16);
         var g = this.g.toString(16);
@@ -240,12 +240,12 @@ function RGBColor(color_string)
         if (g.length == 1) g = '0' + g;
         if (b.length == 1) b = '0' + b;
         return '#' + r + g + b;
-    }
+    };
 
     // help
     this.getHelpXML = function () {
 
-        var examples = new Array();
+        var examples = [];
         // add regexps
         for (var i = 0; i < color_defs.length; i++) {
             var example = color_defs[i].example;
@@ -367,17 +367,15 @@ if(!Array.prototype.indexOf){
 		var ctx = target.getContext('2d');
 		if (typeof(s.documentElement) != 'undefined') {
 			// load from xml doc
-			svg.loadXmlDoc(ctx, s);
-		}
-		else if (s.substr(0,1) == '<') {
-			// load from xml string
-			svg.loadXml(ctx, s);
-		}
-		else {
-			// load from url
-			svg.load(ctx, s);
-		}
-	}
+            svg.loadXmlDoc(ctx, s);
+        } else if (s.substr(0, 1) == '<') {
+            // load from xml string
+            svg.loadXml(ctx, s);
+        } else {
+            // load from url
+            svg.load(ctx, s);
+        }
+    };
 
 	function build() {
 		var svg = { };
@@ -393,95 +391,112 @@ if(!Array.prototype.indexOf){
 			svg.Images = [];
 			svg.ctx = ctx;
 			svg.ViewPort = new (function () {
-				this.viewPorts = [];
-				this.Clear = function() { this.viewPorts = []; }
-				this.SetCurrent = function(width, height) { this.viewPorts.push({ width: width, height: height }); }
-				this.RemoveCurrent = function() { this.viewPorts.pop(); }
-				this.Current = function() { return this.viewPorts[this.viewPorts.length - 1]; }
-				this.width = function() { return this.Current().width; }
-				this.height = function() { return this.Current().height; }
-				this.ComputeSize = function(d) {
-					if (d != null && typeof(d) == 'number') return d;
-					if (d == 'x') return this.width();
-					if (d == 'y') return this.height();
-					return Math.sqrt(Math.pow(this.width(), 2) + Math.pow(this.height(), 2)) / Math.sqrt(2);			
-				}
-			});
-		}
-		svg.init();
-		
-		// images loaded
-		svg.ImagesLoaded = function() { 
-			for (var i=0; i<svg.Images.length; i++) {
-				if (!svg.Images[i].loaded) return false;
-			}
-			return true;
-		}
+                this.viewPorts = [];
+                this.Clear = function () {
+                    this.viewPorts = [];
+                };
+                this.SetCurrent = function (width, height) {
+                    this.viewPorts.push({width: width, height: height});
+                };
+                this.RemoveCurrent = function () {
+                    this.viewPorts.pop();
+                };
+                this.Current = function () {
+                    return this.viewPorts[this.viewPorts.length - 1];
+                };
+                this.width = function () {
+                    return this.Current().width;
+                };
+                this.height = function () {
+                    return this.Current().height;
+                };
+                this.ComputeSize = function (d) {
+                    if (d != null && typeof (d) == 'number') return d;
+                    if (d == 'x') return this.width();
+                    if (d == 'y') return this.height();
+                    return Math.sqrt(Math.pow(this.width(), 2) + Math.pow(this.height(), 2)) / Math.sqrt(2);
+                }
+            });
+        };
+        svg.init();
 
-		// trim
-		svg.trim = function(s) { return s.replace(/^\s+|\s+$/g, ''); }
-		
-		// compress spaces
-		svg.compressSpaces = function(s) { return s.replace(/[\s\r\t\n]+/gm,' '); }
-		
-		// ajax
-		svg.ajax = function(url) {
-			var AJAX;
-			if(window.XMLHttpRequest){AJAX=new XMLHttpRequest();}
-			else{AJAX=new ActiveXObject('Microsoft.XMLHTTP');}
-			if(AJAX){
-			   AJAX.open('GET',url,false);
-			   AJAX.send(null);
-			   return AJAX.responseText;
-			}
-			return null;
-		} 
+        // images loaded
+        svg.ImagesLoaded = function () {
+            for (var i = 0; i < svg.Images.length; i++) {
+                if (!svg.Images[i].loaded) return false;
+            }
+            return true;
+        };
+
+        // trim
+        svg.trim = function (s) {
+            return s.replace(/^\s+|\s+$/g, '');
+        };
+
+        // compress spaces
+        svg.compressSpaces = function (s) {
+            return s.replace(/[\s\r\t\n]+/gm, ' ');
+        };
+
+        // ajax
+        svg.ajax = function (url) {
+            var AJAX;
+            if (window.XMLHttpRequest) {
+                AJAX = new XMLHttpRequest();
+            } else {
+                AJAX = new ActiveXObject('Microsoft.XMLHTTP');
+            }
+            if (AJAX) {
+                AJAX.open('GET', url, false);
+                AJAX.send(null);
+                return AJAX.responseText;
+            }
+            return null;
+        };
 		
 		// parse xml
 		svg.parseXml = function(xml) {
 			if (window.DOMParser)
 			{
 				var parser = new DOMParser();
-				return parser.parseFromString(xml, 'text/xml');
-			}
-			else 
-			{
-				xml = xml.replace(/<!DOCTYPE svg[^>]*>/, '');
-				var xmlDoc = new ActiveXObject('Microsoft.XMLDOM');
-				xmlDoc.async = 'false';
-				xmlDoc.loadXML(xml); 
-				return xmlDoc;
-			}		
-		}
+                return parser.parseFromString(xml, 'text/xml');
+            } else {
+                xml = xml.replace(/<!DOCTYPE svg[^>]*>/, '');
+                var xmlDoc = new ActiveXObject('Microsoft.XMLDOM');
+                xmlDoc.async = 'false';
+                xmlDoc.loadXML(xml);
+                return xmlDoc;
+            }
+        };
 		
 		svg.Property = function(name, value) {
 			this.name = name;
 			this.value = value;
-			
-			this.hasValue = function() {
-				return (this.value != null && this.value !== '');
-			}
+
+            this.hasValue = function () {
+                return (this.value != null && this.value !== '');
+            };
 							
 			// return the numerical value of the property
-			this.numValue = function() {
-				if (!this.hasValue()) return 0;
-				
-				var n = parseFloat(this.value);
-				if ((this.value + '').match(/%$/)) {
-					n = n / 100.0;
-				}
-				return n;
-			}
-			
-			this.valueOrDefault = function(def) {
-				if (this.hasValue()) return this.value;
-				return def;
-			}
-			
-			this.numValueOrDefault = function(def) {
-				if (this.hasValue()) return this.numValue();
-				return def;
-			}
+            this.numValue = function () {
+                if (!this.hasValue()) return 0;
+
+                var n = parseFloat(this.value);
+                if ((this.value + '').match(/%$/)) {
+                    n = n / 100.0;
+                }
+                return n;
+            };
+
+            this.valueOrDefault = function (def) {
+                if (this.hasValue()) return this.value;
+                return def;
+            };
+
+            this.numValueOrDefault = function (def) {
+                if (this.hasValue()) return this.numValue();
+                return def;
+            };
 			
 			/* EXTENSIONS */
 			var that = this;
@@ -489,17 +504,17 @@ if(!Array.prototype.indexOf){
 			// color extensions
 			this.Color = {
 				// augment the current color value with the opacity
-				addOpacity: function(opacity) {
-					var newValue = that.value;
-					if (opacity != null && opacity != '') {
-						var color = new RGBColor(that.value);
-						if (color.ok) {
-							newValue = 'rgba(' + color.r + ', ' + color.g + ', ' + color.b + ', ' + opacity + ')';
-						}
-					}
-					return new svg.Property(that.name, newValue);
-				}
-			}
+                addOpacity: function (opacity) {
+                    var newValue = that.value;
+                    if (opacity != null && opacity != '') {
+                        var color = new RGBColor(that.value);
+                        if (color.ok) {
+                            newValue = 'rgba(' + color.r + ', ' + color.g + ', ' + color.b + ', ' + opacity + ')';
+                        }
+                    }
+                    return new svg.Property(that.name, newValue);
+                }
+            };
 			
 			// definition extensions
 			this.Definition = {
@@ -518,17 +533,17 @@ if(!Array.prototype.indexOf){
 					
 					// gradient
 					if (def != null && def.createGradient) {
-						return def.createGradient(svg.ctx, e);
-					}
-					
-					// pattern
-					if (def != null && def.createPattern) {
-						return def.createPattern(svg.ctx, e);
-					}
-					
-					return null;
-				}
-			}
+                        return def.createGradient(svg.ctx, e);
+                    }
+
+                    // pattern
+                    if (def != null && def.createPattern) {
+                        return def.createPattern(svg.ctx, e);
+                    }
+
+                    return null;
+                }
+            };
 			
 			// length extensions
 			this.Length = {
@@ -550,161 +565,186 @@ if(!Array.prototype.indexOf){
 					if (!that.hasValue()) return 0;
 					var s = that.value+'';
 					if (s.match(/em$/)) return that.numValue() * this.EM(viewPort);
-					if (s.match(/ex$/)) return that.numValue() * this.EM(viewPort) / 2.0;
-					if (s.match(/px$/)) return that.numValue();
-					if (s.match(/pt$/)) return that.numValue() * 1.25;
-					if (s.match(/pc$/)) return that.numValue() * 15;
-					if (s.match(/cm$/)) return that.numValue() * this.DPI(viewPort) / 2.54;
-					if (s.match(/mm$/)) return that.numValue() * this.DPI(viewPort) / 25.4;
-					if (s.match(/in$/)) return that.numValue() * this.DPI(viewPort);
-					if (s.match(/%$/)) return that.numValue() * svg.ViewPort.ComputeSize(viewPort);
-					return that.numValue();
-				}
-			}
+                    if (s.match(/ex$/)) return that.numValue() * this.EM(viewPort) / 2.0;
+                    if (s.match(/px$/)) return that.numValue();
+                    if (s.match(/pt$/)) return that.numValue() * 1.25;
+                    if (s.match(/pc$/)) return that.numValue() * 15;
+                    if (s.match(/cm$/)) return that.numValue() * this.DPI(viewPort) / 2.54;
+                    if (s.match(/mm$/)) return that.numValue() * this.DPI(viewPort) / 25.4;
+                    if (s.match(/in$/)) return that.numValue() * this.DPI(viewPort);
+                    if (s.match(/%$/)) return that.numValue() * svg.ViewPort.ComputeSize(viewPort);
+                    return that.numValue();
+                }
+            };
 			
 			// time extensions
-			this.Time = {
-				// get the time as milliseconds
-				toMilliseconds: function() {
-					if (!that.hasValue()) return 0;
-					var s = that.value+'';
-					if (s.match(/s$/)) return that.numValue() * 1000;
-					if (s.match(/ms$/)) return that.numValue();
-					return that.numValue();
-				}
-			}
+            this.Time = {
+                // get the time as milliseconds
+                toMilliseconds: function () {
+                    if (!that.hasValue()) return 0;
+                    var s = that.value + '';
+                    if (s.match(/s$/)) return that.numValue() * 1000;
+                    if (s.match(/ms$/)) return that.numValue();
+                    return that.numValue();
+                }
+            };
 			
 			// angle extensions
 			this.Angle = {
-				// get the angle as radians
-				toRadians: function() {
-					if (!that.hasValue()) return 0;
-					var s = that.value+'';
-					if (s.match(/deg$/)) return that.numValue() * (Math.PI / 180.0);
-					if (s.match(/grad$/)) return that.numValue() * (Math.PI / 200.0);
-					if (s.match(/rad$/)) return that.numValue();
-					return that.numValue() * (Math.PI / 180.0);
-				}
-			}
-		}
+                // get the angle as radians
+                toRadians: function () {
+                    if (!that.hasValue()) return 0;
+                    var s = that.value + '';
+                    if (s.match(/deg$/)) return that.numValue() * (Math.PI / 180.0);
+                    if (s.match(/grad$/)) return that.numValue() * (Math.PI / 200.0);
+                    if (s.match(/rad$/)) return that.numValue();
+                    return that.numValue() * (Math.PI / 180.0);
+                }
+            }
+        };
 		
 		// fonts
 		svg.Font = new (function() {
 			this.Styles = ['normal','italic','oblique','inherit'];
 			this.Variants = ['normal','small-caps','inherit'];
 			this.Weights = ['normal','bold','bolder','lighter','100','200','300','400','500','600','700','800','900','inherit'];
-			
-			this.CreateFont = function(fontStyle, fontVariant, fontWeight, fontSize, fontFamily, inherit) { 
-				var f = inherit != null ? this.Parse(inherit) : this.CreateFont('', '', '', '', '', svg.ctx.font);
-				return { 
-					fontFamily: fontFamily || f.fontFamily, 
-					fontSize: fontSize || f.fontSize, 
-					fontStyle: fontStyle || f.fontStyle, 
-					fontWeight: fontWeight || f.fontWeight, 
-					fontVariant: fontVariant || f.fontVariant,
-					toString: function () { return [this.fontStyle, this.fontVariant, this.fontWeight, this.fontSize, this.fontFamily].join(' ') } 
-				} 
-			}
+
+            this.CreateFont = function (fontStyle, fontVariant, fontWeight, fontSize, fontFamily, inherit) {
+                var f = inherit != null ? this.Parse(inherit) : this.CreateFont('', '', '', '', '', svg.ctx.font);
+                return {
+                    fontFamily: fontFamily || f.fontFamily,
+                    fontSize: fontSize || f.fontSize,
+                    fontStyle: fontStyle || f.fontStyle,
+                    fontWeight: fontWeight || f.fontWeight,
+                    fontVariant: fontVariant || f.fontVariant,
+                    toString: function () {
+                        return [this.fontStyle, this.fontVariant, this.fontWeight, this.fontSize, this.fontFamily].join(' ')
+                    }
+                }
+            };
 			
 			var that = this;
 			this.Parse = function(s) {
-				var f = {};
-				var d = svg.trim(svg.compressSpaces(s || '')).split(' ');
-				var set = { fontSize: false, fontStyle: false, fontWeight: false, fontVariant: false }
-				var ff = '';
-				for (var i=0; i<d.length; i++) {
-					if (!set.fontStyle && that.Styles.indexOf(d[i]) != -1) { if (d[i] != 'inherit') f.fontStyle = d[i]; set.fontStyle = true; }
-					else if (!set.fontVariant && that.Variants.indexOf(d[i]) != -1) { if (d[i] != 'inherit') f.fontVariant = d[i]; set.fontStyle = set.fontVariant = true;	}
-					else if (!set.fontWeight && that.Weights.indexOf(d[i]) != -1) {	if (d[i] != 'inherit') f.fontWeight = d[i]; set.fontStyle = set.fontVariant = set.fontWeight = true; }
-					else if (!set.fontSize) { if (d[i] != 'inherit') f.fontSize = d[i].split('/')[0]; set.fontStyle = set.fontVariant = set.fontWeight = set.fontSize = true; }
-					else { if (d[i] != 'inherit') ff += d[i]; }
-				} if (ff != '') f.fontFamily = ff;
-				return f;
-			}
+                var f = {};
+                var d = svg.trim(svg.compressSpaces(s || '')).split(' ');
+                var set = {fontSize: false, fontStyle: false, fontWeight: false, fontVariant: false};
+                var ff = '';
+                for (var i = 0; i < d.length; i++) {
+                    if (!set.fontStyle && that.Styles.indexOf(d[i]) != -1) {
+                        if (d[i] != 'inherit') f.fontStyle = d[i];
+                        set.fontStyle = true;
+                    } else if (!set.fontVariant && that.Variants.indexOf(d[i]) != -1) {
+                        if (d[i] != 'inherit') f.fontVariant = d[i];
+                        set.fontStyle = set.fontVariant = true;
+                    } else if (!set.fontWeight && that.Weights.indexOf(d[i]) != -1) {
+                        if (d[i] != 'inherit') f.fontWeight = d[i];
+                        set.fontStyle = set.fontVariant = set.fontWeight = true;
+                    } else if (!set.fontSize) {
+                        if (d[i] != 'inherit') f.fontSize = d[i].split('/')[0];
+                        set.fontStyle = set.fontVariant = set.fontWeight = set.fontSize = true;
+                    } else {
+                        if (d[i] != 'inherit') ff += d[i];
+                    }
+                }
+                if (ff != '') f.fontFamily = ff;
+                return f;
+            }
 		});
 		
 		// points and paths
-		svg.ToNumberArray = function(s) {
-			var a = svg.trim(svg.compressSpaces((s || '').replace(/,/g, ' '))).split(' ');
-			for (var i=0; i<a.length; i++) {
-				a[i] = parseFloat(a[i]);
-			}
-			return a;
-		}		
-		svg.Point = function(x, y) {
-			this.x = x;
-			this.y = y;
-			
-			this.angleTo = function(p) {
-				return Math.atan2(p.y - this.y, p.x - this.x);
-			}
-			
-			this.applyTransform = function(v) {
-				var xp = this.x * v[0] + this.y * v[2] + v[4];
-				var yp = this.x * v[1] + this.y * v[3] + v[5];
-				this.x = xp;
-				this.y = yp;
-			}
-		}
-		svg.CreatePoint = function(s) {
-			var a = svg.ToNumberArray(s);
-			return new svg.Point(a[0], a[1]);
-		}
-		svg.CreatePath = function(s) {
-			var a = svg.ToNumberArray(s);
-			var path = [];
-			for (var i=0; i<a.length; i+=2) {
-				path.push(new svg.Point(a[i], a[i+1]));
-			}
-			return path;
-		}
+        svg.ToNumberArray = function (s) {
+            var a = svg.trim(svg.compressSpaces((s || '').replace(/,/g, ' '))).split(' ');
+            for (var i = 0; i < a.length; i++) {
+                a[i] = parseFloat(a[i]);
+            }
+            return a;
+        };
+        svg.Point = function (x, y) {
+            this.x = x;
+            this.y = y;
+
+            this.angleTo = function (p) {
+                return Math.atan2(p.y - this.y, p.x - this.x);
+            };
+
+            this.applyTransform = function (v) {
+                var xp = this.x * v[0] + this.y * v[2] + v[4];
+                var yp = this.x * v[1] + this.y * v[3] + v[5];
+                this.x = xp;
+                this.y = yp;
+            }
+        };
+        svg.CreatePoint = function (s) {
+            var a = svg.ToNumberArray(s);
+            return new svg.Point(a[0], a[1]);
+        };
+        svg.CreatePath = function (s) {
+            var a = svg.ToNumberArray(s);
+            var path = [];
+            for (var i = 0; i < a.length; i += 2) {
+                path.push(new svg.Point(a[i], a[i + 1]));
+            }
+            return path;
+        };
 		
 		// bounding box
 		svg.BoundingBox = function(x1, y1, x2, y2) { // pass in initial points if you want
-			this.x1 = Number.NaN;
-			this.y1 = Number.NaN;
-			this.x2 = Number.NaN;
-			this.y2 = Number.NaN;
-			
-			this.x = function() { return this.x1; }
-			this.y = function() { return this.y1; }
-			this.width = function() { return this.x2 - this.x1; }
-			this.height = function() { return this.y2 - this.y1; }
-			
-			this.addPoint = function(x, y) {	
-				if (x != null) {
-					if (isNaN(this.x1) || isNaN(this.x2)) {
-						this.x1 = x;
-						this.x2 = x;
-					}
-					if (x < this.x1) this.x1 = x;
-					if (x > this.x2) this.x2 = x;
-				}
-			
-				if (y != null) {
-					if (isNaN(this.y1) || isNaN(this.y2)) {
-						this.y1 = y;
-						this.y2 = y;
-					}
-					if (y < this.y1) this.y1 = y;
-					if (y > this.y2) this.y2 = y;
-				}
-			}			
-			this.addX = function(x) { this.addPoint(x, null); }
-			this.addY = function(y) { this.addPoint(null, y); }
-			
-			this.addBoundingBox = function(bb) {
-				this.addPoint(bb.x1, bb.y1);
-				this.addPoint(bb.x2, bb.y2);
-			}
-			
-			this.addQuadraticCurve = function(p0x, p0y, p1x, p1y, p2x, p2y) {
-				var cp1x = p0x + 2/3 * (p1x - p0x); // CP1 = QP0 + 2/3 *(QP1-QP0)
-				var cp1y = p0y + 2/3 * (p1y - p0y); // CP1 = QP0 + 2/3 *(QP1-QP0)
-				var cp2x = cp1x + 1/3 * (p2x - p0x); // CP2 = CP1 + 1/3 *(QP2-QP0)
-				var cp2y = cp1y + 1/3 * (p2y - p0y); // CP2 = CP1 + 1/3 *(QP2-QP0)
-				this.addBezierCurve(p0x, p0y, cp1x, cp2x, cp1y,	cp2y, p2x, p2y);
-			}
+            this.x1 = Number.NaN;
+            this.y1 = Number.NaN;
+            this.x2 = Number.NaN;
+            this.y2 = Number.NaN;
+
+            this.x = function () {
+                return this.x1;
+            };
+            this.y = function () {
+                return this.y1;
+            };
+            this.width = function () {
+                return this.x2 - this.x1;
+            };
+            this.height = function () {
+                return this.y2 - this.y1;
+            };
+
+            this.addPoint = function (x, y) {
+                if (x != null) {
+                    if (isNaN(this.x1) || isNaN(this.x2)) {
+                        this.x1 = x;
+                        this.x2 = x;
+                    }
+                    if (x < this.x1) this.x1 = x;
+                    if (x > this.x2) this.x2 = x;
+                }
+
+                if (y != null) {
+                    if (isNaN(this.y1) || isNaN(this.y2)) {
+                        this.y1 = y;
+                        this.y2 = y;
+                    }
+                    if (y < this.y1) this.y1 = y;
+                    if (y > this.y2) this.y2 = y;
+                }
+            };
+            this.addX = function (x) {
+                this.addPoint(x, null);
+            };
+            this.addY = function (y) {
+                this.addPoint(null, y);
+            };
+
+            this.addBoundingBox = function (bb) {
+                this.addPoint(bb.x1, bb.y1);
+                this.addPoint(bb.x2, bb.y2);
+            };
+
+            this.addQuadraticCurve = function (p0x, p0y, p1x, p1y, p2x, p2y) {
+                var cp1x = p0x + 2 / 3 * (p1x - p0x); // CP1 = QP0 + 2/3 *(QP1-QP0)
+                var cp1y = p0y + 2 / 3 * (p1y - p0y); // CP1 = QP0 + 2/3 *(QP1-QP0)
+                var cp2x = cp1x + 1 / 3 * (p2x - p0x); // CP2 = CP1 + 1/3 *(QP2-QP0)
+                var cp2y = cp1y + 1 / 3 * (p2y - p0y); // CP2 = CP1 + 1/3 *(QP2-QP0)
+                this.addBezierCurve(p0x, p0y, cp1x, cp2x, cp1y, cp2y, p2x, p2y);
+            };
 			
 			this.addBezierCurve = function(p0x, p0y, p1x, p1y, p2x, p2y, p3x, p3y) {
 				// from http://blog.hackers-cafe.net/2009/06/how-to-calculate-bezier-curves-bounding.html
@@ -713,12 +753,12 @@ if(!Array.prototype.indexOf){
 				this.addPoint(p3[0], p3[1]);
 				
 				for (i=0; i<=1; i++) {
-					var f = function(t) { 
-						return Math.pow(1-t, 3) * p0[i]
-						+ 3 * Math.pow(1-t, 2) * t * p1[i]
-						+ 3 * (1-t) * Math.pow(t, 2) * p2[i]
-						+ Math.pow(t, 3) * p3[i];
-					}
+                    var f = function (t) {
+                        return Math.pow(1 - t, 3) * p0[i]
+                            + 3 * Math.pow(1 - t, 2) * t * p1[i]
+                            + 3 * (1 - t) * Math.pow(t, 2) * p2[i]
+                            + Math.pow(t, 3) * p3[i];
+                    };
 					
 					var b = 6 * p0[i] - 12 * p1[i] + 6 * p2[i];
 					var a = -3 * p0[i] + 9 * p1[i] - 9 * p2[i] + 3 * p3[i];
@@ -737,124 +777,124 @@ if(!Array.prototype.indexOf){
 					var b2ac = Math.pow(b, 2) - 4 * c * a;
 					if (b2ac < 0) continue;
 					var t1 = (-b + Math.sqrt(b2ac)) / (2 * a);
-					if (0 < t1 && t1 < 1) {
-						if (i == 0) this.addX(f(t1));
-						if (i == 1) this.addY(f(t1));
-					}
-					var t2 = (-b - Math.sqrt(b2ac)) / (2 * a);
-					if (0 < t2 && t2 < 1) {
-						if (i == 0) this.addX(f(t2));
-						if (i == 1) this.addY(f(t2));
-					}
-				}
-			}
-			
-			this.isPointInBox = function(x, y) {
-				return (this.x1 <= x && x <= this.x2 && this.y1 <= y && y <= this.y2);
-			}
-			
-			this.addPoint(x1, y1);
-			this.addPoint(x2, y2);
-		}
+                    if (0 < t1 && t1 < 1) {
+                        if (i == 0) this.addX(f(t1));
+                        if (i == 1) this.addY(f(t1));
+                    }
+                    var t2 = (-b - Math.sqrt(b2ac)) / (2 * a);
+                    if (0 < t2 && t2 < 1) {
+                        if (i == 0) this.addX(f(t2));
+                        if (i == 1) this.addY(f(t2));
+                    }
+                }
+            };
+
+            this.isPointInBox = function (x, y) {
+                return (this.x1 <= x && x <= this.x2 && this.y1 <= y && y <= this.y2);
+            };
+
+            this.addPoint(x1, y1);
+            this.addPoint(x2, y2);
+        };
 		
 		// transforms
-		svg.Transform = function(v) {	
-			var that = this;
-			this.Type = {}
-		
-			// translate
-			this.Type.translate = function(s) {
-				this.p = svg.CreatePoint(s);			
-				this.apply = function(ctx) {
-					ctx.translate(this.p.x || 0.0, this.p.y || 0.0);
-				}
-				this.applyToPoint = function(p) {
-					p.applyTransform([1, 0, 0, 1, this.p.x || 0.0, this.p.y || 0.0]);
-				}
-			}
+		svg.Transform = function(v) {
+            var that = this;
+            this.Type = {};
+
+            // translate
+            this.Type.translate = function (s) {
+                this.p = svg.CreatePoint(s);
+                this.apply = function (ctx) {
+                    ctx.translate(this.p.x || 0.0, this.p.y || 0.0);
+                };
+                this.applyToPoint = function (p) {
+                    p.applyTransform([1, 0, 0, 1, this.p.x || 0.0, this.p.y || 0.0]);
+                }
+            };
 			
 			// rotate
 			this.Type.rotate = function(s) {
 				var a = svg.ToNumberArray(s);
 				this.angle = new svg.Property('angle', a[0]);
 				this.cx = a[1] || 0;
-				this.cy = a[2] || 0;
-				this.apply = function(ctx) {
-					ctx.translate(this.cx, this.cy);
-					ctx.rotate(this.angle.Angle.toRadians());
-					ctx.translate(-this.cx, -this.cy);
-				}
-				this.applyToPoint = function(p) {
-					var a = this.angle.Angle.toRadians();
-					p.applyTransform([1, 0, 0, 1, this.p.x || 0.0, this.p.y || 0.0]);
-					p.applyTransform([Math.cos(a), Math.sin(a), -Math.sin(a), Math.cos(a), 0, 0]);
-					p.applyTransform([1, 0, 0, 1, -this.p.x || 0.0, -this.p.y || 0.0]);
-				}			
-			}
-			
-			this.Type.scale = function(s) {
-				this.p = svg.CreatePoint(s);
-				this.apply = function(ctx) {
-					ctx.scale(this.p.x || 1.0, this.p.y || this.p.x || 1.0);
-				}
-				this.applyToPoint = function(p) {
-					p.applyTransform([this.p.x || 0.0, 0, 0, this.p.y || 0.0, 0, 0]);
-				}				
-			}
-			
-			this.Type.matrix = function(s) {
-				this.m = svg.ToNumberArray(s);
-				this.apply = function(ctx) {
-					ctx.transform(this.m[0], this.m[1], this.m[2], this.m[3], this.m[4], this.m[5]);
-				}
-				this.applyToPoint = function(p) {
-					p.applyTransform(this.m);
-				}					
-			}
-			
-			this.Type.SkewBase = function(s) {
-				this.base = that.Type.matrix;
-				this.base(s);
-				this.angle = new svg.Property('angle', s);
-			}
-			this.Type.SkewBase.prototype = new this.Type.matrix;
-			
-			this.Type.skewX = function(s) {
-				this.base = that.Type.SkewBase;
-				this.base(s);
-				this.m = [1, 0, Math.tan(this.angle.Angle.toRadians()), 1, 0, 0];
-			}
-			this.Type.skewX.prototype = new this.Type.SkewBase;
-			
-			this.Type.skewY = function(s) {
-				this.base = that.Type.SkewBase;
-				this.base(s);
-				this.m = [1, Math.tan(this.angle.Angle.toRadians()), 0, 1, 0, 0];
-			}
-			this.Type.skewY.prototype = new this.Type.SkewBase;
+                this.cy = a[2] || 0;
+                this.apply = function (ctx) {
+                    ctx.translate(this.cx, this.cy);
+                    ctx.rotate(this.angle.Angle.toRadians());
+                    ctx.translate(-this.cx, -this.cy);
+                };
+                this.applyToPoint = function (p) {
+                    var a = this.angle.Angle.toRadians();
+                    p.applyTransform([1, 0, 0, 1, this.p.x || 0.0, this.p.y || 0.0]);
+                    p.applyTransform([Math.cos(a), Math.sin(a), -Math.sin(a), Math.cos(a), 0, 0]);
+                    p.applyTransform([1, 0, 0, 1, -this.p.x || 0.0, -this.p.y || 0.0]);
+                }
+            };
+
+            this.Type.scale = function (s) {
+                this.p = svg.CreatePoint(s);
+                this.apply = function (ctx) {
+                    ctx.scale(this.p.x || 1.0, this.p.y || this.p.x || 1.0);
+                };
+                this.applyToPoint = function (p) {
+                    p.applyTransform([this.p.x || 0.0, 0, 0, this.p.y || 0.0, 0, 0]);
+                }
+            };
+
+            this.Type.matrix = function (s) {
+                this.m = svg.ToNumberArray(s);
+                this.apply = function (ctx) {
+                    ctx.transform(this.m[0], this.m[1], this.m[2], this.m[3], this.m[4], this.m[5]);
+                };
+                this.applyToPoint = function (p) {
+                    p.applyTransform(this.m);
+                }
+            };
+
+            this.Type.SkewBase = function (s) {
+                this.base = that.Type.matrix;
+                this.base(s);
+                this.angle = new svg.Property('angle', s);
+            };
+            this.Type.SkewBase.prototype = new this.Type.matrix;
+
+            this.Type.skewX = function (s) {
+                this.base = that.Type.SkewBase;
+                this.base(s);
+                this.m = [1, 0, Math.tan(this.angle.Angle.toRadians()), 1, 0, 0];
+            };
+            this.Type.skewX.prototype = new this.Type.SkewBase;
+
+            this.Type.skewY = function (s) {
+                this.base = that.Type.SkewBase;
+                this.base(s);
+                this.m = [1, Math.tan(this.angle.Angle.toRadians()), 0, 1, 0, 0];
+            };
+            this.Type.skewY.prototype = new this.Type.SkewBase;
 		
 			this.transforms = [];
-			
-			this.apply = function(ctx) {
-				for (var i=0; i<this.transforms.length; i++) {
-					this.transforms[i].apply(ctx);
-				}
-			}
-			
-			this.applyToPoint = function(p) {
-				for (var i=0; i<this.transforms.length; i++) {
-					this.transforms[i].applyToPoint(p);
-				}
-			}
-			
-			var data = svg.trim(svg.compressSpaces(v)).split(/\s(?=[a-z])/);
-			for (var i=0; i<data.length; i++) {
-				var type = data[i].split('(')[0];
-				var s = data[i].split('(')[1].replace(')','');
-				var transform = new this.Type[type](s);
-				this.transforms.push(transform);
-			}
-		}
+
+            this.apply = function (ctx) {
+                for (var i = 0; i < this.transforms.length; i++) {
+                    this.transforms[i].apply(ctx);
+                }
+            };
+
+            this.applyToPoint = function (p) {
+                for (var i = 0; i < this.transforms.length; i++) {
+                    this.transforms[i].applyToPoint(p);
+                }
+            };
+
+            var data = svg.trim(svg.compressSpaces(v)).split(/\s(?=[a-z])/);
+            for (var i = 0; i < data.length; i++) {
+                var type = data[i].split('(')[0];
+                var s = data[i].split('(')[1].replace(')', '');
+                var transform = new this.Type[type](s);
+                this.transforms.push(transform);
+            }
+        };
 		
 		// aspect ratio
 		svg.AspectRatio = function(ctx, aspectRatio, width, desiredWidth, height, desiredHeight, minX, minY, refX, refY) {
@@ -881,36 +921,36 @@ if(!Array.prototype.indexOf){
 				// align
 				if (align.match(/^xMid/) && ((meetOrSlice == 'meet' && scaleMin == scaleY) || (meetOrSlice == 'slice' && scaleMax == scaleY))) ctx.translate(width / 2.0 - desiredWidth / 2.0, 0); 
 				if (align.match(/YMid$/) && ((meetOrSlice == 'meet' && scaleMin == scaleX) || (meetOrSlice == 'slice' && scaleMax == scaleX))) ctx.translate(0, height / 2.0 - desiredHeight / 2.0); 
-				if (align.match(/^xMax/) && ((meetOrSlice == 'meet' && scaleMin == scaleY) || (meetOrSlice == 'slice' && scaleMax == scaleY))) ctx.translate(width - desiredWidth, 0); 
-				if (align.match(/YMax$/) && ((meetOrSlice == 'meet' && scaleMin == scaleX) || (meetOrSlice == 'slice' && scaleMax == scaleX))) ctx.translate(0, height - desiredHeight); 
-			}
-			
-			// scale
-			if (align == 'none') ctx.scale(scaleX, scaleY);
-			else if (meetOrSlice == 'meet') ctx.scale(scaleMin, scaleMin); 
-			else if (meetOrSlice == 'slice') ctx.scale(scaleMax, scaleMax); 	
-			
-			// translate
-			ctx.translate(minX == null ? 0 : -minX, minY == null ? 0 : -minY);			
-		}
-		
-		// elements
-		svg.Element = {}
-		
-		svg.Element.ElementBase = function(node) {	
-			this.attributes = {};
-			this.styles = {};
-			this.children = [];
-			
-			// get or create attribute
-			this.attribute = function(name, createIfNotExists) {
-				var a = this.attributes[name];
-				if (a != null) return a;
-							
-				a = new svg.Property(name, '');
-				if (createIfNotExists == true) this.attributes[name] = a;
-				return a;
-			}
+				if (align.match(/^xMax/) && ((meetOrSlice == 'meet' && scaleMin == scaleY) || (meetOrSlice == 'slice' && scaleMax == scaleY))) ctx.translate(width - desiredWidth, 0);
+                if (align.match(/YMax$/) && ((meetOrSlice == 'meet' && scaleMin == scaleX) || (meetOrSlice == 'slice' && scaleMax == scaleX))) ctx.translate(0, height - desiredHeight);
+            }
+
+            // scale
+            if (align == 'none') ctx.scale(scaleX, scaleY);
+            else if (meetOrSlice == 'meet') ctx.scale(scaleMin, scaleMin);
+            else if (meetOrSlice == 'slice') ctx.scale(scaleMax, scaleMax);
+
+            // translate
+            ctx.translate(minX == null ? 0 : -minX, minY == null ? 0 : -minY);
+        };
+
+        // elements
+        svg.Element = {};
+
+        svg.Element.ElementBase = function (node) {
+            this.attributes = {};
+            this.styles = {};
+            this.children = [];
+
+            // get or create attribute
+            this.attribute = function (name, createIfNotExists) {
+                var a = this.attributes[name];
+                if (a != null) return a;
+
+                a = new svg.Property(name, '');
+                if (createIfNotExists == true) this.attributes[name] = a;
+                return a;
+            };
 			
 			// get or create style, crawls up node tree
 			this.style = function(name, createIfNotExists) {
@@ -923,17 +963,17 @@ if(!Array.prototype.indexOf){
 				}
 				
 				var p = this.parent;
-				if (p != null) {
-					var ps = p.style(name);
-					if (ps != null && ps.hasValue()) {
-						return ps;
-					}
-				}
-					
-				s = new svg.Property(name, '');
-				if (createIfNotExists == true) this.styles[name] = s;
-				return s;
-			}
+                if (p != null) {
+                    var ps = p.style(name);
+                    if (ps != null && ps.hasValue()) {
+                        return ps;
+                    }
+                }
+
+                s = new svg.Property(name, '');
+                if (createIfNotExists == true) this.styles[name] = s;
+                return s;
+            };
 			
 			// base render
 			this.render = function(ctx) {
@@ -947,41 +987,39 @@ if(!Array.prototype.indexOf){
 					this.setContext(ctx);
 						// mask
 						if (this.attribute('mask').hasValue()) {
-							var mask = this.attribute('mask').Definition.getDefinition();
-							if (mask != null) mask.apply(ctx, this);
-						}
-						else if (this.style('filter').hasValue()) {
-							var filter = this.style('filter').Definition.getDefinition();
-							if (filter != null) filter.apply(ctx, this);
-						}
-						else this.renderChildren(ctx);				
-					this.clearContext(ctx);
-				ctx.restore();
-			}
+                            var mask = this.attribute('mask').Definition.getDefinition();
+                            if (mask != null) mask.apply(ctx, this);
+                        } else if (this.style('filter').hasValue()) {
+                            var filter = this.style('filter').Definition.getDefinition();
+                            if (filter != null) filter.apply(ctx, this);
+                        } else this.renderChildren(ctx);
+                this.clearContext(ctx);
+                ctx.restore();
+            };
 			
 			// base set context
-			this.setContext = function(ctx) {
-				// OVERRIDE ME!
-			}
+            this.setContext = function (ctx) {
+                // OVERRIDE ME!
+            };
 			
 			// base clear context
-			this.clearContext = function(ctx) {
-				// OVERRIDE ME!
-			}			
+            this.clearContext = function (ctx) {
+                // OVERRIDE ME!
+            };
 			
 			// base render children
-			this.renderChildren = function(ctx) {
-				for (var i=0; i<this.children.length; i++) {
-					this.children[i].render(ctx);
-				}
-			}
-			
-			this.addChild = function(childNode, create) {
-				var child = childNode;
-				if (create) child = svg.CreateElement(childNode);
-				child.parent = this;
-				this.children.push(child);			
-			}
+            this.renderChildren = function (ctx) {
+                for (var i = 0; i < this.children.length; i++) {
+                    this.children[i].render(ctx);
+                }
+            };
+
+            this.addChild = function (childNode, create) {
+                var child = childNode;
+                if (create) child = svg.CreateElement(childNode);
+                child.parent = this;
+                this.children.push(child);
+            };
 				
 			if (node != null && node.nodeType == 1) { //ELEMENT_NODE
 				// add children
@@ -1033,17 +1071,17 @@ if(!Array.prototype.indexOf){
 							var value = svg.trim(style[1]);
 							this.styles[name] = new svg.Property(name, value);
 						}
-					}
-				}	
+                    }
+                }
 
-				// add id
-				if (this.attribute('id').hasValue()) {
-					if (svg.Definitions[this.attribute('id').value] == null) {
-						svg.Definitions[this.attribute('id').value] = this;
-					}
-				}
-			}
-		}
+                // add id
+                if (this.attribute('id').hasValue()) {
+                    if (svg.Definitions[this.attribute('id').value] == null) {
+                        svg.Definitions[this.attribute('id').value] = this;
+                    }
+                }
+            }
+        };
 		
 		svg.Element.RenderedElementBase = function(node) {
 			this.base = svg.Element.ElementBase;
@@ -1093,27 +1131,27 @@ if(!Array.prototype.indexOf){
 				}
 				
 				// clip
-				if (this.attribute('clip-path').hasValue()) {
-					var clip = this.attribute('clip-path').Definition.getDefinition();
-					if (clip != null) clip.apply(ctx);
-				}
-				
-				// opacity
-				if (this.style('opacity').hasValue()) {
-					ctx.globalAlpha = this.style('opacity').numValue();
-				}
-			}		
-		}
-		svg.Element.RenderedElementBase.prototype = new svg.Element.ElementBase;
+                if (this.attribute('clip-path').hasValue()) {
+                    var clip = this.attribute('clip-path').Definition.getDefinition();
+                    if (clip != null) clip.apply(ctx);
+                }
+
+                // opacity
+                if (this.style('opacity').hasValue()) {
+                    ctx.globalAlpha = this.style('opacity').numValue();
+                }
+            }
+        };
+        svg.Element.RenderedElementBase.prototype = new svg.Element.ElementBase;
 		
 		svg.Element.PathElementBase = function(node) {
 			this.base = svg.Element.RenderedElementBase;
 			this.base(node);
-			
-			this.path = function(ctx) {
-				if (ctx != null) ctx.beginPath();
-				return new svg.BoundingBox();
-			}
+
+            this.path = function (ctx) {
+                if (ctx != null) ctx.beginPath();
+                return new svg.BoundingBox();
+            };
 			
 			this.renderChildren = function(ctx) {
 				this.path(ctx);
@@ -1128,38 +1166,38 @@ if(!Array.prototype.indexOf){
 						marker.render(ctx, markers[0][0], markers[0][1]);
 					}
 					if (this.style('marker-mid').Definition.isUrl()) {
-						var marker = this.style('marker-mid').Definition.getDefinition();
-						for (var i=1;i<markers.length-1;i++) {
-							marker.render(ctx, markers[i][0], markers[i][1]);
-						}
-					}
-					if (this.style('marker-end').Definition.isUrl()) {
-						var marker = this.style('marker-end').Definition.getDefinition();
-						marker.render(ctx, markers[markers.length-1][0], markers[markers.length-1][1]);
-					}
-				}					
-			}
-			
-			this.getBoundingBox = function() {
-				return this.path();
-			}
-			
-			this.getMarkers = function() {
-				return null;
-			}
-		}
-		svg.Element.PathElementBase.prototype = new svg.Element.RenderedElementBase;
+                        var marker = this.style('marker-mid').Definition.getDefinition();
+                        for (var i = 1; i < markers.length - 1; i++) {
+                            marker.render(ctx, markers[i][0], markers[i][1]);
+                        }
+                    }
+                    if (this.style('marker-end').Definition.isUrl()) {
+                        var marker = this.style('marker-end').Definition.getDefinition();
+                        marker.render(ctx, markers[markers.length - 1][0], markers[markers.length - 1][1]);
+                    }
+                }
+            };
+
+            this.getBoundingBox = function () {
+                return this.path();
+            };
+
+            this.getMarkers = function () {
+                return null;
+            }
+        };
+        svg.Element.PathElementBase.prototype = new svg.Element.RenderedElementBase;
 		
 		// svg element
 		svg.Element.svg = function(node) {
 			this.base = svg.Element.RenderedElementBase;
 			this.base(node);
-			
-			this.baseClearContext = this.clearContext;
-			this.clearContext = function(ctx) {
-				this.baseClearContext(ctx);
-				svg.ViewPort.RemoveCurrent();
-			}
+
+            this.baseClearContext = this.clearContext;
+            this.clearContext = function (ctx) {
+                this.baseClearContext(ctx);
+                svg.ViewPort.RemoveCurrent();
+            };
 			
 			this.baseSetContext = this.setContext;
 			this.setContext = function(ctx) {
@@ -1212,18 +1250,18 @@ if(!Array.prototype.indexOf){
 									svg.ViewPort.width(), 
 									width,
 									svg.ViewPort.height(),
-									height,
-									minX,
-									minY,
-									this.attribute('refX').value,
-									this.attribute('refY').value);
-										
-					svg.ViewPort.RemoveCurrent();	
-					svg.ViewPort.SetCurrent(viewBox[2], viewBox[3]);						
-				}				
-			}
-		}
-		svg.Element.svg.prototype = new svg.Element.RenderedElementBase;
+                        height,
+                        minX,
+                        minY,
+                        this.attribute('refX').value,
+                        this.attribute('refY').value);
+
+                    svg.ViewPort.RemoveCurrent();
+                    svg.ViewPort.SetCurrent(viewBox[2], viewBox[3]);
+                }
+            }
+        };
+        svg.Element.svg.prototype = new svg.Element.RenderedElementBase;
 
 		// rect element
 		svg.Element.rect = function(node) {
@@ -1241,23 +1279,23 @@ if(!Array.prototype.indexOf){
 				if (this.attribute('ry').hasValue() && !this.attribute('rx').hasValue()) rx = ry;
 				
 				if (ctx != null) {
-					ctx.beginPath();
-					ctx.moveTo(x + rx, y);
-					ctx.lineTo(x + width - rx, y);
-					ctx.quadraticCurveTo(x + width, y, x + width, y + ry)
-					ctx.lineTo(x + width, y + height - ry);
-					ctx.quadraticCurveTo(x + width, y + height, x + width - rx, y + height)
-					ctx.lineTo(x + rx, y + height);
-					ctx.quadraticCurveTo(x, y + height, x, y + height - ry)
-					ctx.lineTo(x, y + ry);
-					ctx.quadraticCurveTo(x, y, x + rx, y)
-					ctx.closePath();
-				}
-				
-				return new svg.BoundingBox(x, y, x + width, y + height);
-			}
-		}
-		svg.Element.rect.prototype = new svg.Element.PathElementBase;
+                    ctx.beginPath();
+                    ctx.moveTo(x + rx, y);
+                    ctx.lineTo(x + width - rx, y);
+                    ctx.quadraticCurveTo(x + width, y, x + width, y + ry);
+                    ctx.lineTo(x + width, y + height - ry);
+                    ctx.quadraticCurveTo(x + width, y + height, x + width - rx, y + height);
+                    ctx.lineTo(x + rx, y + height);
+                    ctx.quadraticCurveTo(x, y + height, x, y + height - ry);
+                    ctx.lineTo(x, y + ry);
+                    ctx.quadraticCurveTo(x, y, x + rx, y);
+                    ctx.closePath();
+                }
+
+                return new svg.BoundingBox(x, y, x + width, y + height);
+            }
+        };
+        svg.Element.rect.prototype = new svg.Element.PathElementBase;
 		
 		// circle element
 		svg.Element.circle = function(node) {
@@ -1267,18 +1305,18 @@ if(!Array.prototype.indexOf){
 			this.path = function(ctx) {
 				var cx = this.attribute('cx').Length.toPixels('x');
 				var cy = this.attribute('cy').Length.toPixels('y');
-				var r = this.attribute('r').Length.toPixels();
-			
-				if (ctx != null) {
-					ctx.beginPath();
-					ctx.arc(cx, cy, r, 0, Math.PI * 2, true); 
-					ctx.closePath();
-				}
-				
-				return new svg.BoundingBox(cx - r, cy - r, cx + r, cy + r);
-			}
-		}
-		svg.Element.circle.prototype = new svg.Element.PathElementBase;	
+                var r = this.attribute('r').Length.toPixels();
+
+                if (ctx != null) {
+                    ctx.beginPath();
+                    ctx.arc(cx, cy, r, 0, Math.PI * 2, true);
+                    ctx.closePath();
+                }
+
+                return new svg.BoundingBox(cx - r, cy - r, cx + r, cy + r);
+            }
+        };
+        svg.Element.circle.prototype = new svg.Element.PathElementBase;
 
 		// ellipse element
 		svg.Element.ellipse = function(node) {
@@ -1294,49 +1332,49 @@ if(!Array.prototype.indexOf){
 				
 				if (ctx != null) {
 					ctx.beginPath();
-					ctx.moveTo(cx, cy - ry);
-					ctx.bezierCurveTo(cx + (KAPPA * rx), cy - ry,  cx + rx, cy - (KAPPA * ry), cx + rx, cy);
-					ctx.bezierCurveTo(cx + rx, cy + (KAPPA * ry), cx + (KAPPA * rx), cy + ry, cx, cy + ry);
-					ctx.bezierCurveTo(cx - (KAPPA * rx), cy + ry, cx - rx, cy + (KAPPA * ry), cx - rx, cy);
-					ctx.bezierCurveTo(cx - rx, cy - (KAPPA * ry), cx - (KAPPA * rx), cy - ry, cx, cy - ry);
-					ctx.closePath();
-				}
-				
-				return new svg.BoundingBox(cx - rx, cy - ry, cx + rx, cy + ry);
-			}
-		}
-		svg.Element.ellipse.prototype = new svg.Element.PathElementBase;			
+                    ctx.moveTo(cx, cy - ry);
+                    ctx.bezierCurveTo(cx + (KAPPA * rx), cy - ry, cx + rx, cy - (KAPPA * ry), cx + rx, cy);
+                    ctx.bezierCurveTo(cx + rx, cy + (KAPPA * ry), cx + (KAPPA * rx), cy + ry, cx, cy + ry);
+                    ctx.bezierCurveTo(cx - (KAPPA * rx), cy + ry, cx - rx, cy + (KAPPA * ry), cx - rx, cy);
+                    ctx.bezierCurveTo(cx - rx, cy - (KAPPA * ry), cx - (KAPPA * rx), cy - ry, cx, cy - ry);
+                    ctx.closePath();
+                }
+
+                return new svg.BoundingBox(cx - rx, cy - ry, cx + rx, cy + ry);
+            }
+        };
+        svg.Element.ellipse.prototype = new svg.Element.PathElementBase;
 		
 		// line element
 		svg.Element.line = function(node) {
 			this.base = svg.Element.PathElementBase;
 			this.base(node);
-			
-			this.getPoints = function() {
-				return [
-					new svg.Point(this.attribute('x1').Length.toPixels('x'), this.attribute('y1').Length.toPixels('y')),
-					new svg.Point(this.attribute('x2').Length.toPixels('x'), this.attribute('y2').Length.toPixels('y'))];
-			}
-								
-			this.path = function(ctx) {
-				var points = this.getPoints();
-				
-				if (ctx != null) {
-					ctx.beginPath();
-					ctx.moveTo(points[0].x, points[0].y);
-					ctx.lineTo(points[1].x, points[1].y);
-				}
-				
-				return new svg.BoundingBox(points[0].x, points[0].y, points[1].x, points[1].y);
-			}
-			
-			this.getMarkers = function() {
-				var points = this.getPoints();	
-				var a = points[0].angleTo(points[1]);
-				return [[points[0], a], [points[1], a]];
-			}
-		}
-		svg.Element.line.prototype = new svg.Element.PathElementBase;		
+
+            this.getPoints = function () {
+                return [
+                    new svg.Point(this.attribute('x1').Length.toPixels('x'), this.attribute('y1').Length.toPixels('y')),
+                    new svg.Point(this.attribute('x2').Length.toPixels('x'), this.attribute('y2').Length.toPixels('y'))];
+            };
+
+            this.path = function (ctx) {
+                var points = this.getPoints();
+
+                if (ctx != null) {
+                    ctx.beginPath();
+                    ctx.moveTo(points[0].x, points[0].y);
+                    ctx.lineTo(points[1].x, points[1].y);
+                }
+
+                return new svg.BoundingBox(points[0].x, points[0].y, points[1].x, points[1].y);
+            };
+
+            this.getMarkers = function () {
+                var points = this.getPoints();
+                var a = points[0].angleTo(points[1]);
+                return [[points[0], a], [points[1], a]];
+            }
+        };
+        svg.Element.line.prototype = new svg.Element.PathElementBase;
 				
 		// polyline element
 		svg.Element.polyline = function(node) {
@@ -1345,45 +1383,45 @@ if(!Array.prototype.indexOf){
 			
 			this.points = svg.CreatePath(this.attribute('points').value);
 			this.path = function(ctx) {
-				var bb = new svg.BoundingBox(this.points[0].x, this.points[0].y);
-				if (ctx != null) {
-					ctx.beginPath();
-					ctx.moveTo(this.points[0].x, this.points[0].y);
-				}
-				for (var i=1; i<this.points.length; i++) {
-					bb.addPoint(this.points[i].x, this.points[i].y);
-					if (ctx != null) ctx.lineTo(this.points[i].x, this.points[i].y);
-				}
-				return bb;
-			}
-			
-			this.getMarkers = function() {
-				var markers = [];
-				for (var i=0; i<this.points.length - 1; i++) {
-					markers.push([this.points[i], this.points[i].angleTo(this.points[i+1])]);
-				}
-				markers.push([this.points[this.points.length-1], markers[markers.length-1][1]]);
-				return markers;
-			}			
-		}
-		svg.Element.polyline.prototype = new svg.Element.PathElementBase;				
+                var bb = new svg.BoundingBox(this.points[0].x, this.points[0].y);
+                if (ctx != null) {
+                    ctx.beginPath();
+                    ctx.moveTo(this.points[0].x, this.points[0].y);
+                }
+                for (var i = 1; i < this.points.length; i++) {
+                    bb.addPoint(this.points[i].x, this.points[i].y);
+                    if (ctx != null) ctx.lineTo(this.points[i].x, this.points[i].y);
+                }
+                return bb;
+            };
+
+            this.getMarkers = function () {
+                var markers = [];
+                for (var i = 0; i < this.points.length - 1; i++) {
+                    markers.push([this.points[i], this.points[i].angleTo(this.points[i + 1])]);
+                }
+                markers.push([this.points[this.points.length - 1], markers[markers.length - 1][1]]);
+                return markers;
+            }
+        };
+        svg.Element.polyline.prototype = new svg.Element.PathElementBase;
 				
 		// polygon element
 		svg.Element.polygon = function(node) {
 			this.base = svg.Element.polyline;
 			this.base(node);
-			
-			this.basePath = this.path;
-			this.path = function(ctx) {
-				var bb = this.basePath(ctx);
-				if (ctx != null) {
-					ctx.lineTo(this.points[0].x, this.points[0].y);
-					ctx.closePath();
-				}
-				return bb;
-			}
-		}
-		svg.Element.polygon.prototype = new svg.Element.polyline;
+
+            this.basePath = this.path;
+            this.path = function (ctx) {
+                var bb = this.basePath(ctx);
+                if (ctx != null) {
+                    ctx.lineTo(this.points[0].x, this.points[0].y);
+                    ctx.closePath();
+                }
+                return bb;
+            }
+        };
+        svg.Element.polygon.prototype = new svg.Element.polyline;
 
 		// path element
 		svg.Element.path = function(node) {
@@ -1404,104 +1442,106 @@ if(!Array.prototype.indexOf){
 			d = svg.trim(d);
 			this.PathParser = new (function(d) {
 				this.tokens = d.split(' ');
-				
-				this.reset = function() {
-					this.i = -1;
-					this.command = '';
-					this.previousCommand = '';
-					this.start = new svg.Point(0, 0);
-					this.control = new svg.Point(0, 0);
-					this.current = new svg.Point(0, 0);
-					this.points = [];
-					this.angles = [];
-				}
-								
-				this.isEnd = function() {
-					return this.i >= this.tokens.length - 1;
-				}
-				
-				this.isCommandOrEnd = function() {
-					if (this.isEnd()) return true;
-					return this.tokens[this.i + 1].match(/^[A-Za-z]$/) != null;
-				}
-				
-				this.isRelativeCommand = function() {
-					return this.command == this.command.toLowerCase();
-				}
-							
-				this.getToken = function() {
-					this.i = this.i + 1;
-					return this.tokens[this.i];
-				}
-				
-				this.getScalar = function() {
-					return parseFloat(this.getToken());
-				}
-				
-				this.nextCommand = function() {
-					this.previousCommand = this.command;
-					this.command = this.getToken();
-				}				
-				
-				this.getPoint = function() {
-					var p = new svg.Point(this.getScalar(), this.getScalar());
-					return this.makeAbsolute(p);
-				}
-				
-				this.getAsControlPoint = function() {
-					var p = this.getPoint();
-					this.control = p;
-					return p;
-				}
-				
-				this.getAsCurrentPoint = function() {
-					var p = this.getPoint();
-					this.current = p;
-					return p;	
-				}
-				
-				this.getReflectedControlPoint = function() {
-					if (this.previousCommand.toLowerCase() != 'c' && this.previousCommand.toLowerCase() != 's') {
-						return this.current;
-					}
-					
-					// reflect point
-					var p = new svg.Point(2 * this.current.x - this.control.x, 2 * this.current.y - this.control.y);					
-					return p;
-				}
-				
-				this.makeAbsolute = function(p) {
-					if (this.isRelativeCommand()) {
-						p.x = this.current.x + p.x;
-						p.y = this.current.y + p.y;
-					}
-					return p;
-				}
-				
-				this.addMarker = function(p, from, priorTo) {
-					// if the last angle isn't filled in because we didn't have this point yet ...
-					if (priorTo != null && this.angles.length > 0 && this.angles[this.angles.length-1] == null) {
-						this.angles[this.angles.length-1] = this.points[this.points.length-1].angleTo(priorTo);
-					}
-					this.addMarkerAngle(p, from == null ? null : from.angleTo(p));
-				}
-				
-				this.addMarkerAngle = function(p, a) {
-					this.points.push(p);
-					this.angles.push(a);
-				}				
-				
-				this.getMarkerPoints = function() { return this.points; }
-				this.getMarkerAngles = function() {
-					for (var i=0; i<this.angles.length; i++) {
-						if (this.angles[i] == null) {
-							for (var j=i+1; j<this.angles.length; j++) {
-								if (this.angles[j] != null) {
-									this.angles[i] = this.angles[j];
-									break;
-								}
-							}
-						}
+
+                this.reset = function () {
+                    this.i = -1;
+                    this.command = '';
+                    this.previousCommand = '';
+                    this.start = new svg.Point(0, 0);
+                    this.control = new svg.Point(0, 0);
+                    this.current = new svg.Point(0, 0);
+                    this.points = [];
+                    this.angles = [];
+                };
+
+                this.isEnd = function () {
+                    return this.i >= this.tokens.length - 1;
+                };
+
+                this.isCommandOrEnd = function () {
+                    if (this.isEnd()) return true;
+                    return this.tokens[this.i + 1].match(/^[A-Za-z]$/) != null;
+                };
+
+                this.isRelativeCommand = function () {
+                    return this.command == this.command.toLowerCase();
+                };
+
+                this.getToken = function () {
+                    this.i = this.i + 1;
+                    return this.tokens[this.i];
+                };
+
+                this.getScalar = function () {
+                    return parseFloat(this.getToken());
+                };
+
+                this.nextCommand = function () {
+                    this.previousCommand = this.command;
+                    this.command = this.getToken();
+                };
+
+                this.getPoint = function () {
+                    var p = new svg.Point(this.getScalar(), this.getScalar());
+                    return this.makeAbsolute(p);
+                };
+
+                this.getAsControlPoint = function () {
+                    var p = this.getPoint();
+                    this.control = p;
+                    return p;
+                };
+
+                this.getAsCurrentPoint = function () {
+                    var p = this.getPoint();
+                    this.current = p;
+                    return p;
+                };
+
+                this.getReflectedControlPoint = function () {
+                    if (this.previousCommand.toLowerCase() != 'c' && this.previousCommand.toLowerCase() != 's') {
+                        return this.current;
+                    }
+
+                    // reflect point
+                    var p = new svg.Point(2 * this.current.x - this.control.x, 2 * this.current.y - this.control.y);
+                    return p;
+                };
+
+                this.makeAbsolute = function (p) {
+                    if (this.isRelativeCommand()) {
+                        p.x = this.current.x + p.x;
+                        p.y = this.current.y + p.y;
+                    }
+                    return p;
+                };
+
+                this.addMarker = function (p, from, priorTo) {
+                    // if the last angle isn't filled in because we didn't have this point yet ...
+                    if (priorTo != null && this.angles.length > 0 && this.angles[this.angles.length - 1] == null) {
+                        this.angles[this.angles.length - 1] = this.points[this.points.length - 1].angleTo(priorTo);
+                    }
+                    this.addMarkerAngle(p, from == null ? null : from.angleTo(p));
+                };
+
+                this.addMarkerAngle = function (p, a) {
+                    this.points.push(p);
+                    this.angles.push(a);
+                };
+
+                this.getMarkerPoints = function () {
+                    return this.points;
+                };
+                this.getMarkerAngles = function () {
+                    for (var i = 0; i < this.angles.length; i++) {
+                        if (this.angles[i] == null) {
+                            for (var j = i + 1; j < this.angles.length; j++) {
+                                if (this.angles[j] != null) {
+                                    this.angles[i] = this.angles[j];
+                                    break;
+                                }
+                            }
+                        }
 					}
 					return this.angles;
 				}
@@ -1625,31 +1665,37 @@ if(!Array.prototype.indexOf){
 							// cx', cy'
 							var s = (largeArcFlag == sweepFlag ? -1 : 1) * Math.sqrt(
 								((Math.pow(rx,2)*Math.pow(ry,2))-(Math.pow(rx,2)*Math.pow(currp.y,2))-(Math.pow(ry,2)*Math.pow(currp.x,2))) /
-								(Math.pow(rx,2)*Math.pow(currp.y,2)+Math.pow(ry,2)*Math.pow(currp.x,2))
-							);
-							if (isNaN(s)) s = 0;
-							var cpp = new svg.Point(s * rx * currp.y / ry, s * -ry * currp.x / rx);
-							// cx, cy
-							var centp = new svg.Point(
-								(curr.x + cp.x) / 2.0 + Math.cos(xAxisRotation) * cpp.x - Math.sin(xAxisRotation) * cpp.y,
-								(curr.y + cp.y) / 2.0 + Math.sin(xAxisRotation) * cpp.x + Math.cos(xAxisRotation) * cpp.y
-							);
-							// vector magnitude
-							var m = function(v) { return Math.sqrt(Math.pow(v[0],2) + Math.pow(v[1],2)); }
-							// ratio between two vectors
-							var r = function(u, v) { return (u[0]*v[0]+u[1]*v[1]) / (m(u)*m(v)) }
-							// angle between two vectors
-							var a = function(u, v) { return (u[0]*v[1] < u[1]*v[0] ? -1 : 1) * Math.acos(r(u,v)); }
-							// initial angle
-							var a1 = a([1,0], [(currp.x-cpp.x)/rx,(currp.y-cpp.y)/ry]);
-							// angle delta
-							var u = [(currp.x-cpp.x)/rx,(currp.y-cpp.y)/ry];
-							var v = [(-currp.x-cpp.x)/rx,(-currp.y-cpp.y)/ry];
-							var ad = a(u, v);
-							if (r(u,v) <= -1) ad = Math.PI;
-							if (r(u,v) >= 1) ad = 0;
+                                (Math.pow(rx, 2) * Math.pow(currp.y, 2) + Math.pow(ry, 2) * Math.pow(currp.x, 2))
+                            );
+                            if (isNaN(s)) s = 0;
+                            var cpp = new svg.Point(s * rx * currp.y / ry, s * -ry * currp.x / rx);
+                            // cx, cy
+                            var centp = new svg.Point(
+                                (curr.x + cp.x) / 2.0 + Math.cos(xAxisRotation) * cpp.x - Math.sin(xAxisRotation) * cpp.y,
+                                (curr.y + cp.y) / 2.0 + Math.sin(xAxisRotation) * cpp.x + Math.cos(xAxisRotation) * cpp.y
+                            );
+                            // vector magnitude
+                            var m = function (v) {
+                                return Math.sqrt(Math.pow(v[0], 2) + Math.pow(v[1], 2));
+                            };
+                            // ratio between two vectors
+                            var r = function (u, v) {
+                                return (u[0] * v[0] + u[1] * v[1]) / (m(u) * m(v))
+                            };
+                            // angle between two vectors
+                            var a = function (u, v) {
+                                return (u[0] * v[1] < u[1] * v[0] ? -1 : 1) * Math.acos(r(u, v));
+                            };
+                            // initial angle
+                            var a1 = a([1, 0], [(currp.x - cpp.x) / rx, (currp.y - cpp.y) / ry]);
+                            // angle delta
+                            var u = [(currp.x - cpp.x) / rx, (currp.y - cpp.y) / ry];
+                            var v = [(-currp.x - cpp.x) / rx, (-currp.y - cpp.y) / ry];
+                            var ad = a(u, v);
+                            if (r(u, v) <= -1) ad = Math.PI;
+                            if (r(u, v) >= 1) ad = 0;
 
-							if (sweepFlag == 0 && ad > 0) ad = ad - 2 * Math.PI;
+                            if (sweepFlag == 0 && ad > 0) ad = ad - 2 * Math.PI;
 							if (sweepFlag == 1 && ad < 0) ad = ad + 2 * Math.PI;
 
 							// for markers
@@ -1673,30 +1719,30 @@ if(!Array.prototype.indexOf){
 								ctx.scale(1/sx, 1/sy);
 								ctx.rotate(-xAxisRotation);
 								ctx.translate(-centp.x, -centp.y);
-							}
-						}
-						break;
-					case 'Z':
-						if (ctx != null) ctx.closePath();
-						pp.current = pp.start;
-					}
-				}
+                            }
+                        }
+                        break;
+                        case 'Z':
+                            if (ctx != null) ctx.closePath();
+                            pp.current = pp.start;
+                    }
+                }
 
-				return bb;
-			}
+                return bb;
+            };
 
-			this.getMarkers = function() {
-				var points = this.PathParser.getMarkerPoints();
-				var angles = this.PathParser.getMarkerAngles();
-				
-				var markers = [];
-				for (var i=0; i<points.length; i++) {
-					markers.push([points[i], angles[i]]);
-				}
-				return markers;
-			}
-		}
-		svg.Element.path.prototype = new svg.Element.PathElementBase;
+            this.getMarkers = function () {
+                var points = this.PathParser.getMarkerPoints();
+                var angles = this.PathParser.getMarkerAngles();
+
+                var markers = [];
+                for (var i = 0; i < points.length; i++) {
+                    markers.push([points[i], angles[i]]);
+                }
+                return markers;
+            }
+        };
+        svg.Element.path.prototype = new svg.Element.PathElementBase;
 		
 		// pattern element
 		svg.Element.pattern = function(node) {
@@ -1709,18 +1755,18 @@ if(!Array.prototype.indexOf){
 				tempSvg.attributes['viewBox'] = new svg.Property('viewBox', this.attribute('viewBox').value);
 				tempSvg.attributes['x'] = new svg.Property('x', this.attribute('x').value);
 				tempSvg.attributes['y'] = new svg.Property('y', this.attribute('y').value);
-				tempSvg.attributes['width'] = new svg.Property('width', this.attribute('width').value);
-				tempSvg.attributes['height'] = new svg.Property('height', this.attribute('height').value);
-				tempSvg.children = this.children;
-				
-				var c = document.createElement('canvas');
-				c.width = this.attribute('width').Length.toPixels('x');
-				c.height = this.attribute('height').Length.toPixels('y');
-				tempSvg.render(c.getContext('2d'));		
-				return ctx.createPattern(c, 'repeat');
-			}
-		}
-		svg.Element.pattern.prototype = new svg.Element.ElementBase;
+                tempSvg.attributes['width'] = new svg.Property('width', this.attribute('width').value);
+                tempSvg.attributes['height'] = new svg.Property('height', this.attribute('height').value);
+                tempSvg.children = this.children;
+
+                var c = document.createElement('canvas');
+                c.width = this.attribute('width').Length.toPixels('x');
+                c.height = this.attribute('height').Length.toPixels('y');
+                tempSvg.render(c.getContext('2d'));
+                return ctx.createPattern(c, 'repeat');
+            }
+        };
+        svg.Element.pattern.prototype = new svg.Element.ElementBase;
 		
 		// marker element
 		svg.Element.marker = function(node) {
@@ -1741,29 +1787,29 @@ if(!Array.prototype.indexOf){
 				tempSvg.attributes['refY'] = new svg.Property('refY', this.attribute('refY').value);
 				tempSvg.attributes['width'] = new svg.Property('width', this.attribute('markerWidth').value);
 				tempSvg.attributes['height'] = new svg.Property('height', this.attribute('markerHeight').value);
-				tempSvg.attributes['fill'] = new svg.Property('fill', this.attribute('fill').valueOrDefault('black'));
-				tempSvg.attributes['stroke'] = new svg.Property('stroke', this.attribute('stroke').valueOrDefault('none'));
-				tempSvg.children = this.children;
-				tempSvg.render(ctx);
-				
-				ctx.restore();
-				if (this.attribute('markerUnits').valueOrDefault('strokeWidth') == 'strokeWidth') ctx.scale(1/ctx.lineWidth, 1/ctx.lineWidth);
-				if (this.attribute('orient').valueOrDefault('auto') == 'auto') ctx.rotate(-angle);
-				ctx.translate(-point.x, -point.y);
-			}
-		}
-		svg.Element.marker.prototype = new svg.Element.ElementBase;
+                tempSvg.attributes['fill'] = new svg.Property('fill', this.attribute('fill').valueOrDefault('black'));
+                tempSvg.attributes['stroke'] = new svg.Property('stroke', this.attribute('stroke').valueOrDefault('none'));
+                tempSvg.children = this.children;
+                tempSvg.render(ctx);
+
+                ctx.restore();
+                if (this.attribute('markerUnits').valueOrDefault('strokeWidth') == 'strokeWidth') ctx.scale(1 / ctx.lineWidth, 1 / ctx.lineWidth);
+                if (this.attribute('orient').valueOrDefault('auto') == 'auto') ctx.rotate(-angle);
+                ctx.translate(-point.x, -point.y);
+            }
+        };
+        svg.Element.marker.prototype = new svg.Element.ElementBase;
 		
 		// definitions element
-		svg.Element.defs = function(node) {
-			this.base = svg.Element.ElementBase;
-			this.base(node);	
-			
-			this.render = function(ctx) {
-				// NOOP
-			}
-		}
-		svg.Element.defs.prototype = new svg.Element.ElementBase;
+        svg.Element.defs = function (node) {
+            this.base = svg.Element.ElementBase;
+            this.base(node);
+
+            this.render = function (ctx) {
+                // NOOP
+            }
+        };
+        svg.Element.defs.prototype = new svg.Element.ElementBase;
 		
 		// base for gradients
 		svg.Element.GradientBase = function(node) {
@@ -1776,11 +1822,11 @@ if(!Array.prototype.indexOf){
 			for (var i=0; i<this.children.length; i++) {
 				var child = this.children[i];
 				this.stops.push(child);
-			}	
-			
-			this.getGradient = function() {
-				// OVERRIDE ME!
-			}			
+			}
+
+            this.getGradient = function () {
+                // OVERRIDE ME!
+            };
 
 			this.createGradient = function(ctx, element) {
 				var stopsContainer = this;
@@ -1815,18 +1861,18 @@ if(!Array.prototype.indexOf){
 					tempSvg.children = [ group ];
 					
 					var c = document.createElement('canvas');
-					c.width = rootView.width;
-					c.height = rootView.height;
-					var tempCtx = c.getContext('2d');
-					tempCtx.fillStyle = g;
-					tempSvg.render(tempCtx);		
-					return tempCtx.createPattern(c, 'no-repeat');
-				}
-				
-				return g;				
-			}
-		}
-		svg.Element.GradientBase.prototype = new svg.Element.ElementBase;
+                    c.width = rootView.width;
+                    c.height = rootView.height;
+                    var tempCtx = c.getContext('2d');
+                    tempCtx.fillStyle = g;
+                    tempSvg.render(tempCtx);
+                    return tempCtx.createPattern(c, 'no-repeat');
+                }
+
+                return g;
+            }
+        };
+        svg.Element.GradientBase.prototype = new svg.Element.ElementBase;
 		
 		// linear gradient element
 		svg.Element.linearGradient = function(node) {
@@ -1841,18 +1887,18 @@ if(!Array.prototype.indexOf){
 					: this.attribute('x1').Length.toPixels('x'));
 				var y1 = (this.gradientUnits == 'objectBoundingBox' 
 					? bb.y() + bb.height() * this.attribute('y1').numValue()
-					: this.attribute('y1').Length.toPixels('y'));
-				var x2 = (this.gradientUnits == 'objectBoundingBox' 
-					? bb.x() + bb.width() * this.attribute('x2').numValue()
-					: this.attribute('x2').Length.toPixels('x'));
-				var y2 = (this.gradientUnits == 'objectBoundingBox' 
-					? bb.y() + bb.height() * this.attribute('y2').numValue()
-					: this.attribute('y2').Length.toPixels('y'));
+                    : this.attribute('y1').Length.toPixels('y'));
+                var x2 = (this.gradientUnits == 'objectBoundingBox'
+                    ? bb.x() + bb.width() * this.attribute('x2').numValue()
+                    : this.attribute('x2').Length.toPixels('x'));
+                var y2 = (this.gradientUnits == 'objectBoundingBox'
+                    ? bb.y() + bb.height() * this.attribute('y2').numValue()
+                    : this.attribute('y2').Length.toPixels('y'));
 
-				return ctx.createLinearGradient(x1, y1, x2, y2);
-			}
-		}
-		svg.Element.linearGradient.prototype = new svg.Element.GradientBase;
+                return ctx.createLinearGradient(x1, y1, x2, y2);
+            }
+        };
+        svg.Element.linearGradient.prototype = new svg.Element.GradientBase;
 		
 		// radial gradient element
 		svg.Element.radialGradient = function(node) {
@@ -1877,32 +1923,32 @@ if(!Array.prototype.indexOf){
 					: this.attribute('fx').Length.toPixels('x'));
 				}
 				if (this.attribute('fy').hasValue()) {
-					fy = (this.gradientUnits == 'objectBoundingBox' 
-					? bb.y() + bb.height() * this.attribute('fy').numValue() 
-					: this.attribute('fy').Length.toPixels('y'));
-				}
-				
-				var r = (this.gradientUnits == 'objectBoundingBox' 
-					? (bb.width() + bb.height()) / 2.0 * this.attribute('r').numValue()
-					: this.attribute('r').Length.toPixels());
-				
-				return ctx.createRadialGradient(fx, fy, 0, cx, cy, r);
-			}
-		}
-		svg.Element.radialGradient.prototype = new svg.Element.GradientBase;
+					fy = (this.gradientUnits == 'objectBoundingBox'
+                        ? bb.y() + bb.height() * this.attribute('fy').numValue()
+                        : this.attribute('fy').Length.toPixels('y'));
+                }
+
+                var r = (this.gradientUnits == 'objectBoundingBox'
+                    ? (bb.width() + bb.height()) / 2.0 * this.attribute('r').numValue()
+                    : this.attribute('r').Length.toPixels());
+
+                return ctx.createRadialGradient(fx, fy, 0, cx, cy, r);
+            }
+        };
+        svg.Element.radialGradient.prototype = new svg.Element.GradientBase;
 		
 		// gradient stop element
-		svg.Element.stop = function(node) {
-			this.base = svg.Element.ElementBase;
-			this.base(node);
-			
-			this.offset = this.attribute('offset').numValue();
-			
-			var stopColor = this.style('stop-color');
-			if (this.style('stop-opacity').hasValue()) stopColor = stopColor.Color.addOpacity(this.style('stop-opacity').value);
-			this.color = stopColor.value;
-		}
-		svg.Element.stop.prototype = new svg.Element.ElementBase;
+        svg.Element.stop = function (node) {
+            this.base = svg.Element.ElementBase;
+            this.base(node);
+
+            this.offset = this.attribute('offset').numValue();
+
+            var stopColor = this.style('stop-color');
+            if (this.style('stop-opacity').hasValue()) stopColor = stopColor.Color.addOpacity(this.style('stop-opacity').value);
+            this.color = stopColor.value;
+        };
+        svg.Element.stop.prototype = new svg.Element.ElementBase;
 		
 		// animation base element
 		svg.Element.AnimateBase = function(node) {
@@ -1926,12 +1972,12 @@ if(!Array.prototype.indexOf){
 			};
 			
 			this.initialValue = null;
-			this.removed = false;			
+			this.removed = false;
 
-			this.calcValue = function() {
-				// OVERRIDE ME!
-				return '';
-			}
+            this.calcValue = function () {
+                // OVERRIDE ME!
+                return '';
+            };
 			
 			this.update = function(delta) {	
 				// set initial value
@@ -1962,39 +2008,39 @@ if(!Array.prototype.indexOf){
 					var newValue = this.calcValue(); // tween
 					
 					if (this.attribute('type').hasValue()) {
-						// for transform, etc.
-						var type = this.attribute('type').value;
-						newValue = type + '(' + newValue + ')';
-					}
-					
-					this.getProperty().value = newValue;
-					updated = true;
-				}
-				
-				return updated;
-			}
-			
-			// fraction of duration we've covered
-			this.progress = function() {
-				return ((this.duration - this.begin) / (this.maxDuration - this.begin));
-			}			
-		}
-		svg.Element.AnimateBase.prototype = new svg.Element.ElementBase;
+                        // for transform, etc.
+                        var type = this.attribute('type').value;
+                        newValue = type + '(' + newValue + ')';
+                    }
+
+                    this.getProperty().value = newValue;
+                    updated = true;
+                }
+
+                return updated;
+            };
+
+            // fraction of duration we've covered
+            this.progress = function () {
+                return ((this.duration - this.begin) / (this.maxDuration - this.begin));
+            }
+        };
+        svg.Element.AnimateBase.prototype = new svg.Element.ElementBase;
 		
 		// animate element
 		svg.Element.animate = function(node) {
-			this.base = svg.Element.AnimateBase;
-			this.base(node);
-			
-			this.calcValue = function() {
-				var from = this.attribute('from').numValue();
-				var to = this.attribute('to').numValue();
-				
-				// tween value linearly
-				return from + (to - from) * this.progress(); 
-			};
-		}
-		svg.Element.animate.prototype = new svg.Element.AnimateBase;
+            this.base = svg.Element.AnimateBase;
+            this.base(node);
+
+            this.calcValue = function () {
+                var from = this.attribute('from').numValue();
+                var to = this.attribute('to').numValue();
+
+                // tween value linearly
+                return from + (to - from) * this.progress();
+            };
+        };
+        svg.Element.animate.prototype = new svg.Element.AnimateBase;
 			
 		// animate color element
 		svg.Element.animateColor = function(node) {
@@ -2004,25 +2050,25 @@ if(!Array.prototype.indexOf){
 			this.calcValue = function() {
 				var from = new RGBColor(this.attribute('from').value);
 				var to = new RGBColor(this.attribute('to').value);
-				
-				if (from.ok && to.ok) {
-					// tween color linearly
-					var r = from.r + (to.r - from.r) * this.progress();
-					var g = from.g + (to.g - from.g) * this.progress();
-					var b = from.b + (to.b - from.b) * this.progress();
-					return 'rgb('+parseInt(r,10)+','+parseInt(g,10)+','+parseInt(b,10)+')';
-				}
-				return this.attribute('from').value;
-			};
-		}
-		svg.Element.animateColor.prototype = new svg.Element.AnimateBase;
+
+                if (from.ok && to.ok) {
+                    // tween color linearly
+                    var r = from.r + (to.r - from.r) * this.progress();
+                    var g = from.g + (to.g - from.g) * this.progress();
+                    var b = from.b + (to.b - from.b) * this.progress();
+                    return 'rgb(' + parseInt(r, 10) + ',' + parseInt(g, 10) + ',' + parseInt(b, 10) + ')';
+                }
+                return this.attribute('from').value;
+            };
+        };
+        svg.Element.animateColor.prototype = new svg.Element.AnimateBase;
 		
 		// animate transform element
-		svg.Element.animateTransform = function(node) {
-			this.base = svg.Element.animate;
-			this.base(node);
-		}
-		svg.Element.animateTransform.prototype = new svg.Element.animate;
+        svg.Element.animateTransform = function (node) {
+            this.base = svg.Element.animate;
+            this.base(node);
+        };
+        svg.Element.animateTransform.prototype = new svg.Element.animate;
 		
 		// font element
 		svg.Element.font = function(node) {
@@ -2047,49 +2093,48 @@ if(!Array.prototype.indexOf){
 				else if (child.type == 'missing-glyph') this.missingGlyph = child;
 				else if (child.type == 'glyph') {
 					if (child.arabicForm != '') {
-						this.isRTL = true;
-						this.isArabic = true;
-						if (typeof(this.glyphs[child.unicode]) == 'undefined') this.glyphs[child.unicode] = [];
-						this.glyphs[child.unicode][child.arabicForm] = child;
-					}
-					else {
-						this.glyphs[child.unicode] = child;
-					}
-				}
-			}	
-		}
-		svg.Element.font.prototype = new svg.Element.ElementBase;
+                        this.isRTL = true;
+                        this.isArabic = true;
+                        if (typeof (this.glyphs[child.unicode]) == 'undefined') this.glyphs[child.unicode] = [];
+                        this.glyphs[child.unicode][child.arabicForm] = child;
+                    } else {
+                        this.glyphs[child.unicode] = child;
+                    }
+                }
+            }
+        };
+        svg.Element.font.prototype = new svg.Element.ElementBase;
 		
 		// font-face element
-		svg.Element.fontface = function(node) {
-			this.base = svg.Element.ElementBase;
-			this.base(node);	
-			
-			this.ascent = this.attribute('ascent').value;
-			this.descent = this.attribute('descent').value;
-			this.unitsPerEm = this.attribute('units-per-em').numValue();				
-		}
-		svg.Element.fontface.prototype = new svg.Element.ElementBase;
+        svg.Element.fontface = function (node) {
+            this.base = svg.Element.ElementBase;
+            this.base(node);
+
+            this.ascent = this.attribute('ascent').value;
+            this.descent = this.attribute('descent').value;
+            this.unitsPerEm = this.attribute('units-per-em').numValue();
+        };
+        svg.Element.fontface.prototype = new svg.Element.ElementBase;
 		
 		// missing-glyph element
-		svg.Element.missingglyph = function(node) {
-			this.base = svg.Element.path;
-			this.base(node);	
-			
-			this.horizAdvX = 0;
-		}
-		svg.Element.missingglyph.prototype = new svg.Element.path;
+        svg.Element.missingglyph = function (node) {
+            this.base = svg.Element.path;
+            this.base(node);
+
+            this.horizAdvX = 0;
+        };
+        svg.Element.missingglyph.prototype = new svg.Element.path;
 		
 		// glyph element
-		svg.Element.glyph = function(node) {
-			this.base = svg.Element.path;
-			this.base(node);	
-			
-			this.horizAdvX = this.attribute('horiz-adv-x').numValue();
-			this.unicode = this.attribute('unicode').value;
-			this.arabicForm = this.attribute('arabic-form').value;
-		}
-		svg.Element.glyph.prototype = new svg.Element.path;
+        svg.Element.glyph = function (node) {
+            this.base = svg.Element.path;
+            this.base(node);
+
+            this.horizAdvX = this.attribute('horiz-adv-x').numValue();
+            this.unicode = this.attribute('unicode').value;
+            this.arabicForm = this.attribute('arabic-form').value;
+        };
+        svg.Element.glyph.prototype = new svg.Element.path;
 		
 		// text element
 		svg.Element.text = function(node) {
@@ -2109,13 +2154,13 @@ if(!Array.prototype.indexOf){
 					}
 				}
 			}
-			
-			this.baseSetContext = this.setContext;
-			this.setContext = function(ctx) {
-				this.baseSetContext(ctx);
-				if (this.style('dominant-baseline').hasValue()) ctx.textBaseline = this.style('dominant-baseline').value;
-				if (this.style('alignment-baseline').hasValue()) ctx.textBaseline = this.style('alignment-baseline').value;
-			}
+
+            this.baseSetContext = this.setContext;
+            this.setContext = function (ctx) {
+                this.baseSetContext(ctx);
+                if (this.style('dominant-baseline').hasValue()) ctx.textBaseline = this.style('dominant-baseline').value;
+                if (this.style('alignment-baseline').hasValue()) ctx.textBaseline = this.style('alignment-baseline').value;
+            };
 			
 			this.renderChildren = function(ctx) {
 				var textAnchor = this.style('text-anchor').valueOrDefault('start');
@@ -2147,18 +2192,17 @@ if(!Array.prototype.indexOf){
 					
 					if (child.attribute('y').hasValue()) {
 						child.y = child.attribute('y').Length.toPixels('y');
-					}
-					else {
-						if (child.attribute('dy').hasValue()) y += child.attribute('dy').Length.toPixels('y');
-						child.y = y;
-					}	
-					y = child.y;
-					
-					child.render(ctx);
-				}
-			}
-		}
-		svg.Element.text.prototype = new svg.Element.RenderedElementBase;
+                    } else {
+                        if (child.attribute('dy').hasValue()) y += child.attribute('dy').Length.toPixels('y');
+                        child.y = y;
+                    }
+                    y = child.y;
+
+                    child.render(ctx);
+                }
+            }
+        };
+        svg.Element.text.prototype = new svg.Element.RenderedElementBase;
 		
 		// text base
 		svg.Element.TextElementBase = function(node) {
@@ -2173,17 +2217,16 @@ if(!Array.prototype.indexOf){
 					if ((i==0 || text[i-1]==' ') && i<text.length-2 && text[i+1]!=' ') arabicForm = 'terminal'; 
 					if (i>0 && text[i-1]!=' ' && i<text.length-2 && text[i+1]!=' ') arabicForm = 'medial';
 					if (i>0 && text[i-1]!=' ' && (i == text.length-1 || text[i+1]==' ')) arabicForm = 'initial';
-					if (typeof(font.glyphs[c]) != 'undefined') {
-						glyph = font.glyphs[c][arabicForm];
-						if (glyph == null && font.glyphs[c].type == 'glyph') glyph = font.glyphs[c];
-					}
-				}
-				else {
-					glyph = font.glyphs[c];
-				}
-				if (glyph == null) glyph = font.missingGlyph;
-				return glyph;
-			}
+                    if (typeof (font.glyphs[c]) != 'undefined') {
+                        glyph = font.glyphs[c][arabicForm];
+                        if (glyph == null && font.glyphs[c].type == 'glyph') glyph = font.glyphs[c];
+                    }
+                } else {
+                    glyph = font.glyphs[c];
+                }
+                if (glyph == null) glyph = font.missingGlyph;
+                return glyph;
+            };
 			
 			this.renderChildren = function(ctx) {
 				var customFont = this.parent.style('font-family').Definition.getDefinition();
@@ -2206,23 +2249,23 @@ if(!Array.prototype.indexOf){
 						if (fontStyle == 'italic') ctx.transform(1, 0, -.4, 1, 0, 0);
 						ctx.lineWidth = lw;
 						ctx.scale(1/scale, -1/scale);
-						ctx.translate(-this.x, -this.y);	
-						
-						this.x += fontSize * (glyph.horizAdvX || customFont.horizAdvX) / customFont.fontFace.unitsPerEm;
-						if (typeof(dx[i]) != 'undefined' && !isNaN(dx[i])) {
-							this.x += dx[i];
-						}
-					}
-					return;
-				}
-			
-				if (ctx.strokeStyle != '') ctx.strokeText(svg.compressSpaces(this.getText()), this.x, this.y);
-				if (ctx.fillStyle != '') ctx.fillText(svg.compressSpaces(this.getText()), this.x, this.y);
-			}
-			
-			this.getText = function() {
-				// OVERRIDE ME
-			}
+						ctx.translate(-this.x, -this.y);
+
+                        this.x += fontSize * (glyph.horizAdvX || customFont.horizAdvX) / customFont.fontFace.unitsPerEm;
+                        if (typeof (dx[i]) != 'undefined' && !isNaN(dx[i])) {
+                            this.x += dx[i];
+                        }
+                    }
+                    return;
+                }
+
+                if (ctx.strokeStyle != '') ctx.strokeText(svg.compressSpaces(this.getText()), this.x, this.y);
+                if (ctx.fillStyle != '') ctx.fillText(svg.compressSpaces(this.getText()), this.x, this.y);
+            };
+
+            this.getText = function () {
+                // OVERRIDE ME
+            };
 			
 			this.measureText = function(ctx) {
 				var customFont = this.parent.style('font-family').Definition.getDefinition();
@@ -2241,44 +2284,44 @@ if(!Array.prototype.indexOf){
 					}
 					return measure;
 				}
-			
-				var textToMeasure = svg.compressSpaces(this.getText());
-				if (!ctx.measureText) return textToMeasure.length * 10;
-				
-				ctx.save();
-				this.setContext(ctx);
-				var width = ctx.measureText(textToMeasure).width;
-				ctx.restore();
-				return width;
-			}
-		}
-		svg.Element.TextElementBase.prototype = new svg.Element.RenderedElementBase;
+
+                var textToMeasure = svg.compressSpaces(this.getText());
+                if (!ctx.measureText) return textToMeasure.length * 10;
+
+                ctx.save();
+                this.setContext(ctx);
+                var width = ctx.measureText(textToMeasure).width;
+                ctx.restore();
+                return width;
+            }
+        };
+        svg.Element.TextElementBase.prototype = new svg.Element.RenderedElementBase;
 		
 		// tspan 
-		svg.Element.tspan = function(node) {
-			this.base = svg.Element.TextElementBase;
-			this.base(node);
-			
-			this.text = node.nodeType == 3 ? node.nodeValue : // text
-						node.childNodes.length > 0 ? node.childNodes[0].nodeValue : // element
-						node.text;
-			this.getText = function() {
-				return this.text;
-			}
-		}
-		svg.Element.tspan.prototype = new svg.Element.TextElementBase;
+        svg.Element.tspan = function (node) {
+            this.base = svg.Element.TextElementBase;
+            this.base(node);
+
+            this.text = node.nodeType == 3 ? node.nodeValue : // text
+                node.childNodes.length > 0 ? node.childNodes[0].nodeValue : // element
+                    node.text;
+            this.getText = function () {
+                return this.text;
+            }
+        };
+        svg.Element.tspan.prototype = new svg.Element.TextElementBase;
 		
 		// tref
-		svg.Element.tref = function(node) {
-			this.base = svg.Element.TextElementBase;
-			this.base(node);
-			
-			this.getText = function() {
-				var element = this.attribute('xlink:href').Definition.getDefinition();
-				if (element != null) return element.children[0].getText();
-			}
-		}
-		svg.Element.tref.prototype = new svg.Element.TextElementBase;		
+        svg.Element.tref = function (node) {
+            this.base = svg.Element.TextElementBase;
+            this.base(node);
+
+            this.getText = function () {
+                var element = this.attribute('xlink:href').Definition.getDefinition();
+                if (element != null) return element.children[0].getText();
+            }
+        };
+        svg.Element.tref.prototype = new svg.Element.TextElementBase;
 		
 		// a element
 		svg.Element.a = function(node) {
@@ -2291,88 +2334,89 @@ if(!Array.prototype.indexOf){
 			}
 			
 			// this might contain text
-			this.text = this.hasText ? node.childNodes[0].nodeValue : '';
-			this.getText = function() {
-				return this.text;
-			}		
+            this.text = this.hasText ? node.childNodes[0].nodeValue : '';
+            this.getText = function () {
+                return this.text;
+            };
 
 			this.baseRenderChildren = this.renderChildren;
 			this.renderChildren = function(ctx) {
 				if (this.hasText) {
 					// render as text element
 					this.baseRenderChildren(ctx);
-					var fontSize = new svg.Property('fontSize', svg.Font.Parse(svg.ctx.font).fontSize);
-					svg.Mouse.checkBoundingBox(this, new svg.BoundingBox(this.x, this.y - fontSize.Length.toPixels('y'), this.x + this.measureText(ctx), this.y));					
-				}
-				else {
-					// render as temporary group
-					var g = new svg.Element.g();
-					g.children = this.children;
-					g.parent = this;
-					g.render(ctx);
-				}
-			}
-			
-			this.onclick = function() {
-				window.open(this.attribute('xlink:href').value);
-			}
-			
-			this.onmousemove = function() {
-				svg.ctx.canvas.style.cursor = 'pointer';
-			}
-		}
-		svg.Element.a.prototype = new svg.Element.TextElementBase;		
+                    var fontSize = new svg.Property('fontSize', svg.Font.Parse(svg.ctx.font).fontSize);
+                    svg.Mouse.checkBoundingBox(this, new svg.BoundingBox(this.x, this.y - fontSize.Length.toPixels('y'), this.x + this.measureText(ctx), this.y));
+                } else {
+                    // render as temporary group
+                    var g = new svg.Element.g();
+                    g.children = this.children;
+                    g.parent = this;
+                    g.render(ctx);
+                }
+            };
+
+            this.onclick = function () {
+                window.open(this.attribute('xlink:href').value);
+            };
+
+            this.onmousemove = function () {
+                svg.ctx.canvas.style.cursor = 'pointer';
+            }
+        };
+        svg.Element.a.prototype = new svg.Element.TextElementBase;
 		
 		// image element
 		svg.Element.image = function(node) {
-			this.base = svg.Element.RenderedElementBase;
-			this.base(node);
-			
-			svg.Images.push(this);
-			this.img = document.createElement('img');
-			this.loaded = false;
-			var that = this;
-			this.img.onload = function() { that.loaded = true; }
-			this.img.src = this.attribute('xlink:href').value;
-			
-			this.renderChildren = function(ctx) {
-				var x = this.attribute('x').Length.toPixels('x');
-				var y = this.attribute('y').Length.toPixels('y');
-				
-				var width = this.attribute('width').Length.toPixels('x');
-				var height = this.attribute('height').Length.toPixels('y');			
-				if (width == 0 || height == 0) return;
+            this.base = svg.Element.RenderedElementBase;
+            this.base(node);
+
+            svg.Images.push(this);
+            this.img = document.createElement('img');
+            this.loaded = false;
+            var that = this;
+            this.img.onload = function () {
+                that.loaded = true;
+            };
+            this.img.src = this.attribute('xlink:href').value;
+
+            this.renderChildren = function (ctx) {
+                var x = this.attribute('x').Length.toPixels('x');
+                var y = this.attribute('y').Length.toPixels('y');
+
+                var width = this.attribute('width').Length.toPixels('x');
+                var height = this.attribute('height').Length.toPixels('y');
+                if (width == 0 || height == 0) return;
 			
 				ctx.save();
 				ctx.translate(x, y);
 				svg.AspectRatio(ctx,
-								this.attribute('preserveAspectRatio').value,
-								width,
-								this.img.width,
-								height,
-								this.img.height,
-								0,
-								0);	
-				ctx.drawImage(this.img, 0, 0);			
-				ctx.restore();
-			}
-		}
-		svg.Element.image.prototype = new svg.Element.RenderedElementBase;
+                    this.attribute('preserveAspectRatio').value,
+                    width,
+                    this.img.width,
+                    height,
+                    this.img.height,
+                    0,
+                    0);
+                ctx.drawImage(this.img, 0, 0);
+                ctx.restore();
+            }
+        };
+        svg.Element.image.prototype = new svg.Element.RenderedElementBase;
 		
 		// group element
 		svg.Element.g = function(node) {
-			this.base = svg.Element.RenderedElementBase;
-			this.base(node);
-			
-			this.getBoundingBox = function() {
-				var bb = new svg.BoundingBox();
-				for (var i=0; i<this.children.length; i++) {
-					bb.addBoundingBox(this.children[i].getBoundingBox());
-				}
-				return bb;
-			};
-		}
-		svg.Element.g.prototype = new svg.Element.RenderedElementBase;
+            this.base = svg.Element.RenderedElementBase;
+            this.base(node);
+
+            this.getBoundingBox = function () {
+                var bb = new svg.BoundingBox();
+                for (var i = 0; i < this.children.length; i++) {
+                    bb.addBoundingBox(this.children[i].getBoundingBox());
+                }
+                return bb;
+            };
+        };
+        svg.Element.g.prototype = new svg.Element.RenderedElementBase;
 
 		// symbol element
 		svg.Element.symbol = function(node) {
@@ -2392,19 +2436,19 @@ if(!Array.prototype.indexOf){
 					height = viewBox[3];
 					
 					svg.AspectRatio(ctx,
-									this.attribute('preserveAspectRatio').value, 
-									this.attribute('width').Length.toPixels('x'),
-									width,
-									this.attribute('height').Length.toPixels('y'),
-									height,
-									minX,
-									minY);
+									this.attribute('preserveAspectRatio').value,
+                        this.attribute('width').Length.toPixels('x'),
+                        width,
+                        this.attribute('height').Length.toPixels('y'),
+                        height,
+                        minX,
+                        minY);
 
-					svg.ViewPort.SetCurrent(viewBox[2], viewBox[3]);						
-				}
-			}			
-		}
-		svg.Element.symbol.prototype = new svg.Element.RenderedElementBase;		
+                    svg.ViewPort.SetCurrent(viewBox[2], viewBox[3]);
+                }
+            }
+        };
+        svg.Element.symbol.prototype = new svg.Element.RenderedElementBase;
 			
 		// style element
 		svg.Element.style = function(node) { 
@@ -2445,49 +2489,49 @@ if(!Array.prototype.indexOf){
 										var doc = svg.parseXml(svg.ajax(url));
 										var fonts = doc.getElementsByTagName('font');
 										for (var f=0; f<fonts.length; f++) {
-											var font = svg.CreateElement(fonts[f]);
-											svg.Definitions[fontFamily] = font;
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-		svg.Element.style.prototype = new svg.Element.ElementBase;
+                                            var font = svg.CreateElement(fonts[f]);
+                                            svg.Definitions[fontFamily] = font;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        };
+        svg.Element.style.prototype = new svg.Element.ElementBase;
 		
 		// use element 
 		svg.Element.use = function(node) {
 			this.base = svg.Element.RenderedElementBase;
 			this.base(node);
-			
-			this.baseSetContext = this.setContext;
-			this.setContext = function(ctx) {
-				this.baseSetContext(ctx);
-				if (this.attribute('x').hasValue()) ctx.translate(this.attribute('x').Length.toPixels('x'), 0);
-				if (this.attribute('y').hasValue()) ctx.translate(0, this.attribute('y').Length.toPixels('y'));
-			}
-			
-			this.getDefinition = function() {
-				var element = this.attribute('xlink:href').Definition.getDefinition();
-				if (this.attribute('width').hasValue()) element.attribute('width', true).value = this.attribute('width').value;
-				if (this.attribute('height').hasValue()) element.attribute('height', true).value = this.attribute('height').value;
-				return element;
-			}
-			
-			this.path = function(ctx) {
-				var element = this.getDefinition();
-				if (element != null) element.path(ctx);
-			}
-			
-			this.renderChildren = function(ctx) {
-				var element = this.getDefinition();
-				if (element != null) element.render(ctx);
-			}
-		}
-		svg.Element.use.prototype = new svg.Element.RenderedElementBase;
+
+            this.baseSetContext = this.setContext;
+            this.setContext = function (ctx) {
+                this.baseSetContext(ctx);
+                if (this.attribute('x').hasValue()) ctx.translate(this.attribute('x').Length.toPixels('x'), 0);
+                if (this.attribute('y').hasValue()) ctx.translate(0, this.attribute('y').Length.toPixels('y'));
+            };
+
+            this.getDefinition = function () {
+                var element = this.attribute('xlink:href').Definition.getDefinition();
+                if (this.attribute('width').hasValue()) element.attribute('width', true).value = this.attribute('width').value;
+                if (this.attribute('height').hasValue()) element.attribute('height', true).value = this.attribute('height').value;
+                return element;
+            };
+
+            this.path = function (ctx) {
+                var element = this.getDefinition();
+                if (element != null) element.path(ctx);
+            };
+
+            this.renderChildren = function (ctx) {
+                var element = this.getDefinition();
+                if (element != null) element.render(ctx);
+            }
+        };
+        svg.Element.use.prototype = new svg.Element.RenderedElementBase;
 		
 		// mask element
 		svg.Element.mask = function(node) {
@@ -2515,43 +2559,43 @@ if(!Array.prototype.indexOf){
 					c.width = x + width;
 					c.height = y + height;
 					var tempCtx = c.getContext('2d');
-					element.render(tempCtx);
-					tempCtx.globalCompositeOperation = 'destination-in';
-					tempCtx.fillStyle = maskCtx.createPattern(cMask, 'no-repeat');
-					tempCtx.fillRect(0, 0, x + width, y + height);
-					
-					ctx.fillStyle = tempCtx.createPattern(c, 'no-repeat');
-					ctx.fillRect(0, 0, x + width, y + height);
-					
-				// reassign mask
-				element.attribute('mask').value = mask;	
-			}
-			
-			this.render = function(ctx) {
-				// NO RENDER
-			}
-		}
-		svg.Element.mask.prototype = new svg.Element.ElementBase;
+                element.render(tempCtx);
+                tempCtx.globalCompositeOperation = 'destination-in';
+                tempCtx.fillStyle = maskCtx.createPattern(cMask, 'no-repeat');
+                tempCtx.fillRect(0, 0, x + width, y + height);
+
+                ctx.fillStyle = tempCtx.createPattern(c, 'no-repeat');
+                ctx.fillRect(0, 0, x + width, y + height);
+
+                // reassign mask
+                element.attribute('mask').value = mask;
+            };
+
+            this.render = function (ctx) {
+                // NO RENDER
+            }
+        };
+        svg.Element.mask.prototype = new svg.Element.ElementBase;
 		
 		// clip element
 		svg.Element.clipPath = function(node) {
 			this.base = svg.Element.ElementBase;
 			this.base(node);
-			
-			this.apply = function(ctx) {
-				for (var i=0; i<this.children.length; i++) {
-					if (this.children[i].path) {
-						this.children[i].path(ctx);
-						ctx.clip();
-					}
-				}
-			}
-			
-			this.render = function(ctx) {
-				// NO RENDER
-			}
-		}
-		svg.Element.clipPath.prototype = new svg.Element.ElementBase;
+
+            this.apply = function (ctx) {
+                for (var i = 0; i < this.children.length; i++) {
+                    if (this.children[i].path) {
+                        this.children[i].path(ctx);
+                        ctx.clip();
+                    }
+                }
+            };
+
+            this.render = function (ctx) {
+                // NO RENDER
+            }
+        };
+        svg.Element.clipPath.prototype = new svg.Element.ElementBase;
 
 		// filters
 		svg.Element.filter = function(node) {
@@ -2589,24 +2633,24 @@ if(!Array.prototype.indexOf){
 				var tempCtx = c.getContext('2d');
 				tempCtx.translate(-x + px, -y + py);
 				element.render(tempCtx);
-			
-				// apply filters
-				for (var i=0; i<this.children.length; i++) {
-					this.children[i].apply(tempCtx, 0, 0, width + 2*px, height + 2*py);
-				}
-				
-				// render on me
-				ctx.drawImage(c, 0, 0, width + 2*px, height + 2*py, x - px, y - py, width + 2*px, height + 2*py);
-				
-				// reassign filter
-				element.style('filter', true).value = filter;	
-			}
-			
-			this.render = function(ctx) {
-				// NO RENDER
-			}		
-		}
-		svg.Element.filter.prototype = new svg.Element.ElementBase;
+
+                // apply filters
+                for (var i = 0; i < this.children.length; i++) {
+                    this.children[i].apply(tempCtx, 0, 0, width + 2 * px, height + 2 * py);
+                }
+
+                // render on me
+                ctx.drawImage(c, 0, 0, width + 2 * px, height + 2 * py, x - px, y - py, width + 2 * px, height + 2 * py);
+
+                // reassign filter
+                element.style('filter', true).value = filter;
+            };
+
+            this.render = function (ctx) {
+                // NO RENDER
+            }
+        };
+        svg.Element.filter.prototype = new svg.Element.ElementBase;
 		
 		svg.Element.feGaussianBlur = function(node) {
 			this.base = svg.Element.ElementBase;
@@ -2667,74 +2711,73 @@ if(!Array.prototype.indexOf){
 				var mask = make_fgauss(sigma);
 				mask = normalize(mask);
 				tmp = [];
-				convolve_even(srcData.data, tmp, mask, width, height);
-				convolve_even(tmp, srcData.data, mask, height, width);
-				ctx.clearRect(0, 0, width, height);
-				ctx.putImageData(srcData, 0, 0);
-			}			
-		
-			this.apply = function(ctx, x, y, width, height) {
-				// assuming x==0 && y==0 for now
-				blur(ctx, width, height, this.attribute('stdDeviation').numValue());
-			}
-		}
-		svg.Element.filter.prototype = new svg.Element.feGaussianBlur;
+                convolve_even(srcData.data, tmp, mask, width, height);
+                convolve_even(tmp, srcData.data, mask, height, width);
+                ctx.clearRect(0, 0, width, height);
+                ctx.putImageData(srcData, 0, 0);
+            }
+
+            this.apply = function (ctx, x, y, width, height) {
+                // assuming x==0 && y==0 for now
+                blur(ctx, width, height, this.attribute('stdDeviation').numValue());
+            }
+        };
+        svg.Element.filter.prototype = new svg.Element.feGaussianBlur;
 		
 		// title element, do nothing
-		svg.Element.title = function(node) {
-		}
-		svg.Element.title.prototype = new svg.Element.ElementBase;
+        svg.Element.title = function (node) {
+        };
+        svg.Element.title.prototype = new svg.Element.ElementBase;
 
 		// desc element, do nothing
-		svg.Element.desc = function(node) {
-		}
-		svg.Element.desc.prototype = new svg.Element.ElementBase;		
-		
-		svg.Element.MISSING = function(node) {
-			console.log('ERROR: Element \'' + node.nodeName + '\' not yet implemented.');
-		}
-		svg.Element.MISSING.prototype = new svg.Element.ElementBase;
+        svg.Element.desc = function (node) {
+        };
+        svg.Element.desc.prototype = new svg.Element.ElementBase;
+
+        svg.Element.MISSING = function (node) {
+            console.log('ERROR: Element \'' + node.nodeName + '\' not yet implemented.');
+        };
+        svg.Element.MISSING.prototype = new svg.Element.ElementBase;
 		
 		// element factory
 		svg.CreateElement = function(node) {	
 			var className = node.nodeName.replace(/^[^:]+:/,''); // remove namespace
 			className = className.replace(/\-/g,''); // remove dashes
-			var e = null;
-			if (typeof(svg.Element[className]) != 'undefined') {
-				e = new svg.Element[className](node);
-			}
-			else {
-				e = new svg.Element.MISSING(node);
-			}
+            var e = null;
+            if (typeof (svg.Element[className]) != 'undefined') {
+                e = new svg.Element[className](node);
+            } else {
+                e = new svg.Element.MISSING(node);
+            }
 
-			e.type = node.nodeName;
-			return e;
-		}
+            e.type = node.nodeName;
+            return e;
+        };
 				
 		// load from url
-		svg.load = function(ctx, url) {
-			svg.loadXml(ctx, svg.ajax(url));
-		}
+        svg.load = function (ctx, url) {
+            svg.loadXml(ctx, svg.ajax(url));
+        };
 		
 		// load from xml
-		svg.loadXml = function(ctx, xml) {
-			svg.loadXmlDoc(ctx, svg.parseXml(xml));
-		}
+        svg.loadXml = function (ctx, xml) {
+            svg.loadXmlDoc(ctx, svg.parseXml(xml));
+        };
 		
 		svg.loadXmlDoc = function(ctx, dom) {
 			svg.init(ctx);
-			
-			var mapXY = function(p) {
-				var e = ctx.canvas;
-				while (e) {
-					p.x -= e.offsetLeft;
-					p.y -= e.offsetTop;
-					e = e.offsetParent;
-				}
-				if (window.scrollX) p.x += window.scrollX;
-				if (window.scrollY) p.y += window.scrollY;
-				return p;
-			}
+
+            var mapXY = function (p) {
+                var e = ctx.canvas;
+                while (e) {
+                    p.x -= e.offsetLeft;
+                    p.y -= e.offsetTop;
+                    e = e.offsetParent;
+                }
+                if (window.scrollX) p.x += window.scrollX;
+                if (window.scrollY) p.y += window.scrollY;
+                return p;
+            };
 			
 			// bind mouse
 			if (svg.opts['ignoreMouse'] != true) {
@@ -2784,17 +2827,17 @@ if(!Array.prototype.indexOf){
 					e.attribute('viewBox', true).value = '0 0 ' + (cWidth * xRatio) + ' ' + (cHeight * yRatio);
 					e.attribute('preserveAspectRatio', true).value = 'none';
 				}
-			
-				// clear and render
-				if (svg.opts['ignoreClear'] != true) {
-					ctx.clearRect(0, 0, cWidth, cHeight);
-				}
-				e.render(ctx);
-				if (isFirstRender) {
-					isFirstRender = false;
-					if (svg.opts != null && typeof(svg.opts['renderCallback']) == 'function') svg.opts['renderCallback']();
-				}			
-			}
+
+                // clear and render
+                if (svg.opts['ignoreClear'] != true) {
+                    ctx.clearRect(0, 0, cWidth, cHeight);
+                }
+                e.render(ctx);
+                if (isFirstRender) {
+                    isFirstRender = false;
+                    if (svg.opts != null && typeof (svg.opts['renderCallback']) == 'function') svg.opts['renderCallback']();
+                }
+            };
 			
 			var waitingForImages = true;
 			if (svg.ImagesLoaded()) {
@@ -2822,55 +2865,63 @@ if(!Array.prototype.indexOf){
 				}
 				
 				// need update from redraw?
-				if (svg.opts != null && typeof(svg.opts['forceRedraw']) == 'function') {
-					if (svg.opts['forceRedraw']() == true) needUpdate = true;
-				}
-				
-				// render if needed
-				if (needUpdate) {
-					draw();				
-					svg.Mouse.runEvents(); // run and clear our events
-				}
-			}, 1000 / svg.FRAMERATE);
-		}
-		
-		svg.stop = function() {
-			if (svg.intervalID) {
-				clearInterval(svg.intervalID);
-			}
-		}
+                if (svg.opts != null && typeof (svg.opts['forceRedraw']) == 'function') {
+                    if (svg.opts['forceRedraw']() == true) needUpdate = true;
+                }
+
+                // render if needed
+                if (needUpdate) {
+                    draw();
+                    svg.Mouse.runEvents(); // run and clear our events
+                }
+            }, 1000 / svg.FRAMERATE);
+        };
+
+        svg.stop = function () {
+            if (svg.intervalID) {
+                clearInterval(svg.intervalID);
+            }
+        };
 		
 		svg.Mouse = new (function() {
-			this.events = [];
-			this.hasEvents = function() { return this.events.length != 0; }
-		
-			this.onclick = function(x, y) {
-				this.events.push({ type: 'onclick', x: x, y: y, 
-					run: function(e) { if (e.onclick) e.onclick(); }
-				});
-			}
-			
-			this.onmousemove = function(x, y) {
-				this.events.push({ type: 'onmousemove', x: x, y: y,
-					run: function(e) { if (e.onmousemove) e.onmousemove(); }
-				});
-			}			
+            this.events = [];
+            this.hasEvents = function () {
+                return this.events.length != 0;
+            };
+
+            this.onclick = function (x, y) {
+                this.events.push({
+                    type: 'onclick', x: x, y: y,
+                    run: function (e) {
+                        if (e.onclick) e.onclick();
+                    }
+                });
+            };
+
+            this.onmousemove = function (x, y) {
+                this.events.push({
+                    type: 'onmousemove', x: x, y: y,
+                    run: function (e) {
+                        if (e.onmousemove) e.onmousemove();
+                    }
+                });
+            };
 			
 			this.eventElements = [];
-			
-			this.checkPath = function(element, ctx) {
-				for (var i=0; i<this.events.length; i++) {
-					var e = this.events[i];
-					if (ctx.isPointInPath && ctx.isPointInPath(e.x, e.y)) this.eventElements[i] = element;
-				}
-			}
-			
-			this.checkBoundingBox = function(element, bb) {
-				for (var i=0; i<this.events.length; i++) {
-					var e = this.events[i];
-					if (bb.isPointInBox(e.x, e.y)) this.eventElements[i] = element;
-				}			
-			}
+
+            this.checkPath = function (element, ctx) {
+                for (var i = 0; i < this.events.length; i++) {
+                    var e = this.events[i];
+                    if (ctx.isPointInPath && ctx.isPointInPath(e.x, e.y)) this.eventElements[i] = element;
+                }
+            };
+
+            this.checkBoundingBox = function (element, bb) {
+                for (var i = 0; i < this.events.length; i++) {
+                    var e = this.events[i];
+                    if (bb.isPointInBox(e.x, e.y)) this.eventElements[i] = element;
+                }
+            };
 			
 			this.runEvents = function() {
 				svg.ctx.canvas.style.cursor = '';

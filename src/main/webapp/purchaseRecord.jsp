@@ -106,36 +106,36 @@
 										/*$("#RawMaterialsTypeName").val("");
 										$("#RawMaterialsTypeDescription").val("");
 										$("#Ramark").val("");*/
-										page1();
-										location.reload();
-									}
-								});
-							}
-						}
-					});
-					alert(t);
-				}
+                                        page1();
+                                        location.reload();
+                                    }
+                                });
+                            }
+                        }
+                    });
+                    alert(t);
+                };
 
-				var btn_edit = function(id) {
-					$.jq_Panel({
-						url: "/RawMaterialsType/EditRawMaterialsType?id=" + id,
-						title: "编辑分类",
-						dialogModal: true,
-						iframeWidth: 500,
-						iframeHeight: 400
-					});
-				}
-				var btn_delete = function(id) {
-					$.jq_Confirm({
-						message: "您确定要删除吗?",
-						btnOkClick: function() {
-							
-						}
-					});
-				}
-			</script>
+                var btn_edit = function (id) {
+                    $.jq_Panel({
+                        url: "/RawMaterialsType/EditRawMaterialsType?id=" + id,
+                        title: "编辑分类",
+                        dialogModal: true,
+                        iframeWidth: 500,
+                        iframeHeight: 400
+                    });
+                };
+                var btn_delete = function (id) {
+                    $.jq_Confirm({
+                        message: "您确定要删除吗?",
+                        btnOkClick: function () {
 
-		</div>
+                        }
+                    });
+                }
+            </script>
+
+        </div>
 	</body>
 
 </html>

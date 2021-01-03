@@ -69,7 +69,7 @@
 		r.curHoverNode = null;
 		r.dragFlag = 0;
 		r.dragNodeShowBefore = [];
-		r.dragMaskList = new Array();
+		r.dragMaskList = [];
 		r.showHoverDom = true;
 	},
 	//default cache of exedit
@@ -163,14 +163,14 @@
 	},
 	//update zTreeObj, add method of edit
 	_zTreeTools = function(setting, zTreeTools) {
-		zTreeTools.cancelEditName = function(newName) {
+		zTreeTools.cancelEditName = function (newName) {
 			var root = data.getRoot(setting),
-			nameKey = setting.data.key.name,
-			node = root.curEditNode;
+				nameKey = setting.data.key.name,
+				node = root.curEditNode;
 			if (!root.curEditNode) return;
-			view.cancelCurEditNode(setting, newName?newName:node[nameKey]);
-		}
-		zTreeTools.copyNode = function(targetNode, node, moveType, isSilent) {
+			view.cancelCurEditNode(setting, newName ? newName : node[nameKey]);
+		};
+		zTreeTools.copyNode = function (targetNode, node, moveType, isSilent) {
 			if (!node) return null;
 			if (targetNode && !targetNode.isParent && setting.data.keep.leaf && moveType === consts.move.TYPE_INNER) return null;
 			var newNode = tools.clone(node);
@@ -193,13 +193,13 @@
 				view.moveNode(setting, targetNode, newNode, moveType, false, isSilent);
 			}
 			return newNode;
-		}
-		zTreeTools.editName = function(node) {
+		};
+		zTreeTools.editName = function (node) {
 			if (!node || !node.tId || node !== data.getNodeCache(setting, node.tId)) return;
 			if (node.parentTId) view.expandCollapseParentNode(setting, node.getParentNode(), true);
 			view.editNode(setting, node)
-		}
-		zTreeTools.moveNode = function(targetNode, node, moveType, isSilent) {
+		};
+		zTreeTools.moveNode = function (targetNode, node, moveType, isSilent) {
 			if (!node) return node;
 			if (targetNode && !targetNode.isParent && setting.data.keep.leaf && moveType === consts.move.TYPE_INNER) {
 				return null;
@@ -208,17 +208,19 @@
 			} else if (!targetNode) {
 				targetNode = null;
 			}
+
 			function moveCallback() {
 				view.moveNode(setting, targetNode, node, moveType, false, isSilent);
 			}
+
 			if (tools.canAsync(setting, targetNode) && moveType === consts.move.TYPE_INNER) {
 				view.asyncNode(setting, targetNode, isSilent, moveCallback);
 			} else {
 				moveCallback();
 			}
 			return node;
-		}
-		zTreeTools.setEditable = function(editable) {
+		};
+		zTreeTools.setEditable = function (editable) {
 			setting.edit.enable = editable;
 			return this.refresh();
 		}
@@ -978,7 +980,7 @@
 				}
 			}
 			if (moveType == consts.move.TYPE_INNER) {
-				if (!targetNode[childKey]) targetNode[childKey] = new Array();
+				if (!targetNode[childKey]) targetNode[childKey] = [];
 				if (targetNode[childKey].length > 0) {
 					newNeighbor = targetNode[childKey][targetNode[childKey].length - 1];
 					newNeighbor.isLastNode = false;
@@ -1017,7 +1019,7 @@
 
 			//repair node what been moved
 			view.setNodeLineIcos(setting, node);
-			view.repairNodeLevelClass(setting, node, oldLevel)
+			view.repairNodeLevelClass(setting, node, oldLevel);
 
 			//repair node's old parentNode dom
 			if (!setting.data.keep.parent && oldParentNode[childKey].length < 1) {
@@ -1025,8 +1027,8 @@
 				oldParentNode.isParent = false;
 				oldParentNode.open = false;
 				var tmp_ulObj = $("#" + oldParentNode.tId + consts.id.UL),
-				tmp_switchObj = $("#" + oldParentNode.tId + consts.id.SWITCH),
-				tmp_icoObj = $("#" + oldParentNode.tId + consts.id.ICON);
+					tmp_switchObj = $("#" + oldParentNode.tId + consts.id.SWITCH),
+					tmp_icoObj = $("#" + oldParentNode.tId + consts.id.ICON);
 				view.replaceSwitchClass(oldParentNode, tmp_switchObj, consts.folder.DOCU);
 				view.replaceIcoClass(oldParentNode, tmp_icoObj, consts.folder.DOCU);
 				tmp_ulObj.css("display", "none");
@@ -1110,17 +1112,17 @@
 	var _cancelPreSelectedNode = view.cancelPreSelectedNode;
 	view.cancelPreSelectedNode = function (setting, node) {
 		var list = data.getRoot(setting).curSelectedList;
-		for (var i=0, j=list.length; i<j; i++) {
+		for (var i = 0, j = list.length; i < j; i++) {
 			if (!node || node === list[i]) {
 				view.removeTreeDom(setting, list[i]);
 				if (node) break;
 			}
 		}
 		if (_cancelPreSelectedNode) _cancelPreSelectedNode.apply(view, arguments);
-	}
+	};
 
 	var _createNodes = view.createNodes;
-	view.createNodes = function(setting, level, nodes, parentNode) {
+	view.createNodes = function (setting, level, nodes, parentNode) {
 		if (_createNodes) {
 			_createNodes.apply(view, arguments);
 		}
@@ -1128,24 +1130,24 @@
 		if (view.repairParentChkClassWithSelf) {
 			view.repairParentChkClassWithSelf(setting, parentNode);
 		}
-	}
+	};
 
 	var _makeNodeUrl = view.makeNodeUrl;
-	view.makeNodeUrl = function(setting, node) {
+	view.makeNodeUrl = function (setting, node) {
 		return setting.edit.enable ? null : (_makeNodeUrl.apply(view, arguments));
-	}
+	};
 
 	var _removeNode = view.removeNode;
-	view.removeNode = function(setting, node) {
+	view.removeNode = function (setting, node) {
 		var root = data.getRoot(setting);
 		if (root.curEditNode === node) root.curEditNode = null;
 		if (_removeNode) {
 			_removeNode.apply(view, arguments);
 		}
-	}
+	};
 
 	var _selectNode = view.selectNode;
-	view.selectNode = function(setting, node, addFlag) {
+	view.selectNode = function (setting, node, addFlag) {
 		var root = data.getRoot(setting);
 		if (data.isSelectedNode(setting, node) && root.curEditNode == node && node.editNameFlag) {
 			return false;
@@ -1153,7 +1155,7 @@
 		if (_selectNode) _selectNode.apply(view, arguments);
 		view.addHoverDom(setting, node);
 		return true;
-	}
+	};
 
 	var _uCanDo = tools.uCanDo;
 	tools.uCanDo = function(setting, e) {

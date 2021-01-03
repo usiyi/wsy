@@ -3261,7 +3261,7 @@ vjs.Player.prototype.techGet = function(method){
     }
   }
 
-  return;
+
 };
 
 /**
@@ -5274,26 +5274,56 @@ vjs.Html5.prototype.enterFullScreen = function(){
 vjs.Html5.prototype.exitFullScreen = function(){
   this.el_.webkitExitFullScreen();
 };
-vjs.Html5.prototype.src = function(src){ this.el_.src = src; };
-vjs.Html5.prototype.load = function(){ this.el_.load(); };
-vjs.Html5.prototype.currentSrc = function(){ return this.el_.currentSrc; };
+vjs.Html5.prototype.src = function (src) {
+    this.el_.src = src;
+};
+vjs.Html5.prototype.load = function () {
+    this.el_.load();
+};
+vjs.Html5.prototype.currentSrc = function () {
+    return this.el_.currentSrc;
+};
 
-vjs.Html5.prototype.preload = function(){ return this.el_.preload; };
-vjs.Html5.prototype.setPreload = function(val){ this.el_.preload = val; };
+vjs.Html5.prototype.preload = function () {
+    return this.el_.preload;
+};
+vjs.Html5.prototype.setPreload = function (val) {
+    this.el_.preload = val;
+};
 
-vjs.Html5.prototype.autoplay = function(){ return this.el_.autoplay; };
-vjs.Html5.prototype.setAutoplay = function(val){ this.el_.autoplay = val; };
+vjs.Html5.prototype.autoplay = function () {
+    return this.el_.autoplay;
+};
+vjs.Html5.prototype.setAutoplay = function (val) {
+    this.el_.autoplay = val;
+};
 
-vjs.Html5.prototype.controls = function(){ return this.el_.controls; }
-vjs.Html5.prototype.setControls = function(val){ this.el_.controls = !!val; }
+vjs.Html5.prototype.controls = function () {
+    return this.el_.controls;
+};
+vjs.Html5.prototype.setControls = function (val) {
+    this.el_.controls = !!val;
+};
 
-vjs.Html5.prototype.loop = function(){ return this.el_.loop; };
-vjs.Html5.prototype.setLoop = function(val){ this.el_.loop = val; };
+vjs.Html5.prototype.loop = function () {
+    return this.el_.loop;
+};
+vjs.Html5.prototype.setLoop = function (val) {
+    this.el_.loop = val;
+};
 
-vjs.Html5.prototype.error = function(){ return this.el_.error; };
-vjs.Html5.prototype.seeking = function(){ return this.el_.seeking; };
-vjs.Html5.prototype.ended = function(){ return this.el_.ended; };
-vjs.Html5.prototype.defaultMuted = function(){ return this.el_.defaultMuted; };
+vjs.Html5.prototype.error = function () {
+    return this.el_.error;
+};
+vjs.Html5.prototype.seeking = function () {
+    return this.el_.seeking;
+};
+vjs.Html5.prototype.ended = function () {
+    return this.el_.ended;
+};
+vjs.Html5.prototype.defaultMuted = function () {
+    return this.el_.defaultMuted;
+};
 
 /* HTML5 Support Testing ---------------------------------------------------- */
 

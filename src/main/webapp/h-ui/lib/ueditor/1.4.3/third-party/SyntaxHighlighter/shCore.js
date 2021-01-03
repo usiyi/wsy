@@ -359,7 +359,7 @@ if (XRegExp) {
             result = nativ.replace.call(this + "", search, function () {
                 if (captureNames) {
                     // Change the `arguments[0]` string primitive to a String object which can store properties
-                    arguments[0] = new String(arguments[0]);
+                    arguments[0] = String(arguments[0]);
                     // Store named backreferences on `arguments[0]`
                     for (var i = 0; i < captureNames.length; i++) {
                         if (captureNames[i])
@@ -801,7 +801,7 @@ if (typeof(SyntaxHighlighter) == 'undefined') var SyntaxHighlighter = function()
                 function defaultGetHtml(highlighter, name)
                 {
                     return sh.toolbar.getButtonHtml(highlighter, name, sh.config.strings[name]);
-                };
+                }
 
                 for (var i = 0; i < list.length; i++)
                     html += (items[list[i]].getHtml || defaultGetHtml)(highlighter, list[i]);
@@ -843,7 +843,7 @@ if (typeof(SyntaxHighlighter) == 'undefined') var SyntaxHighlighter = function()
                         ;
 
                     return match ? match[1] : null;
-                };
+                }
 
                 var highlighter = getHighlighterById(findParentElement(target, '.syntaxhighlighter').id),
                     commandName = getValue('command')
@@ -1036,7 +1036,7 @@ if (typeof(SyntaxHighlighter) == 'undefined') var SyntaxHighlighter = function()
     function hasClass(target, className)
     {
         return target.className.indexOf(className) != -1;
-    };
+    }
 
     /**
      * Adds CSS class name to the target DOM element.
@@ -1047,7 +1047,7 @@ if (typeof(SyntaxHighlighter) == 'undefined') var SyntaxHighlighter = function()
     {
         if (!hasClass(target, className))
             target.className += ' ' + className;
-    };
+    }
 
     /**
      * Removes CSS class name from the target DOM element.
@@ -1057,7 +1057,7 @@ if (typeof(SyntaxHighlighter) == 'undefined') var SyntaxHighlighter = function()
     function removeClass(target, className)
     {
         target.className = target.className.replace(className, '');
-    };
+    }
 
     /**
      * Converts the source to array object. Mostly used for function arguments and
@@ -1073,7 +1073,7 @@ if (typeof(SyntaxHighlighter) == 'undefined') var SyntaxHighlighter = function()
             result.push(source[i]);
 
         return result;
-    };
+    }
 
     /**
      * Splits block of text into lines.
@@ -1094,7 +1094,7 @@ if (typeof(SyntaxHighlighter) == 'undefined') var SyntaxHighlighter = function()
     {
         var prefix = 'highlighter_';
         return id.indexOf(prefix) == 0 ? id : prefix + id;
-    };
+    }
 
     /**
      * Finds Highlighter instance by ID.
@@ -1104,7 +1104,7 @@ if (typeof(SyntaxHighlighter) == 'undefined') var SyntaxHighlighter = function()
     function getHighlighterById(id)
     {
         return sh.vars.highlighters[getHighlighterId(id)];
-    };
+    }
 
     /**
      * Finds highlighter's DIV container.
@@ -1114,7 +1114,7 @@ if (typeof(SyntaxHighlighter) == 'undefined') var SyntaxHighlighter = function()
     function getHighlighterDivById(id)
     {
         return document.getElementById(getHighlighterId(id));
-    };
+    }
 
     /**
      * Stores highlighter so that getHighlighterById() can do its thing. Each
@@ -1124,7 +1124,7 @@ if (typeof(SyntaxHighlighter) == 'undefined') var SyntaxHighlighter = function()
     function storeHighlighter(highlighter)
     {
         sh.vars.highlighters[getHighlighterId(highlighter.id)] = highlighter;
-    };
+    }
 
     /**
      * Looks for a child or parent node which has specified classname.
@@ -1158,7 +1158,7 @@ if (typeof(SyntaxHighlighter) == 'undefined') var SyntaxHighlighter = function()
             found = findElement(nodes[i], search, reverse);
 
         return found;
-    };
+    }
 
     /**
      * Looks for a parent node which has specified classname.
@@ -1170,7 +1170,7 @@ if (typeof(SyntaxHighlighter) == 'undefined') var SyntaxHighlighter = function()
     function findParentElement(target, className)
     {
         return findElement(target, className, true);
-    };
+    }
 
     /**
      * Finds an index of element in the array.
@@ -1188,7 +1188,7 @@ if (typeof(SyntaxHighlighter) == 'undefined') var SyntaxHighlighter = function()
                 return i;
 
         return -1;
-    };
+    }
 
     /**
      * Generates a unique element ID.
@@ -1196,7 +1196,7 @@ if (typeof(SyntaxHighlighter) == 'undefined') var SyntaxHighlighter = function()
     function guid(prefix)
     {
         return (prefix || '') + Math.round(Math.random() * 1000000).toString();
-    };
+    }
 
     /**
      * Merges two objects. Values from obj2 override values in obj1.
@@ -1216,7 +1216,7 @@ if (typeof(SyntaxHighlighter) == 'undefined') var SyntaxHighlighter = function()
             result[name] = obj2[name];
 
         return result;
-    };
+    }
 
     /**
      * Attempts to convert string to boolean.
@@ -1227,7 +1227,7 @@ if (typeof(SyntaxHighlighter) == 'undefined') var SyntaxHighlighter = function()
     {
         var result = { "true" : true, "false" : false }[value];
         return result == null ? value : result;
-    };
+    }
 
     /**
      * Opens up a centered popup window.
@@ -1254,7 +1254,7 @@ if (typeof(SyntaxHighlighter) == 'undefined') var SyntaxHighlighter = function()
         var win = window.open(url, name, options);
         win.focus();
         return win;
-    };
+    }
 
     /**
      * Adds event handler to the target object.
@@ -1278,7 +1278,7 @@ if (typeof(SyntaxHighlighter) == 'undefined') var SyntaxHighlighter = function()
             }
 
             func.call(scope || window, e);
-        };
+        }
 
         if (obj.attachEvent)
         {
@@ -1288,7 +1288,7 @@ if (typeof(SyntaxHighlighter) == 'undefined') var SyntaxHighlighter = function()
         {
             obj.addEventListener(type, handler, false);
         }
-    };
+    }
 
     /**
      * Displays an alert.
@@ -1297,7 +1297,7 @@ if (typeof(SyntaxHighlighter) == 'undefined') var SyntaxHighlighter = function()
     function alert(str)
     {
         window.alert(sh.config.strings.alert + str);
-    };
+    }
 
     /**
      * Finds a brush by its alias.
@@ -1342,7 +1342,7 @@ if (typeof(SyntaxHighlighter) == 'undefined') var SyntaxHighlighter = function()
             alert(sh.config.strings.noBrush + alias);
 
         return result;
-    };
+    }
 
     /**
      * Executes a callback on each line and replaces each line with result from the callback.
@@ -1358,7 +1358,7 @@ if (typeof(SyntaxHighlighter) == 'undefined') var SyntaxHighlighter = function()
 
         // include \r to enable copy-paste on windows (ie8) without getting everything on one line
         return lines.join('\r\n');
-    };
+    }
 
     /**
      * This is a special trim which only removes first and last empty lines
@@ -1370,7 +1370,7 @@ if (typeof(SyntaxHighlighter) == 'undefined') var SyntaxHighlighter = function()
     function trimFirstAndLastLines(str)
     {
         return str.replace(/^[ ]*[\n]+|[\n]*[ ]*$/g, '');
-    };
+    }
 
     /**
      * Parses key/value pairs into hash object.
@@ -1422,7 +1422,7 @@ if (typeof(SyntaxHighlighter) == 'undefined') var SyntaxHighlighter = function()
         }
 
         return result;
-    };
+    }
 
     /**
      * Wraps each line of the string into <code/> tag with given style applied to it.
@@ -1472,7 +1472,7 @@ if (typeof(SyntaxHighlighter) == 'undefined') var SyntaxHighlighter = function()
             });
 
         return str;
-    };
+    }
 
     /**
      * Pads number with zeros until it's length is the same as given length.
@@ -1489,7 +1489,7 @@ if (typeof(SyntaxHighlighter) == 'undefined') var SyntaxHighlighter = function()
             result = '0' + result;
 
         return result;
-    };
+    }
 
     /**
      * Replaces tabs with spaces.
@@ -1506,7 +1506,7 @@ if (typeof(SyntaxHighlighter) == 'undefined') var SyntaxHighlighter = function()
             tab += ' ';
 
         return code.replace(/\t/g, tab);
-    };
+    }
 
     /**
      * Replaces tabs with smart spaces.
@@ -1535,7 +1535,7 @@ if (typeof(SyntaxHighlighter) == 'undefined') var SyntaxHighlighter = function()
                 + spaces.substr(0, count)
                 + line.substr(pos + 1, line.length) // pos + 1 will get rid of the tab
                 ;
-        };
+        }
 
         // Go through all the lines and do the 'smart tabs' magic.
         code = eachLine(code, function(line)
@@ -1558,7 +1558,7 @@ if (typeof(SyntaxHighlighter) == 'undefined') var SyntaxHighlighter = function()
         });
 
         return code;
-    };
+    }
 
     /**
      * Performs various string fixes based on configuration.
@@ -1574,7 +1574,7 @@ if (typeof(SyntaxHighlighter) == 'undefined') var SyntaxHighlighter = function()
             str = str.replace(br, '');
 
         return str;
-    };
+    }
 
     /**
      * Removes all white space at the begining and end of a string.
@@ -1585,7 +1585,7 @@ if (typeof(SyntaxHighlighter) == 'undefined') var SyntaxHighlighter = function()
     function trim(str)
     {
         return str.replace(/^\s+|\s+$/g, '');
-    };
+    }
 
     /**
      * Unindents a block of text by the lowest common indent amount.
@@ -1595,10 +1595,10 @@ if (typeof(SyntaxHighlighter) == 'undefined') var SyntaxHighlighter = function()
     function unindent(str)
     {
         var lines = splitLines(fixInputString(str)),
-            indents = new Array(),
+            indents = [],
             regex = /^\s*/,
             min = 1000
-            ;
+        ;
 
         // go through every line and check for common number of indents
         for (var i = 0; i < lines.length && min > 0; i++)
@@ -1624,7 +1624,7 @@ if (typeof(SyntaxHighlighter) == 'undefined') var SyntaxHighlighter = function()
                 lines[i] = lines[i].substr(min);
 
         return lines.join('\n');
-    };
+    }
 
     /**
      * Callback method for Array.sort() which sorts matches by
@@ -1651,7 +1651,7 @@ if (typeof(SyntaxHighlighter) == 'undefined') var SyntaxHighlighter = function()
         }
 
         return 0;
-    };
+    }
 
     /**
      * Executes given regular expression on provided code and returns all
@@ -1666,7 +1666,7 @@ if (typeof(SyntaxHighlighter) == 'undefined') var SyntaxHighlighter = function()
         function defaultAdd(match, regexInfo)
         {
             return match[0];
-        };
+        }
 
         var index = 0,
             match = null,
@@ -1685,7 +1685,7 @@ if (typeof(SyntaxHighlighter) == 'undefined') var SyntaxHighlighter = function()
         }
 
         return matches;
-    };
+    }
 
     /**
      * Turns all URLs in the code into <a/> tags.
@@ -1714,7 +1714,7 @@ if (typeof(SyntaxHighlighter) == 'undefined') var SyntaxHighlighter = function()
 
             return '<a href="' + m + '">' + m + '</a>' + suffix;
         });
-    };
+    }
 
     /**
      * Finds all <SCRIPT TYPE="syntaxhighlighter" /> elementss.
@@ -1731,7 +1731,7 @@ if (typeof(SyntaxHighlighter) == 'undefined') var SyntaxHighlighter = function()
                 result.push(tags[i]);
 
         return result;
-    };
+    }
 
     /**
      * Strips <![CDATA[]]> from <SCRIPT /> content because it should be used
@@ -1765,7 +1765,7 @@ if (typeof(SyntaxHighlighter) == 'undefined') var SyntaxHighlighter = function()
         }
 
         return changed ? copy : original;
-    };
+    }
 
 
     /**
@@ -1817,7 +1817,7 @@ if (typeof(SyntaxHighlighter) == 'undefined') var SyntaxHighlighter = function()
             textarea.parentNode.removeChild(textarea);
             removeClass(highlighterDiv, 'source');
         });
-    };
+    }
 
     /**
      * Match object.
@@ -1999,7 +1999,7 @@ if (typeof(SyntaxHighlighter) == 'undefined') var SyntaxHighlighter = function()
                     var itemJ = matches[j];
 
                     if (itemJ === null)
-                        continue;
+
                     else if (itemJ.index > itemIEndPos)
                         break;
                     else if (itemJ.index == itemI.index && itemJ.length > itemI.length)
@@ -2121,7 +2121,7 @@ if (typeof(SyntaxHighlighter) == 'undefined') var SyntaxHighlighter = function()
                     indent = /^(&nbsp;|\s)+/.exec(line),
                     spaces = null,
                     lineNumber = lineNumbers ? lineNumbers[i] : firstLine + i;
-                ;
+
 
                 if (indent != null)
                 {
@@ -2170,7 +2170,7 @@ if (typeof(SyntaxHighlighter) == 'undefined') var SyntaxHighlighter = function()
             {
                 var result = match ? (match.brushName || brushName) : brushName;
                 return result ? result + ' ' : '';
-            };
+            }
 
             // Finally, go through the final list of matches and pull the all
             // together adding everything in between that isn't a match.
@@ -2328,7 +2328,7 @@ if (typeof(SyntaxHighlighter) == 'undefined') var SyntaxHighlighter = function()
             storeHighlighter(this);
 
             // local params take precedence over defaults
-            this.params = merge(sh.defaults, params || {})
+            this.params = merge(sh.defaults, params || {});
 
             // process light mode
             if (this.getParam('light') == true)
@@ -2413,7 +2413,7 @@ typeof(exports) != 'undefined' ? exports.SyntaxHighlighter = SyntaxHighlighter :
         ];
 
         this.forHtmlScript(SyntaxHighlighter.regexLib.scriptScriptTags);
-    };
+    }
 
     Brush.prototype	= new SyntaxHighlighter.Highlighter();
     Brush.aliases	= ['actionscript3', 'as3'];
@@ -2473,7 +2473,7 @@ typeof(exports) != 'undefined' ? exports.SyntaxHighlighter = SyntaxHighlighter :
             { regex: new RegExp(this.getKeywords(keywords), 'gm'), css: 'keyword' },
             { regex: new RegExp(this.getKeywords(ordinals), 'gm'), css: 'keyword' }
         ];
-    };
+    }
 
     Brush.prototype = new SyntaxHighlighter.Highlighter();
     Brush.aliases = ['applescript'];
@@ -2671,17 +2671,17 @@ typeof(exports) != 'undefined' ? exports.SyntaxHighlighter = SyntaxHighlighter :
 						'strncpy strpbrk strrchr strspn strstr strtok strxfrm asctime ' +
 						'clock ctime difftime gmtime localtime mktime strftime time';
 
-		this.regexList = [
-			{ regex: SyntaxHighlighter.regexLib.singleLineCComments,	css: 'comments' },			// one line comments
-			{ regex: SyntaxHighlighter.regexLib.multiLineCComments,		css: 'comments' },			// multiline comments
-			{ regex: SyntaxHighlighter.regexLib.doubleQuotedString,		css: 'string' },			// strings
-			{ regex: SyntaxHighlighter.regexLib.singleQuotedString,		css: 'string' },			// strings
-			{ regex: /^ *#.*/gm,										css: 'preprocessor' },
-			{ regex: new RegExp(this.getKeywords(datatypes), 'gm'),		css: 'color1 bold' },
-			{ regex: new RegExp(this.getKeywords(functions), 'gm'),		css: 'functions bold' },
-			{ regex: new RegExp(this.getKeywords(keywords), 'gm'),		css: 'keyword bold' }
-			];
-	};
+        this.regexList = [
+            {regex: SyntaxHighlighter.regexLib.singleLineCComments, css: 'comments'},			// one line comments
+            {regex: SyntaxHighlighter.regexLib.multiLineCComments, css: 'comments'},			// multiline comments
+            {regex: SyntaxHighlighter.regexLib.doubleQuotedString, css: 'string'},			// strings
+            {regex: SyntaxHighlighter.regexLib.singleQuotedString, css: 'string'},			// strings
+            {regex: /^ *#.*/gm, css: 'preprocessor'},
+            {regex: new RegExp(this.getKeywords(datatypes), 'gm'), css: 'color1 bold'},
+            {regex: new RegExp(this.getKeywords(functions), 'gm'), css: 'functions bold'},
+            {regex: new RegExp(this.getKeywords(keywords), 'gm'), css: 'keyword bold'}
+        ];
+    }
 
 	Brush.prototype	= new SyntaxHighlighter.Highlighter();
 	Brush.aliases	= ['cpp', 'c'];
@@ -2720,17 +2720,17 @@ typeof(exports) != 'undefined' ? exports.SyntaxHighlighter = SyntaxHighlighter :
 		this.regexList = [
 			{ regex: SyntaxHighlighter.regexLib.singleLineCComments,	func : fixComments },		// one line comments
 			{ regex: SyntaxHighlighter.regexLib.multiLineCComments,		css: 'comments' },			// multiline comments
-			{ regex: /@"(?:[^"]|"")*"/g,								css: 'string' },			// @-quoted strings
-			{ regex: SyntaxHighlighter.regexLib.doubleQuotedString,		css: 'string' },			// strings
-			{ regex: SyntaxHighlighter.regexLib.singleQuotedString,		css: 'string' },			// strings
-			{ regex: /^\s*#.*/gm,										css: 'preprocessor' },		// preprocessor tags like #region and #endregion
-			{ regex: new RegExp(this.getKeywords(keywords), 'gm'),		css: 'keyword' },			// c# keyword
-			{ regex: /\bpartial(?=\s+(?:class|interface|struct)\b)/g,	css: 'keyword' },			// contextual keyword: 'partial'
-			{ regex: /\byield(?=\s+(?:return|break)\b)/g,				css: 'keyword' }			// contextual keyword: 'yield'
-			];
-		
-		this.forHtmlScript(SyntaxHighlighter.regexLib.aspScriptTags);
-	};
+            {regex: /@"(?:[^"]|"")*"/g, css: 'string'},			// @-quoted strings
+            {regex: SyntaxHighlighter.regexLib.doubleQuotedString, css: 'string'},			// strings
+            {regex: SyntaxHighlighter.regexLib.singleQuotedString, css: 'string'},			// strings
+            {regex: /^\s*#.*/gm, css: 'preprocessor'},		// preprocessor tags like #region and #endregion
+            {regex: new RegExp(this.getKeywords(keywords), 'gm'), css: 'keyword'},			// c# keyword
+            {regex: /\bpartial(?=\s+(?:class|interface|struct)\b)/g, css: 'keyword'},			// contextual keyword: 'partial'
+            {regex: /\byield(?=\s+(?:return|break)\b)/g, css: 'keyword'}			// contextual keyword: 'yield'
+        ];
+
+        this.forHtmlScript(SyntaxHighlighter.regexLib.aspScriptTags);
+    }
 
 	Brush.prototype	= new SyntaxHighlighter.Highlighter();
 	Brush.aliases	= ['c#', 'c-sharp', 'csharp'];
@@ -2747,15 +2747,13 @@ typeof(exports) != 'undefined' ? exports.SyntaxHighlighter = SyntaxHighlighter :
 
 	function Brush()
 	{
-		function getKeywordsCSS(str)
-		{
-			return '\\b([a-z_]|)' + str.replace(/ /g, '(?=:)\\b|\\b([a-z_\\*]|\\*|)') + '(?=:)\\b';
-		};
+		function getKeywordsCSS(str) {
+            return '\\b([a-z_]|)' + str.replace(/ /g, '(?=:)\\b|\\b([a-z_\\*]|\\*|)') + '(?=:)\\b';
+        }
 	
-		function getValuesCSS(str)
-		{
-			return '\\b' + str.replace(/ /g, '(?!-)(?!:)\\b|\\b()') + '\:\\b';
-		};
+		function getValuesCSS(str) {
+            return '\\b' + str.replace(/ /g, '(?!-)(?!:)\\b|\\b()') + '\:\\b';
+        }
 
 		var keywords =	'ascent azimuth background-attachment background-color background-image background-position ' +
 						'background-repeat background baseline bbox border-collapse border-color border-spacing border-style border-top ' +
@@ -2795,17 +2793,17 @@ typeof(exports) != 'undefined' ? exports.SyntaxHighlighter = SyntaxHighlighter :
 			{ regex: SyntaxHighlighter.regexLib.singleQuotedString,		css: 'string' },	// single quoted strings
 			{ regex: /\#[a-fA-F0-9]{3,6}/g,								css: 'value' },		// html colors
 			{ regex: /(-?\d+)(\.\d+)?(px|em|pt|\:|\%|)/g,				css: 'value' },		// sizes
-			{ regex: /!important/g,										css: 'color3' },	// !important
-			{ regex: new RegExp(getKeywordsCSS(keywords), 'gm'),		css: 'keyword' },	// keywords
-			{ regex: new RegExp(getValuesCSS(values), 'g'),				css: 'value' },		// values
-			{ regex: new RegExp(this.getKeywords(fonts), 'g'),			css: 'color1' }		// fonts
-			];
+            {regex: /!important/g, css: 'color3'},	// !important
+            {regex: new RegExp(getKeywordsCSS(keywords), 'gm'), css: 'keyword'},	// keywords
+            {regex: new RegExp(getValuesCSS(values), 'g'), css: 'value'},		// values
+            {regex: new RegExp(this.getKeywords(fonts), 'g'), css: 'color1'}		// fonts
+        ];
 
-		this.forHtmlScript({ 
-			left: /(&lt;|<)\s*style.*?(&gt;|>)/gi, 
-			right: /(&lt;|<)\/\s*style\s*(&gt;|>)/gi 
-			});
-	};
+        this.forHtmlScript({
+            left: /(&lt;|<)\s*style.*?(&gt;|>)/gi,
+            right: /(&lt;|<)\/\s*style\s*(&gt;|>)/gi
+        });
+    }
 
 	Brush.prototype	= new SyntaxHighlighter.Highlighter();
 	Brush.aliases	= ['css'];
@@ -2834,17 +2832,17 @@ typeof(exports) != 'undefined' ? exports.SyntaxHighlighter = SyntaxHighlighter :
 						'threadvar to true try type unit until uses val var varirnt while widechar ' +
 						'widestring with word write writeln xor';
 
-		this.regexList = [
-			{ regex: /\(\*[\s\S]*?\*\)/gm,								css: 'comments' },  	// multiline comments (* *)
-			{ regex: /{(?!\$)[\s\S]*?}/gm,								css: 'comments' },  	// multiline comments { }
-			{ regex: SyntaxHighlighter.regexLib.singleLineCComments,	css: 'comments' },  	// one line
-			{ regex: SyntaxHighlighter.regexLib.singleQuotedString,		css: 'string' },		// strings
-			{ regex: /\{\$[a-zA-Z]+ .+\}/g,								css: 'color1' },		// compiler Directives and Region tags
-			{ regex: /\b[\d\.]+\b/g,									css: 'value' },			// numbers 12345
-			{ regex: /\$[a-zA-Z0-9]+\b/g,								css: 'value' },			// numbers $F5D3
-			{ regex: new RegExp(this.getKeywords(keywords), 'gmi'),		css: 'keyword' }		// keyword
-			];
-	};
+        this.regexList = [
+            {regex: /\(\*[\s\S]*?\*\)/gm, css: 'comments'},  	// multiline comments (* *)
+            {regex: /{(?!\$)[\s\S]*?}/gm, css: 'comments'},  	// multiline comments { }
+            {regex: SyntaxHighlighter.regexLib.singleLineCComments, css: 'comments'},  	// one line
+            {regex: SyntaxHighlighter.regexLib.singleQuotedString, css: 'string'},		// strings
+            {regex: /\{\$[a-zA-Z]+ .+\}/g, css: 'color1'},		// compiler Directives and Region tags
+            {regex: /\b[\d\.]+\b/g, css: 'value'},			// numbers 12345
+            {regex: /\$[a-zA-Z0-9]+\b/g, css: 'value'},			// numbers $F5D3
+            {regex: new RegExp(this.getKeywords(keywords), 'gmi'), css: 'keyword'}		// keyword
+        ];
+    }
 
 	Brush.prototype	= new SyntaxHighlighter.Highlighter();
 	Brush.aliases	= ['delphi', 'pascal', 'pas'];
@@ -2859,17 +2857,16 @@ typeof(exports) != 'undefined' ? exports.SyntaxHighlighter = SyntaxHighlighter :
 	// CommonJS
 	SyntaxHighlighter = SyntaxHighlighter || (typeof require !== 'undefined'? require('shCore').SyntaxHighlighter : null);
 
-	function Brush()
-	{
-		this.regexList = [
-			{ regex: /^\+\+\+ .*$/gm,	css: 'color2' },	// new file
-			{ regex: /^\-\-\- .*$/gm,	css: 'color2' },	// old file
-			{ regex: /^\s.*$/gm,		css: 'color1' },	// unchanged
-			{ regex: /^@@.*@@.*$/gm,	css: 'variable' },	// location
-			{ regex: /^\+.*$/gm,		css: 'string' },	// additions
-			{ regex: /^\-.*$/gm,		css: 'color3' }		// deletions
-			];
-	};
+	function Brush() {
+        this.regexList = [
+            {regex: /^\+\+\+ .*$/gm, css: 'color2'},	// new file
+            {regex: /^\-\-\- .*$/gm, css: 'color2'},	// old file
+            {regex: /^\s.*$/gm, css: 'color1'},	// unchanged
+            {regex: /^@@.*@@.*$/gm, css: 'variable'},	// location
+            {regex: /^\+.*$/gm, css: 'string'},	// additions
+            {regex: /^\-.*$/gm, css: 'color3'}		// deletions
+        ];
+    }
 
 	Brush.prototype	= new SyntaxHighlighter.Highlighter();
 	Brush.aliases	= ['diff', 'patch'];
@@ -2896,16 +2893,16 @@ typeof(exports) != 'undefined' ? exports.SyntaxHighlighter = SyntaxHighlighter :
 			// additional
 			' module export import define';
 
-		this.regexList = [
-			{ regex: new RegExp("[A-Z][A-Za-z0-9_]+", 'g'), 			css: 'constants' },
-			{ regex: new RegExp("\\%.+", 'gm'), 						css: 'comments' },
-			{ regex: new RegExp("\\?[A-Za-z0-9_]+", 'g'), 				css: 'preprocessor' },
-			{ regex: new RegExp("[a-z0-9_]+:[a-z0-9_]+", 'g'), 			css: 'functions' },
-			{ regex: SyntaxHighlighter.regexLib.doubleQuotedString,		css: 'string' },
-			{ regex: SyntaxHighlighter.regexLib.singleQuotedString,		css: 'string' },
-			{ regex: new RegExp(this.getKeywords(keywords),	'gm'),		css: 'keyword' }
-			];
-	};
+        this.regexList = [
+            {regex: new RegExp("[A-Z][A-Za-z0-9_]+", 'g'), css: 'constants'},
+            {regex: new RegExp("\\%.+", 'gm'), css: 'comments'},
+            {regex: new RegExp("\\?[A-Za-z0-9_]+", 'g'), css: 'preprocessor'},
+            {regex: new RegExp("[a-z0-9_]+:[a-z0-9_]+", 'g'), css: 'functions'},
+            {regex: SyntaxHighlighter.regexLib.doubleQuotedString, css: 'string'},
+            {regex: SyntaxHighlighter.regexLib.singleQuotedString, css: 'string'},
+            {regex: new RegExp(this.getKeywords(keywords), 'gm'), css: 'keyword'}
+        ];
+    }
 
 	Brush.prototype	= new SyntaxHighlighter.Highlighter();
 	Brush.aliases	= ['erl', 'erlang'];
@@ -2987,17 +2984,17 @@ typeof(exports) != 'undefined' ? exports.SyntaxHighlighter = SyntaxHighlighter :
 			{ regex: /\/\*(?!\*\/)\*[\s\S]*?\*\//gm,					css: 'preprocessor' },	// documentation comments
 			{ regex: SyntaxHighlighter.regexLib.doubleQuotedString,		css: 'string' },		// strings
 			{ regex: SyntaxHighlighter.regexLib.singleQuotedString,		css: 'string' },		// strings
-			{ regex: /\b([\d]+(\.[\d]+)?|0x[a-f0-9]+)\b/gi,				css: 'value' },			// numbers
-			{ regex: /(?!\@interface\b)\@[\$\w]+\b/g,					css: 'color1' },		// annotation @anno
-			{ regex: /\@interface\b/g,									css: 'color2' },		// @interface keyword
-			{ regex: new RegExp(this.getKeywords(keywords), 'gm'),		css: 'keyword' }		// java keyword
-			];
+            {regex: /\b([\d]+(\.[\d]+)?|0x[a-f0-9]+)\b/gi, css: 'value'},			// numbers
+            {regex: /(?!\@interface\b)\@[\$\w]+\b/g, css: 'color1'},		// annotation @anno
+            {regex: /\@interface\b/g, css: 'color2'},		// @interface keyword
+            {regex: new RegExp(this.getKeywords(keywords), 'gm'), css: 'keyword'}		// java keyword
+        ];
 
-		this.forHtmlScript({
-			left	: /(&lt;|<)%[@!=]?/g, 
-			right	: /%(&gt;|>)/g 
-		});
-	};
+        this.forHtmlScript({
+            left: /(&lt;|<)%[@!=]?/g,
+            right: /%(&gt;|>)/g
+        });
+    }
 
 	Brush.prototype	= new SyntaxHighlighter.Highlighter();
 	Brush.aliases	= ['java'];
@@ -3029,17 +3026,17 @@ typeof(exports) != 'undefined' ? exports.SyntaxHighlighter = SyntaxHighlighter :
 						+ 'attribute let private readonly static trigger'
 						;
 
-		this.regexList = [
-			{ regex: SyntaxHighlighter.regexLib.singleLineCComments,	css: 'comments' },
-			{ regex: SyntaxHighlighter.regexLib.multiLineCComments,		css: 'comments' },
-			{ regex: SyntaxHighlighter.regexLib.singleQuotedString,		css: 'string' },
-			{ regex: SyntaxHighlighter.regexLib.doubleQuotedString,		css: 'string' },
-			{ regex: /(-?\.?)(\b(\d*\.?\d+|\d+\.?\d*)(e[+-]?\d+)?|0x[a-f\d]+)\b\.?/gi, css: 'color2' },	// numbers
-			{ regex: new RegExp(this.getKeywords(datatypes), 'gm'),		css: 'variable' },	// datatypes
-			{ regex: new RegExp(this.getKeywords(keywords), 'gm'),		css: 'keyword' }
-		];
-		this.forHtmlScript(SyntaxHighlighter.regexLib.aspScriptTags);
-	};
+        this.regexList = [
+            {regex: SyntaxHighlighter.regexLib.singleLineCComments, css: 'comments'},
+            {regex: SyntaxHighlighter.regexLib.multiLineCComments, css: 'comments'},
+            {regex: SyntaxHighlighter.regexLib.singleQuotedString, css: 'string'},
+            {regex: SyntaxHighlighter.regexLib.doubleQuotedString, css: 'string'},
+            {regex: /(-?\.?)(\b(\d*\.?\d+|\d+\.?\d*)(e[+-]?\d+)?|0x[a-f\d]+)\b\.?/gi, css: 'color2'},	// numbers
+            {regex: new RegExp(this.getKeywords(datatypes), 'gm'), css: 'variable'},	// datatypes
+            {regex: new RegExp(this.getKeywords(keywords), 'gm'), css: 'keyword'}
+        ];
+        this.forHtmlScript(SyntaxHighlighter.regexLib.aspScriptTags);
+    }
 
 	Brush.prototype	= new SyntaxHighlighter.Highlighter();
 	Brush.aliases	= ['jfx', 'javafx'];
@@ -3064,18 +3061,18 @@ typeof(exports) != 'undefined' ? exports.SyntaxHighlighter = SyntaxHighlighter :
 						;
 
 		var r = SyntaxHighlighter.regexLib;
-		
-		this.regexList = [
-			{ regex: r.multiLineDoubleQuotedString,					css: 'string' },			// double quoted strings
-			{ regex: r.multiLineSingleQuotedString,					css: 'string' },			// single quoted strings
-			{ regex: r.singleLineCComments,							css: 'comments' },			// one line comments
-			{ regex: r.multiLineCComments,							css: 'comments' },			// multiline comments
-			{ regex: /\s*#.*/gm,									css: 'preprocessor' },		// preprocessor tags like #region and #endregion
-			{ regex: new RegExp(this.getKeywords(keywords), 'gm'),	css: 'keyword' }			// keywords
-			];
-	
-		this.forHtmlScript(r.scriptScriptTags);
-	};
+
+        this.regexList = [
+            {regex: r.multiLineDoubleQuotedString, css: 'string'},			// double quoted strings
+            {regex: r.multiLineSingleQuotedString, css: 'string'},			// single quoted strings
+            {regex: r.singleLineCComments, css: 'comments'},			// one line comments
+            {regex: r.multiLineCComments, css: 'comments'},			// multiline comments
+            {regex: /\s*#.*/gm, css: 'preprocessor'},		// preprocessor tags like #region and #endregion
+            {regex: new RegExp(this.getKeywords(keywords), 'gm'), css: 'keyword'}			// keywords
+        ];
+
+        this.forHtmlScript(r.scriptScriptTags);
+    }
 
 	Brush.prototype	= new SyntaxHighlighter.Highlighter();
 	Brush.aliases	= ['js', 'jscript', 'javascript'];
@@ -3214,17 +3211,17 @@ typeof(exports) != 'undefined' ? exports.SyntaxHighlighter = SyntaxHighlighter :
 
 		this.regexList = [
 			{ regex: SyntaxHighlighter.regexLib.singleLineCComments,	css: 'comments' },			// one line comments
-			{ regex: SyntaxHighlighter.regexLib.multiLineCComments,		css: 'comments' },			// multiline comments
-			{ regex: SyntaxHighlighter.regexLib.doubleQuotedString,		css: 'string' },			// double quoted strings
-			{ regex: SyntaxHighlighter.regexLib.singleQuotedString,		css: 'string' },			// single quoted strings
-			{ regex: /\$\w+/g,											css: 'variable' },			// variables
-			{ regex: new RegExp(this.getKeywords(funcs), 'gmi'),		css: 'functions' },			// common functions
-			{ regex: new RegExp(this.getKeywords(constants), 'gmi'),	css: 'constants' },			// constants
-			{ regex: new RegExp(this.getKeywords(keywords), 'gm'),		css: 'keyword' }			// keyword
-			];
+            {regex: SyntaxHighlighter.regexLib.multiLineCComments, css: 'comments'},			// multiline comments
+            {regex: SyntaxHighlighter.regexLib.doubleQuotedString, css: 'string'},			// double quoted strings
+            {regex: SyntaxHighlighter.regexLib.singleQuotedString, css: 'string'},			// single quoted strings
+            {regex: /\$\w+/g, css: 'variable'},			// variables
+            {regex: new RegExp(this.getKeywords(funcs), 'gmi'), css: 'functions'},			// common functions
+            {regex: new RegExp(this.getKeywords(constants), 'gmi'), css: 'constants'},			// constants
+            {regex: new RegExp(this.getKeywords(keywords), 'gm'), css: 'keyword'}			// keyword
+        ];
 
-		this.forHtmlScript(SyntaxHighlighter.regexLib.phpScriptTags);
-	};
+        this.forHtmlScript(SyntaxHighlighter.regexLib.phpScriptTags);
+    }
 
 	Brush.prototype	= new SyntaxHighlighter.Highlighter();
 	Brush.aliases	= ['php'];
@@ -3239,9 +3236,8 @@ typeof(exports) != 'undefined' ? exports.SyntaxHighlighter = SyntaxHighlighter :
 	// CommonJS
 	SyntaxHighlighter = SyntaxHighlighter || (typeof require !== 'undefined'? require('shCore').SyntaxHighlighter : null);
 
-	function Brush()
-	{
-	};
+	function Brush() {
+    }
 
 	Brush.prototype	= new SyntaxHighlighter.Highlighter();
 	Brush.aliases	= ['text', 'plain'];
@@ -3290,17 +3286,23 @@ typeof(exports) != 'undefined' ? exports.SyntaxHighlighter = SyntaxHighlighter :
 			
 			{ regex: new RegExp('@"\\n[\\s\\S]*?\\n"@', 'gm'),												css: 'script string here' },			// double quoted here-strings
 			{ regex: new RegExp("@'\\n[\\s\\S]*?\\n'@", 'gm'),												css: 'script string single here' },		// single quoted here-strings
-			{ regex: new RegExp('"(?:\\$\\([^\\)]*\\)|[^"]|`"|"")*[^`]"','g'),								css: 'string' },						// double quoted strings
-			{ regex: new RegExp("'(?:[^']|'')*'", 'g'),														css: 'string single' },					// single quoted strings
-			
-			{ regex: new RegExp('[\\$|@|@@](?:(?:global|script|private|env):)?[A-Z0-9_]+', 'gi'),			css: 'variable' },						// $variables
-			{ regex: new RegExp('(?:\\b'+verbs.replace(/ /g, '\\b|\\b')+')-[a-zA-Z_][a-zA-Z0-9_]*', 'gmi'),	css: 'functions' },						// functions and cmdlets
-			{ regex: new RegExp(this.getKeywords(keywords), 'gmi'),											css: 'keyword' },						// keywords
-			{ regex: new RegExp('-'+this.getKeywords(operators), 'gmi'),									css: 'operator value' },				// operators
-			{ regex: new RegExp('\\[[A-Z_\\[][A-Z0-9_. `,\\[\\]]*\\]', 'gi'),								css: 'constants' },						// .Net [Type]s
-			{ regex: new RegExp('\\s+-(?!'+this.getKeywords(operators)+')[a-zA-Z_][a-zA-Z0-9_]*', 'gmi'),	css: 'color1' },						// parameters	  
-		];
-	};
+            {regex: new RegExp('"(?:\\$\\([^\\)]*\\)|[^"]|`"|"")*[^`]"', 'g'), css: 'string'},						// double quoted strings
+            {regex: new RegExp("'(?:[^']|'')*'", 'g'), css: 'string single'},					// single quoted strings
+
+            {regex: new RegExp('[\\$|@|@@](?:(?:global|script|private|env):)?[A-Z0-9_]+', 'gi'), css: 'variable'},						// $variables
+            {
+                regex: new RegExp('(?:\\b' + verbs.replace(/ /g, '\\b|\\b') + ')-[a-zA-Z_][a-zA-Z0-9_]*', 'gmi'),
+                css: 'functions'
+            },						// functions and cmdlets
+            {regex: new RegExp(this.getKeywords(keywords), 'gmi'), css: 'keyword'},						// keywords
+            {regex: new RegExp('-' + this.getKeywords(operators), 'gmi'), css: 'operator value'},				// operators
+            {regex: new RegExp('\\[[A-Z_\\[][A-Z0-9_. `,\\[\\]]*\\]', 'gi'), css: 'constants'},						// .Net [Type]s
+            {
+                regex: new RegExp('\\s+-(?!' + this.getKeywords(operators) + ')[a-zA-Z_][a-zA-Z0-9_]*', 'gmi'),
+                css: 'color1'
+            },						// parameters
+        ];
+    }
 
 	Brush.prototype	= new SyntaxHighlighter.Highlighter();
 	Brush.aliases	= ['powershell', 'ps', 'posh'];
@@ -3338,17 +3340,17 @@ typeof(exports) != 'undefined' ? exports.SyntaxHighlighter = SyntaxHighlighter :
 				{ regex: SyntaxHighlighter.regexLib.singleLinePerlComments, css: 'comments' },
 				{ regex: /^\s*@\w+/gm, 										css: 'decorator' },
 				{ regex: /(['\"]{3})([^\1])*?\1/gm, 						css: 'comments' },
-				{ regex: /"(?!")(?:\.|\\\"|[^\""\n])*"/gm, 					css: 'string' },
-				{ regex: /'(?!')(?:\.|(\\\')|[^\''\n])*'/gm, 				css: 'string' },
-				{ regex: /\+|\-|\*|\/|\%|=|==/gm, 							css: 'keyword' },
-				{ regex: /\b\d+\.?\w*/g, 									css: 'value' },
-				{ regex: new RegExp(this.getKeywords(funcs), 'gmi'),		css: 'functions' },
-				{ regex: new RegExp(this.getKeywords(keywords), 'gm'), 		css: 'keyword' },
-				{ regex: new RegExp(this.getKeywords(special), 'gm'), 		css: 'color1' }
-				];
-			
-		this.forHtmlScript(SyntaxHighlighter.regexLib.aspScriptTags);
-	};
+            {regex: /"(?!")(?:\.|\\\"|[^\""\n])*"/gm, css: 'string'},
+            {regex: /'(?!')(?:\.|(\\\')|[^\''\n])*'/gm, css: 'string'},
+            {regex: /\+|\-|\*|\/|\%|=|==/gm, css: 'keyword'},
+            {regex: /\b\d+\.?\w*/g, css: 'value'},
+            {regex: new RegExp(this.getKeywords(funcs), 'gmi'), css: 'functions'},
+            {regex: new RegExp(this.getKeywords(keywords), 'gm'), css: 'keyword'},
+            {regex: new RegExp(this.getKeywords(special), 'gm'), css: 'color1'}
+        ];
+
+        this.forHtmlScript(SyntaxHighlighter.regexLib.aspScriptTags);
+    }
 
 	Brush.prototype	= new SyntaxHighlighter.Highlighter();
 	Brush.aliases	= ['py', 'python'];
@@ -3377,17 +3379,17 @@ typeof(exports) != 'undefined' ? exports.SyntaxHighlighter = SyntaxHighlighter :
 
 		this.regexList = [
 			{ regex: SyntaxHighlighter.regexLib.singleLinePerlComments,	css: 'comments' },		// one line comments
-			{ regex: SyntaxHighlighter.regexLib.doubleQuotedString,		css: 'string' },		// double quoted strings
-			{ regex: SyntaxHighlighter.regexLib.singleQuotedString,		css: 'string' },		// single quoted strings
-			{ regex: /\b[A-Z0-9_]+\b/g,									css: 'constants' },		// constants
-			{ regex: /:[a-z][A-Za-z0-9_]*/g,							css: 'color2' },		// symbols
-			{ regex: /(\$|@@|@)\w+/g,									css: 'variable bold' },	// $global, @instance, and @@class variables
-			{ regex: new RegExp(this.getKeywords(keywords), 'gm'),		css: 'keyword' },		// keywords
-			{ regex: new RegExp(this.getKeywords(builtins), 'gm'),		css: 'color1' }			// builtins
-			];
+            {regex: SyntaxHighlighter.regexLib.doubleQuotedString, css: 'string'},		// double quoted strings
+            {regex: SyntaxHighlighter.regexLib.singleQuotedString, css: 'string'},		// single quoted strings
+            {regex: /\b[A-Z0-9_]+\b/g, css: 'constants'},		// constants
+            {regex: /:[a-z][A-Za-z0-9_]*/g, css: 'color2'},		// symbols
+            {regex: /(\$|@@|@)\w+/g, css: 'variable bold'},	// $global, @instance, and @@class variables
+            {regex: new RegExp(this.getKeywords(keywords), 'gm'), css: 'keyword'},		// keywords
+            {regex: new RegExp(this.getKeywords(builtins), 'gm'), css: 'color1'}			// builtins
+        ];
 
-		this.forHtmlScript(SyntaxHighlighter.regexLib.aspScriptTags);
-	};
+        this.forHtmlScript(SyntaxHighlighter.regexLib.aspScriptTags);
+    }
 
 	Brush.prototype	= new SyntaxHighlighter.Highlighter();
 	Brush.aliases	= ['ruby', 'rails', 'ror', 'rb'];
@@ -3404,15 +3406,13 @@ typeof(exports) != 'undefined' ? exports.SyntaxHighlighter = SyntaxHighlighter :
 
 	function Brush()
 	{
-		function getKeywordsCSS(str)
-		{
-			return '\\b([a-z_]|)' + str.replace(/ /g, '(?=:)\\b|\\b([a-z_\\*]|\\*|)') + '(?=:)\\b';
-		};
+		function getKeywordsCSS(str) {
+            return '\\b([a-z_]|)' + str.replace(/ /g, '(?=:)\\b|\\b([a-z_\\*]|\\*|)') + '(?=:)\\b';
+        }
 	
-		function getValuesCSS(str)
-		{
-			return '\\b' + str.replace(/ /g, '(?!-)(?!:)\\b|\\b()') + '\:\\b';
-		};
+		function getValuesCSS(str) {
+            return '\\b' + str.replace(/ /g, '(?!-)(?!:)\\b|\\b()') + '\:\\b';
+        }
 
 		var keywords =	'ascent azimuth background-attachment background-color background-image background-position ' +
 						'background-repeat background baseline bbox border-collapse border-color border-spacing border-style border-top ' +
@@ -3455,17 +3455,17 @@ typeof(exports) != 'undefined' ? exports.SyntaxHighlighter = SyntaxHighlighter :
 			{ regex: r.multiLineCComments,								css: 'comments' },		// multiline comments
 			{ regex: r.singleLineCComments,								css: 'comments' },		// singleline comments
 			{ regex: r.doubleQuotedString,								css: 'string' },		// double quoted strings
-			{ regex: r.singleQuotedString,								css: 'string' },		// single quoted strings
-			{ regex: /\#[a-fA-F0-9]{3,6}/g,								css: 'value' },			// html colors
-			{ regex: /\b(-?\d+)(\.\d+)?(px|em|pt|\:|\%|)\b/g,			css: 'value' },			// sizes
-			{ regex: /\$\w+/g,											css: 'variable' },		// variables
-			{ regex: new RegExp(this.getKeywords(statements), 'g'),		css: 'color3' },		// statements
-			{ regex: new RegExp(this.getKeywords(preprocessor), 'g'),	css: 'preprocessor' },	// preprocessor
-			{ regex: new RegExp(getKeywordsCSS(keywords), 'gm'),		css: 'keyword' },		// keywords
-			{ regex: new RegExp(getValuesCSS(values), 'g'),				css: 'value' },			// values
-			{ regex: new RegExp(this.getKeywords(fonts), 'g'),			css: 'color1' }			// fonts
-			];
-	};
+            {regex: r.singleQuotedString, css: 'string'},		// single quoted strings
+            {regex: /\#[a-fA-F0-9]{3,6}/g, css: 'value'},			// html colors
+            {regex: /\b(-?\d+)(\.\d+)?(px|em|pt|\:|\%|)\b/g, css: 'value'},			// sizes
+            {regex: /\$\w+/g, css: 'variable'},		// variables
+            {regex: new RegExp(this.getKeywords(statements), 'g'), css: 'color3'},		// statements
+            {regex: new RegExp(this.getKeywords(preprocessor), 'g'), css: 'preprocessor'},	// preprocessor
+            {regex: new RegExp(getKeywordsCSS(keywords), 'gm'), css: 'keyword'},		// keywords
+            {regex: new RegExp(getValuesCSS(values), 'g'), css: 'value'},			// values
+            {regex: new RegExp(this.getKeywords(fonts), 'g'), css: 'color1'}			// fonts
+        ];
+    }
 
 	Brush.prototype	= new SyntaxHighlighter.Highlighter();
 	Brush.aliases	= ['sass', 'scss'];
@@ -3539,17 +3539,17 @@ typeof(exports) != 'undefined' ? exports.SyntaxHighlighter = SyntaxHighlighter :
 						'translation trigger true truncate uncommitted union unique update values ' +
 						'varchar varying view when where with work';
 
-		var operators =	'all and any between cross in join like not null or outer some';
+        var operators = 'all and any between cross in join like not null or outer some';
 
-		this.regexList = [
-			{ regex: /--(.*)$/gm,												css: 'comments' },			// one line and multiline comments
-			{ regex: SyntaxHighlighter.regexLib.multiLineDoubleQuotedString,	css: 'string' },			// double quoted strings
-			{ regex: SyntaxHighlighter.regexLib.multiLineSingleQuotedString,	css: 'string' },			// single quoted strings
-			{ regex: new RegExp(this.getKeywords(funcs), 'gmi'),				css: 'color2' },			// functions
-			{ regex: new RegExp(this.getKeywords(operators), 'gmi'),			css: 'color1' },			// operators and such
-			{ regex: new RegExp(this.getKeywords(keywords), 'gmi'),				css: 'keyword' }			// keyword
-			];
-	};
+        this.regexList = [
+            {regex: /--(.*)$/gm, css: 'comments'},			// one line and multiline comments
+            {regex: SyntaxHighlighter.regexLib.multiLineDoubleQuotedString, css: 'string'},			// double quoted strings
+            {regex: SyntaxHighlighter.regexLib.multiLineSingleQuotedString, css: 'string'},			// single quoted strings
+            {regex: new RegExp(this.getKeywords(funcs), 'gmi'), css: 'color2'},			// functions
+            {regex: new RegExp(this.getKeywords(operators), 'gmi'), css: 'color1'},			// operators and such
+            {regex: new RegExp(this.getKeywords(keywords), 'gmi'), css: 'keyword'}			// keyword
+        ];
+    }
 
 	Brush.prototype	= new SyntaxHighlighter.Highlighter();
 	Brush.aliases	= ['sql'];
@@ -3580,17 +3580,17 @@ typeof(exports) != 'undefined' ? exports.SyntaxHighlighter = SyntaxHighlighter :
 						'Protected Public RaiseEvent ReadOnly ReDim REM RemoveHandler Resume ' +
 						'Return Select Set Shadows Shared Short Single Static Step Stop String ' +
 						'Structure Sub SyncLock Then Throw To True Try TypeOf Unicode Until ' +
-						'Variant When While With WithEvents WriteOnly Xor';
+            'Variant When While With WithEvents WriteOnly Xor';
 
-		this.regexList = [
-			{ regex: /'.*$/gm,										css: 'comments' },			// one line comments
-			{ regex: SyntaxHighlighter.regexLib.doubleQuotedString,	css: 'string' },			// strings
-			{ regex: /^\s*#.*$/gm,									css: 'preprocessor' },		// preprocessor tags like #region and #endregion
-			{ regex: new RegExp(this.getKeywords(keywords), 'gm'),	css: 'keyword' }			// vb keyword
-			];
+        this.regexList = [
+            {regex: /'.*$/gm, css: 'comments'},			// one line comments
+            {regex: SyntaxHighlighter.regexLib.doubleQuotedString, css: 'string'},			// strings
+            {regex: /^\s*#.*$/gm, css: 'preprocessor'},		// preprocessor tags like #region and #endregion
+            {regex: new RegExp(this.getKeywords(keywords), 'gm'), css: 'keyword'}			// vb keyword
+        ];
 
-		this.forHtmlScript(SyntaxHighlighter.regexLib.aspScriptTags);
-	};
+        this.forHtmlScript(SyntaxHighlighter.regexLib.aspScriptTags);
+    }
 
 	Brush.prototype	= new SyntaxHighlighter.Highlighter();
 	Brush.aliases	= ['vb', 'vbnet'];
@@ -3633,17 +3633,20 @@ typeof(exports) != 'undefined' ? exports.SyntaxHighlighter = SyntaxHighlighter :
 			if (tag != null)
 				result.push(
 					new constructor(tag.name, match.index + tag[0].indexOf(tag.name), 'keyword')
-				);
+                );
 
-			return result;
-		}
-	
-		this.regexList = [
-			{ regex: new XRegExp('(\\&lt;|<)\\!\\[[\\w\\s]*?\\[(.|\\s)*?\\]\\](\\&gt;|>)', 'gm'),			css: 'color2' },	// <![ ... [ ... ]]>
-			{ regex: SyntaxHighlighter.regexLib.xmlComments,												css: 'comments' },	// <!-- ... -->
-			{ regex: new XRegExp('(&lt;|<)[\\s\\/\\?]*(\\w+)(?<attributes>.*?)[\\s\\/\\?]*(&gt;|>)', 'sg'), func: process }
-		];
-	};
+            return result;
+        }
+
+        this.regexList = [
+            {regex: new XRegExp('(\\&lt;|<)\\!\\[[\\w\\s]*?\\[(.|\\s)*?\\]\\](\\&gt;|>)', 'gm'), css: 'color2'},	// <![ ... [ ... ]]>
+            {regex: SyntaxHighlighter.regexLib.xmlComments, css: 'comments'},	// <!-- ... -->
+            {
+                regex: new XRegExp('(&lt;|<)[\\s\\/\\?]*(\\w+)(?<attributes>.*?)[\\s\\/\\?]*(&gt;|>)', 'sg'),
+                func: process
+            }
+        ];
+    }
 
 	Brush.prototype	= new SyntaxHighlighter.Highlighter();
 	Brush.aliases	= ['xml', 'xhtml', 'xslt', 'html'];

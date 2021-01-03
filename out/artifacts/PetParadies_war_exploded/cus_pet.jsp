@@ -126,7 +126,7 @@
 					}
 				});
 				alert(t);
-			}
+			};
 			var btn_edit = function(id) {
 				$.jq_Panel({
 					url :"/RawMaterialsType/EditRawMaterialsType?id=" + id,
@@ -135,7 +135,7 @@
 					iframeWidth : 500,
 					iframeHeight : 400
 				});
-			}
+			};
 			var btn_delete = function(id) {
 				$.jq_Confirm({
 					message : "您确定要删除吗?",

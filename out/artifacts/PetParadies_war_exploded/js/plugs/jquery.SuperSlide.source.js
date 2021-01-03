@@ -48,7 +48,7 @@
 			var conBox = $(opts.mainCell , $(this));//内容元素父层对象
 			var conBoxSize=conBox.children().size();
 			var sLoad=opts.switchLoad;
-			if(opts.targetCell!=null){ var tarObj = $(opts.targetCell, $(this)) };
+			if(opts.targetCell!=null){ var tarObj = $(opts.targetCell, $(this)) }
 
 			/*字符串转换为数字*/
 			var index=parseInt(opts.defaultIndex);
@@ -109,7 +109,7 @@
 						objs.eq(index).find("img").each(function(){ 
 						if ( typeof($(this).attr(sLoad))!="undefined"){ $(this).attr("src",$(this).attr(sLoad)).removeAttr(sLoad) }
 					})
-				}
+				};
 
 			//效果函数
 			var doPlay=function(isFirst){
@@ -229,8 +229,8 @@
 						if(opp){ index-- }else{ index++ } inter = setInterval(doPlay, interTime);
 						conBox.hover(function(){if(autoPlay){clearInterval(inter); }},function(){if(autoPlay){clearInterval(inter);inter = setInterval(doPlay, interTime);}});
 					}else{
-						 inter=setInterval(function(){  if(opp){ index-- }else{ index++ } ; doPlay() }, interTime); 
-						$(this).hover(function(){if(autoPlay){clearInterval(inter); }},function(){if(autoPlay){clearInterval(inter); inter=setInterval(function(){if(opp){ index-- }else{ index++ }; doPlay() }, interTime); }});
+						 inter=setInterval(function(){  if(opp){ index-- }else{ index++ }  doPlay() }, interTime);
+						$(this).hover(function(){if(autoPlay){clearInterval(inter); }},function(){if(autoPlay){clearInterval(inter); inter=setInterval(function(){if(opp){ index-- }else{ index++ } doPlay() }, interTime); }});
 					}
 			}
 

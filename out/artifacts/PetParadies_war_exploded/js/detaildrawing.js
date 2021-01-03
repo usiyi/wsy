@@ -18,4 +18,4 @@ $(function() {
 	$contents.eq(index).show();
 	//$contents[index].style.display = 'block';
 	});
-})
+});

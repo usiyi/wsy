@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@page isELIgnored="false"%>
@@ -139,7 +140,7 @@
 					}
 				});
 				alert(t);
-			}
+			};
 
 			var btn_edit = function(id) {
 				$.jq_Panel({
@@ -149,7 +150,7 @@
 					iframeWidth : 500,
 					iframeHeight : 400
 				});
-			}
+			};
 			var btn_delete = function(id) {
 				$.jq_Confirm({
 					message : "您确定要删除吗?",

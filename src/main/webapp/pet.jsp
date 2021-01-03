@@ -142,20 +142,20 @@ function initEditPet(itemId){
 					}
 				});
 				alert(t);
-			}
-			var btn_edit = function(id) {
+			};
+			var btn_edit = function (id) {
 				$.jq_Panel({
-					url :"/RawMaterialsType/EditRawMaterialsType?id=" + id,
-					title : "编辑分类",
-					dialogModal : true,
-					iframeWidth : 500,
-					iframeHeight : 400
+					url: "/RawMaterialsType/EditRawMaterialsType?id=" + id,
+					title: "编辑分类",
+					dialogModal: true,
+					iframeWidth: 500,
+					iframeHeight: 400
 				});
-			}
-			var btn_delete = function(id) {
+			};
+			var btn_delete = function (id) {
 				$.jq_Confirm({
-					message : "您确定要删除吗?",
-					btnOkClick : function() {
+					message: "您确定要删除吗?",
+					btnOkClick: function () {
 					}
 				});
 			}

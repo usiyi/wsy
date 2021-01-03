@@ -195,37 +195,37 @@ function initEditType(typeId){
 								dialogModal : true,
 								btnOkClick : function() {
 									// $("#RawMaterialsTypeName").val("");
-									// $("#RawMaterialsTypeDescription").val("");
-									// $("#Ramark").val("");
-									// page1();
-									location.reload();
-								}
-							});
-						}
-					}
-				});
-				alert(t);
-			}
+                                    // $("#RawMaterialsTypeDescription").val("");
+                                    // $("#Ramark").val("");
+                                    // page1();
+                                    location.reload();
+                                }
+                            });
+                        }
+                    }
+                });
+                alert(t);
+            };
 
-			var btn_edit = function(id) {
-				$.jq_Panel({
-					url : "/RawMaterialsType/EditRawMaterialsType?id=" + id,
-					title : "编辑分类",
-					dialogModal : true,
-					iframeWidth : 500,
-					iframeHeight : 400
-				});
-			}
-			var btn_delete = function(id) {
-				$.jq_Confirm({
-					message : "您确定要删除吗?",
-					btnOkClick : function() {
-						$.ajax({
-							type : "post",
-							url : "/RawMaterialsType/DeleteRawMaterialsType",
-							data : {
-								id : id
-							},
+            var btn_edit = function (id) {
+                $.jq_Panel({
+                    url: "/RawMaterialsType/EditRawMaterialsType?id=" + id,
+                    title: "编辑分类",
+                    dialogModal: true,
+                    iframeWidth: 500,
+                    iframeHeight: 400
+                });
+            };
+            var btn_delete = function (id) {
+                $.jq_Confirm({
+                    message: "您确定要删除吗?",
+                    btnOkClick: function () {
+                        $.ajax({
+                            type: "post",
+                            url: "/RawMaterialsType/DeleteRawMaterialsType",
+                            data: {
+                                id: id
+                            },
 							success : function(data) {
 								if (data > 0) {
 									$.jq_Alert({

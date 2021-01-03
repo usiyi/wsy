@@ -38,27 +38,29 @@
 		};
 
 		return this.each(function() {
-			var opts = $.extend({},$.fn.slide.defaults,options);
+			var opts = $.extend({}, $.fn.slide.defaults, options);
 			var effect = opts.effect;
 			var prevBtn = $(opts.prevCell, $(this));
 			var nextBtn = $(opts.nextCell, $(this));
 			var pageState = $(opts.pageStateCell, $(this));
 			var navObj = $(opts.titCell, $(this));//导航子元素结合
 			var navObjSize = navObj.size();
-			var conBox = $(opts.mainCell , $(this));//内容元素父层对象
-			var conBoxSize=conBox.children().size();
-			var sLoad=opts.switchLoad;
-			if(opts.targetCell!=null){ var tarObj = $(opts.targetCell, $(this)) };
+			var conBox = $(opts.mainCell, $(this));//内容元素父层对象
+			var conBoxSize = conBox.children().size();
+			var sLoad = opts.switchLoad;
+			if (opts.targetCell != null) {
+				var tarObj = $(opts.targetCell, $(this))
+			}
 
 			/*字符串转换为数字*/
-			var index=parseInt(opts.defaultIndex);
-			var delayTime=parseInt(opts.delayTime);
-			var interTime=parseInt(opts.interTime);
-			var triggerTime=parseInt(opts.triggerTime);
-			var scroll=parseInt(opts.scroll);
-			var vis=parseInt(opts.vis);
-			var autoPlay = (opts.autoPlay=="false"||opts.autoPlay==false)?false:true;
-			var opp = (opts.opp=="false"||opts.opp==false)?false:true;
+			var index = parseInt(opts.defaultIndex);
+			var delayTime = parseInt(opts.delayTime);
+			var interTime = parseInt(opts.interTime);
+			var triggerTime = parseInt(opts.triggerTime);
+			var scroll = parseInt(opts.scroll);
+			var vis = parseInt(opts.vis);
+			var autoPlay = (opts.autoPlay == "false" || opts.autoPlay == false) ? false : true;
+			var opp = (opts.opp == "false" || opts.opp == false) ? false : true;
 			var autoPage = (opts.autoPage=="false"||opts.autoPage==false)?false:true;
 			var loop = (opts.pnLoop=="false"||opts.pnLoop==false)?false:true;
 
@@ -104,12 +106,18 @@
 			}
 
 			var doStartFun=function(){ if ( $.isFunction( opts.startFun) ){ opts.startFun( index,navObjSize ); } };
-			var doEndFun=function(){ if ( $.isFunction( opts.endFun ) ){ opts.endFun( index,navObjSize ); } };
-			var doSwitchLoad=function(objs){ 
-						objs.eq(index).find("img").each(function(){ 
-						if ( typeof($(this).attr(sLoad))!="undefined"){ $(this).attr("src",$(this).attr(sLoad)).removeAttr(sLoad) }
-					})
+			var doEndFun = function () {
+				if ($.isFunction(opts.endFun)) {
+					opts.endFun(index, navObjSize);
 				}
+			};
+			var doSwitchLoad = function (objs) {
+				objs.eq(index).find("img").each(function () {
+					if (typeof ($(this).attr(sLoad)) != "undefined") {
+						$(this).attr("src", $(this).attr(sLoad)).removeAttr(sLoad)
+					}
+				})
+			};
 
 			//效果函数
 			var doPlay=function(isFirst){
@@ -228,9 +236,32 @@
 					if( effect=="leftMarquee" || effect=="topMarquee"  ){
 						if(opp){ index-- }else{ index++ } inter = setInterval(doPlay, interTime);
 						conBox.hover(function(){if(autoPlay){clearInterval(inter); }},function(){if(autoPlay){clearInterval(inter);inter = setInterval(doPlay, interTime);}});
-					}else{
-						 inter=setInterval(function(){  if(opp){ index-- }else{ index++ } ; doPlay() }, interTime); 
-						$(this).hover(function(){if(autoPlay){clearInterval(inter); }},function(){if(autoPlay){clearInterval(inter); inter=setInterval(function(){if(opp){ index-- }else{ index++ }; doPlay() }, interTime); }});
+					}else {
+						inter = setInterval(function () {
+							if (opp) {
+								index--
+							} else {
+								index++
+							}
+							doPlay()
+						}, interTime);
+						$(this).hover(function () {
+							if (autoPlay) {
+								clearInterval(inter);
+							}
+						}, function () {
+							if (autoPlay) {
+								clearInterval(inter);
+								inter = setInterval(function () {
+									if (opp) {
+										index--
+									} else {
+										index++
+									}
+									doPlay()
+								}, interTime);
+							}
+						});
 					}
 			}
 

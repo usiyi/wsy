@@ -173,40 +173,40 @@
 			} else if (callbackFlag && tools.apply(this.setting.callback.beforeCheck, [this.setting.treeId, node], true) == false) {
 				return;
 			}
-			if (tools.uCanDo(this.setting) && this.setting.check.enable && node.nocheck !== true) {
-				node[checkedKey] = checked;
-				var checkObj = $$(node, consts.id.CHECK, this.setting);
-				if (checkTypeFlag || this.setting.check.chkStyle === consts.radio.STYLE) view.checkNodeRelation(this.setting, node);
-				view.setChkClass(this.setting, checkObj, node);
-				view.repairParentChkClassWithSelf(this.setting, node);
-				if (callbackFlag) {
-					this.setting.treeObj.trigger(consts.event.CHECK, [null, this.setting.treeId, node]);
-				}
-			}
-		}
+            if (tools.uCanDo(this.setting) && this.setting.check.enable && node.nocheck !== true) {
+                node[checkedKey] = checked;
+                var checkObj = $$(node, consts.id.CHECK, this.setting);
+                if (checkTypeFlag || this.setting.check.chkStyle === consts.radio.STYLE) view.checkNodeRelation(this.setting, node);
+                view.setChkClass(this.setting, checkObj, node);
+                view.repairParentChkClassWithSelf(this.setting, node);
+                if (callbackFlag) {
+                    this.setting.treeObj.trigger(consts.event.CHECK, [null, this.setting.treeId, node]);
+                }
+            }
+        };
 
-		zTreeTools.checkAllNodes = function(checked) {
-			view.repairAllChk(this.setting, !!checked);
-		}
+        zTreeTools.checkAllNodes = function (checked) {
+            view.repairAllChk(this.setting, !!checked);
+        };
 
-		zTreeTools.getCheckedNodes = function(checked) {
-			var childKey = this.setting.data.key.children;
-			checked = (checked !== false);
-			return data.getTreeCheckedNodes(this.setting, data.getRoot(this.setting)[childKey], checked);
-		}
+        zTreeTools.getCheckedNodes = function (checked) {
+            var childKey = this.setting.data.key.children;
+            checked = (checked !== false);
+            return data.getTreeCheckedNodes(this.setting, data.getRoot(this.setting)[childKey], checked);
+        };
 
-		zTreeTools.getChangeCheckedNodes = function() {
-			var childKey = this.setting.data.key.children;
-			return data.getTreeChangeCheckedNodes(this.setting, data.getRoot(this.setting)[childKey]);
-		}
+        zTreeTools.getChangeCheckedNodes = function () {
+            var childKey = this.setting.data.key.children;
+            return data.getTreeChangeCheckedNodes(this.setting, data.getRoot(this.setting)[childKey]);
+        };
 
-		zTreeTools.setChkDisabled = function(node, disabled, inheritParent, inheritChildren) {
-			disabled = !!disabled;
-			inheritParent = !!inheritParent;
-			inheritChildren = !!inheritChildren;
-			view.repairSonChkDisabled(this.setting, node, disabled, inheritChildren);
-			view.repairParentChkDisabled(this.setting, node.getParentNode(), disabled, inheritParent);
-		}
+        zTreeTools.setChkDisabled = function (node, disabled, inheritParent, inheritChildren) {
+            disabled = !!disabled;
+            inheritParent = !!inheritParent;
+            inheritChildren = !!inheritChildren;
+            view.repairSonChkDisabled(this.setting, node, disabled, inheritChildren);
+            view.repairParentChkDisabled(this.setting, node.getParentNode(), disabled, inheritParent);
+        };
 
 		var _updateNode = zTreeTools.updateNode;
 		zTreeTools.updateNode = function(node, checkTypeFlag) {
@@ -600,19 +600,19 @@
 	data.addZTreeTools(_zTreeTools);
 
 	var _createNodes = view.createNodes;
-	view.createNodes = function(setting, level, nodes, parentNode) {
-		if (_createNodes) _createNodes.apply(view, arguments);
-		if (!nodes) return;
-		view.repairParentChkClassWithSelf(setting, parentNode);
-	}
+    view.createNodes = function (setting, level, nodes, parentNode) {
+        if (_createNodes) _createNodes.apply(view, arguments);
+        if (!nodes) return;
+        view.repairParentChkClassWithSelf(setting, parentNode);
+    };
 	var _removeNode = view.removeNode;
-	view.removeNode = function(setting, node) {
-		var parentNode = node.getParentNode();
-		if (_removeNode) _removeNode.apply(view, arguments);
-		if (!node || !parentNode) return;
-		view.repairChkClass(setting, parentNode);
-		view.repairParentChkClass(setting, parentNode);
-	}
+    view.removeNode = function (setting, node) {
+        var parentNode = node.getParentNode();
+        if (_removeNode) _removeNode.apply(view, arguments);
+        if (!node || !parentNode) return;
+        view.repairChkClass(setting, parentNode);
+        view.repairParentChkClass(setting, parentNode);
+    };
 
 	var _appendNodes = view.appendNodes;
 	view.appendNodes = function(setting, level, nodes, parentNode, initFlag, openFlag) {

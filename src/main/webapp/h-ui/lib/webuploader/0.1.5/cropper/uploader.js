@@ -173,11 +173,11 @@ var Croper = (function() {
             (function() {
                 var data = new Image();
                 var support = true;
-                data.onload = data.onerror = function() {
-                    if( this.width != 1 || this.height != 1 ) {
+                data.onload = data.onerror = function () {
+                    if (this.width != 1 || this.height != 1) {
                         support = false;
                     }
-                }
+                };
                 data.src = src;
                 isBase64Supported = support;
             })();

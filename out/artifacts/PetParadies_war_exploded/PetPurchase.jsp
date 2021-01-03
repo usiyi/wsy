@@ -127,7 +127,7 @@
 					}
 				});
 				alert(t);
-			}
+			};
 
 			var btn_edit = function(id) {
 				$.jq_Panel({
@@ -137,7 +137,7 @@
 					iframeWidth : 500,
 					iframeHeight : 400
 				});
-			}
+			};
 			var btn_delete = function(id) {
 				$.jq_Confirm({
 					message : "您确定要删除吗?",

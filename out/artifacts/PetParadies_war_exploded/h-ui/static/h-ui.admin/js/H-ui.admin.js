@@ -185,16 +185,16 @@ function removeIframeAll(){
 function layer_show(title,url,w,h){
 	if (title == null || title == '') {
 		title=false;
-	};
+	}
 	if (url == null || url == '') {
 		url="404.html";
-	};
+	}
 	if (w == null || w == '') {
 		w=800;
-	};
+	}
 	if (h == null || h == '') {
 		h=($(window).height() - 50);
-	};
+	}
 	layer.open({
 		type: 2,
 		area: [w+'px', h +'px'],
@@ -230,7 +230,7 @@ function getHTMLDate(obj) {
     _dd = d.getDate();
     _ww = weekday[d.getDay()];
     obj.html(_yy + "年" + _mm + "月" + _dd + "日 " + _ww);
-};
+}
 
 $(function(){
 	getHTMLDate($("#top_time"));

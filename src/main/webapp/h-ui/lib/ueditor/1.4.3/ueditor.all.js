@@ -4230,7 +4230,7 @@ var domUtils = dom.domUtils = {
         while(start !== node){
             if(start.nextSibling){
                 return 0
-            };
+            }
             start = start.parentNode;
         }
         return 1;
@@ -13201,17 +13201,17 @@ UE.plugins['insertcode'] = function() {
                                 if(node.tagName == 'br'){
                                     code += '\n'
                                 }else if(!dtd.$empty[node.tagName]){
-                                    utils.each(node.children,function(cn){
-                                        if(cn.type =='element'){
-                                            if(cn.tagName == 'br'){
+                                    utils.each(node.children, function (cn) {
+                                        if (cn.type == 'element') {
+                                            if (cn.tagName == 'br') {
                                                 code += '\n'
-                                            }else if(!dtd.$empty[node.tagName]){
+                                            } else if (!dtd.$empty[node.tagName]) {
                                                 code += cn.innerText();
                                             }
-                                        }else{
+                                        } else {
                                             code += cn.data
                                         }
-                                    })
+                                    });
                                     if(!/\n$/.test(code)){
                                         code += '\n';
                                     }
@@ -13555,17 +13555,17 @@ UE.plugins['insertcode'] = function() {
                         if(node.tagName == 'br'){
                             htmlstr += '\n'
                         }else if(!dtd.$empty[node.tagName]){
-                            utils.each(node.children,function(cn){
-                                if(cn.type =='element'){
-                                    if(cn.tagName == 'br'){
+                            utils.each(node.children, function (cn) {
+                                if (cn.type == 'element') {
+                                    if (cn.tagName == 'br') {
                                         htmlstr += '\n'
-                                    }else if(!dtd.$empty[node.tagName]){
+                                    } else if (!dtd.$empty[node.tagName]) {
                                         htmlstr += cn.innerText();
                                     }
-                                }else{
+                                } else {
                                     htmlstr += cn.data
                                 }
-                            })
+                            });
                             if(!/\n$/.test(htmlstr)){
                                 htmlstr += '\n';
                             }
@@ -13592,15 +13592,15 @@ UE.plugins['insertcode'] = function() {
                                     if(cn.tagName == 'br'){
 
                                         frag.appendChild(me.document.createElement('br'))
-                                    }else if(!dtd.$empty[node.tagName]){
-                                        frag.appendChild(me.document.createTextNode(utils.html(cn.innerText().replace(/&nbsp;/g,' '))));
+                                    } else if (!dtd.$empty[node.tagName]) {
+                                        frag.appendChild(me.document.createTextNode(utils.html(cn.innerText().replace(/&nbsp;/g, ' '))));
 
                                     }
-                                }else{
-                                    frag.appendChild(me.document.createTextNode(utils.html( cn.data.replace(/&nbsp;/g,' '))));
+                                } else {
+                                    frag.appendChild(me.document.createTextNode(utils.html(cn.data.replace(/&nbsp;/g, ' '))));
 
                                 }
-                            })
+                            });
                             if(frag.lastChild.nodeName != 'BR'){
                                 frag.appendChild(me.document.createElement('br'))
                             }
@@ -13627,7 +13627,7 @@ UE.plugins['insertcode'] = function() {
         if(keyCode == 40){
             var rng = me.selection.getRange(),pre,start = rng.startContainer;
             if(rng.collapsed && (pre = domUtils.findParentByTagName(rng.startContainer,'pre',true)) && !pre.nextSibling){
-                var last = pre.lastChild
+                var last = pre.lastChild;
                 while(last && last.nodeName == 'BR'){
                     last = last.previousSibling;
                 }
@@ -14359,12 +14359,12 @@ UE.plugins['undo'] = function () {
             }
             saveSceneTimer = setTimeout(function(){
                 if(inputType){
-                    var interalTimer = setInterval(function(){
-                        if(!inputType){
+                    var interalTimer = setInterval(function () {
+                        if (!inputType) {
                             save(me);
                             clearInterval(interalTimer)
                         }
-                    },300)
+                    }, 300);
                     return;
                 }
                 save(me);
@@ -15634,7 +15634,7 @@ UE.plugins['list'] = function () {
                         me.fireEvent('contentchange');
                         me.fireEvent('saveScene');
                         domUtils.preventDefault(evt);
-                        return;
+
 
                     }
 
@@ -16101,7 +16101,7 @@ UE.plugins['list'] = function () {
                     }
                     if(tag == ci.nodeName.toLowerCase()){
                         return 1
-                    };
+                    }
                 }
                 return 0;
 
@@ -16118,7 +16118,7 @@ UE.plugins['list'] = function () {
                     if(tag == ci.nodeName.toLowerCase()){
                         node = ci;
                         break;
-                    };
+                    }
                 }
                 return node ? getStyle(node) || domUtils.getComputedStyle(node, 'list-style-type') : null;
             }
@@ -16282,7 +16282,7 @@ UE.plugins['list'] = function () {
                                     if(node.firstChild().tagName == 'br' ){
                                         node.removeChild(node.firstChild())
                                     }
-                                };
+                                }
                                 break;
                                 case 'pre':
                                     node.innerText(node.innerText().replace(/&nbsp;/g,' '))
@@ -16762,7 +16762,7 @@ UE.plugins['keystrokes'] = function() {
                     }
                     if(start === parent.lastChild)
                         evt.preventDefault();
-                    return;
+
                 }
             }
         }
@@ -17598,8 +17598,8 @@ UE.plugins['video'] = function (){
         var str;
         switch (type){
             case 'image':
-                str = '<img ' + (id ? 'id="' + id+'"' : '') + ' width="'+ width +'" height="' + height + '" _url="'+url+'" class="' + classname.replace(/\bvideo-js\b/, '') + '"'  +
-                    ' src="' + me.options.UEDITOR_HOME_URL+'themes/default/images/spacer.gif" style="background:url('+me.options.UEDITOR_HOME_URL+'themes/default/images/videologo.gif) no-repeat center center; border:1px solid gray;'+(align ? 'float:' + align + ';': '')+'" />'
+                str = '<img ' + (id ? 'id="' + id + '"' : '') + ' width="' + width + '" height="' + height + '" _url="' + url + '" class="' + classname.replace(/\bvideo-js\b/, '') + '"' +
+                    ' src="' + me.options.UEDITOR_HOME_URL + 'themes/default/images/spacer.gif" style="background:url(' + me.options.UEDITOR_HOME_URL + 'themes/default/images/videologo.gif) no-repeat center center; border:1px solid gray;' + (align ? 'float:' + align + ';' : '') + '" />';
                 break;
             case 'embed':
                 str = '<embed type="application/x-shockwave-flash" class="' + classname + '" pluginspage="http://www.macromedia.com/go/getflashplayer"' +
@@ -17915,7 +17915,7 @@ UE.plugins['video'] = function (){
         }
         //去掉宽高
         !keepPro && domUtils.removeAttributes(tmpCell,'width height');
-        !keepPro && domUtils.removeAttributes(tmpCell,'style');
+        !keepPro && domUtils.removeAttributes(tmpCell, 'style');
 
         tmpCell.style.borderLeftStyle = "";
         tmpCell.style.borderTopStyle = "";
@@ -17925,7 +17925,7 @@ UE.plugins['video'] = function (){
         tmpCell.style.borderTopWidth = cell.style.borderBottomWidth;
         flag && domUtils.addClass(cell, "selectTdClass");
         return tmpCell;
-    }
+    };
 
     UETable.prototype = {
         getMaxRows:function () {
@@ -18979,7 +18979,7 @@ UE.plugins['video'] = function (){
                 } else {
                     rng.setStart(next, 0)
                 }
-                rng.setCursor(false, true)
+                rng.setCursor(false, true);
                 this.fireEvent("tablehasdeleted")
 
             }
@@ -19787,8 +19787,8 @@ UE.plugins['video'] = function (){
         setTimeout(function () {
             utils.each(tds, function (td) {
                 (td.colSpan == 1) && tdsWidths.push(td.offsetWidth)
-            })
-            utils.each(tds, function (td,i) {
+            });
+            utils.each(tds, function (td, i) {
                 (td.colSpan == 1) && td.setAttribute("width", tdsWidths[i] + "");
             })
         }, 0);
@@ -19861,16 +19861,16 @@ UE.plugins['table'] = function () {
             var table = getUETableBySelected(me);
             if(table){
                 var str = '';
-                utils.each(table.selectedTds,function(td){
-                    str += td[browser.ie?'innerText':'textContent'];
-                })
+                utils.each(table.selectedTds, function (td) {
+                    str += td[browser.ie ? 'innerText' : 'textContent'];
+                });
                 return str;
-            }else{
+            } else {
                 return orgGetText.call(me.selection)
             }
 
         }
-    })
+    });
 
     //处理拖动及框选相关方法
     var startTd = null, //鼠标按下时的锚点td
@@ -22849,7 +22849,7 @@ UE.plugin.register('searchreplace',function(){
                     }
                 }
             }else if(!dtd.$empty[currentNode.tagName]){
-                currentNodeLength = currentNode[browser.ie ? 'innerText' : 'textContent'].replace(/(^[\t\r\n]+)|([\t\r\n]+$)/,'').length
+                currentNodeLength = currentNode[browser.ie ? 'innerText' : 'textContent'].replace(/(^[\t\r\n]+)|([\t\r\n]+$)/, '').length;
                 currentIndex += currentNodeLength;
                 if(currentIndex >= index){
                     result = findNTextInBlockElm(currentNode,currentNodeLength - (currentIndex - index),str);
@@ -24052,17 +24052,17 @@ UE.plugin.register('charts', function (){
             })
 
         },
-        outputRule:function(root){
-            utils.each(root.getNodesByTagName('table'),function( tableNode ){
+        outputRule: function (root) {
+            utils.each(root.getNodesByTagName('table'), function (tableNode) {
 
-                if ( tableNode.getAttr("data-chart") !== undefined ) {
+                if (tableNode.getAttr("data-chart") !== undefined) {
                     tableNode.setAttr("style", "display: none;");
                 }
 
             })
 
         }
-    }
+    };
 
     function validData ( table ) {
 
@@ -29010,7 +29010,7 @@ UE.ui = baidu.editor.ui = {};
 
                 var buff = [];
                 for (var i = 0, ci; ci = list[i]; i++) {
-                    buff[i] = this.formatHtml('<span unselectable="on" onclick="$$.editor.execCommand(&quot;elementpath&quot;, &quot;' + i + '&quot;);">' + ci + '</span>');
+                    buff[i] = this.formatHtml('<span unselectable="on" onclick="$$.editor.execCommand(&quot;elementpath&quot;, &quot;' + i + '&quot;)">' + ci + '</span>');
                 }
                 bottom.innerHTML = '<div class="edui-editor-breadcrumb" onmousedown="return false;">' + this.editor.getLang("elementPathTip") + ': ' + buff.join(' &gt; ') + '</div>';
 

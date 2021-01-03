@@ -642,10 +642,10 @@
 			if (!setting.view.txtSelectedEnable) {
 				// for can't select text
 				o.bind('selectstart', function(e){
-					var node
-					var n = e.originalEvent.srcElement.nodeName.toLowerCase();
-					return (n === "input" || n === "textarea" );
-				}).css({
+                    var node;
+                    var n = e.originalEvent.srcElement.nodeName.toLowerCase();
+                    return (n === "input" || n === "textarea");
+                }).css({
 					"-moz-user-select":"-moz-none"
 				});
 			}
@@ -1460,7 +1460,7 @@
 			} else if (setting.async.enable) {
 				if (!view.asyncNode(setting, node)) {
 					view.expandCollapseNode(setting, node, !node.open);
-					return;
+
 				}
 			} else if (node) {
 				view.expandCollapseNode(setting, node, !node.open);
@@ -1641,14 +1641,14 @@
 					view.asyncNode(this.setting, isRoot? null:parentNode, !!isSilent);
 				},
 				refresh : function() {
-					this.setting.treeObj.empty();
-					var root = data.getRoot(setting),
-					nodes = root[setting.data.key.children]
-					data.initRoot(setting);
-					root[setting.data.key.children] = nodes
-					data.initCache(setting);
-					view.createNodes(setting, 0, root[setting.data.key.children]);
-				},
+                    this.setting.treeObj.empty();
+                    var root = data.getRoot(setting),
+                        nodes = root[setting.data.key.children];
+                    data.initRoot(setting);
+                    root[setting.data.key.children] = nodes;
+                    data.initCache(setting);
+                    view.createNodes(setting, 0, root[setting.data.key.children]);
+                },
 				removeChildNodes : function(node) {
 					if (!node) return null;
 					var childKey = setting.data.key.children,
@@ -1686,17 +1686,17 @@
 					return data.transformToArrayFormat(setting, nodes);
 				},
 				updateNode : function(node, checkTypeFlag) {
-					if (!node) return;
-					var nObj = $$(node, setting);
-					if (nObj.get(0) && tools.uCanDo(setting)) {
-						view.setNodeName(setting, node);
-						view.setNodeTarget(setting, node);
-						view.setNodeUrl(setting, node);
-						view.setNodeLineIcos(setting, node);
-						view.setNodeFontCss(setting, node);
-					}
-				}
-			}
+                    if (!node) return;
+                    var nObj = $$(node, setting);
+                    if (nObj.get(0) && tools.uCanDo(setting)) {
+                        view.setNodeName(setting, node);
+                        view.setNodeTarget(setting, node);
+                        view.setNodeUrl(setting, node);
+                        view.setNodeLineIcos(setting, node);
+                        view.setNodeFontCss(setting, node);
+                    }
+                }
+            };
 			root.treeTools = zTreeTools;
 			data.setZTreeTools(setting, zTreeTools);
 

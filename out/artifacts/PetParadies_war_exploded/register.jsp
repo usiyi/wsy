@@ -145,7 +145,7 @@
 		window.onload = function() {
 			document.getElementById("password1").onchange = validatePassword;
 			document.getElementById("password2").onchange = validatePassword;
-		}
+		};
 
 		function validatePassword() {
 			var pass2 = document.getElementById("password2").value;

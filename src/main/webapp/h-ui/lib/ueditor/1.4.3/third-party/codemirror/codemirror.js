@@ -2082,15 +2082,17 @@ var CodeMirror = (function() {
             for (var i = 0; i < mk.length; ++i) {
                 if (mk[i].to == null && mk[i].style) {
                     var newmk = ln.marked || (ln.marked = []), mark = mk[i];
-                    var nmark = mark.dup(); newmk.push(nmark); nmark.attach(ln);
+                    var nmark = mark.dup();
+                    newmk.push(nmark);
+                    nmark.attach(ln);
                 }
             }
         }
         return ln;
-    }
+    };
     Line.prototype = {
         // Replace a piece of a line, keeping the styles around it intact.
-        replace: function(from, to_, text) {
+        replace: function (from, to_, text) {
             var st = [], mk = this.marked, to = to_ == null ? this.text.length : to_;
             copyStyles(0, from, this.styles, st);
             if (text) st.push(text, null);

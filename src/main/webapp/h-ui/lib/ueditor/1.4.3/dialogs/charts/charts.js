@@ -129,11 +129,11 @@ function initEvent () {
         typeViewCount = chartsConfig.length- 1,
         $chartsTypeViewBox = $( '#scrollBed .view-box' );
 
-    $( ".charts-format" ).delegate( ".format-ctrl", "change", function () {
+    $(".charts-format").delegate(".format-ctrl", "change", function () {
 
         renderCharts();
 
-    } )
+    });
 
     $( ".table-view" ).delegate( ".data-item", "focus", function () {
 

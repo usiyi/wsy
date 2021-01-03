@@ -69,19 +69,19 @@
                         <a href="index.html">首页</a>
                     </li>
                     <li>
-                        <a href="javascript:;">宠物</a>
+                        <a href="javascript:">宠物</a>
                     </li>
                     <li>
-                        <a href="javascript:;">礼品</a>
+                        <a href="javascript:">礼品</a>
                     </li>
                     <li>
-                        <a href="javascript:;">咨讯</a>
+                        <a href="javascript:">咨讯</a>
                     </li>
                     <li>
-                        <a href="javascript:;">博客</a>
+                        <a href="javascript:">博客</a>
                     </li>
                     <li>
-                        <a href="javascript:;">专题</a>
+                        <a href="javascript:">专题</a>
                     </li>
                 </ul>
             </div>
@@ -112,9 +112,9 @@
 
             <!--搜索栏-->
             <div class="search">
-                <input type="text" placeholder="请输入关键字" />
+                <input type="text" placeholder="请输入关键字"/>
                 <div class="cion">
-                    <a href="javascript:;"><i style="color: black; font-size:25px" class="fa fa-search"></i></a>
+                    <a href="javascript:"><i style="color: black; font-size:25px" class="fa fa-search"></i></a>
                 </div>
 
             </div>
@@ -136,29 +136,29 @@
                     <img class=""src="/images/小柯基2.jpg" />
                 </div>
                 <div id="big3" style="display:none;">
-                    <img src="/images/小柯基3.jpg" />
+                    <img src="/images/小柯基3.jpg"/>
                 </div>
                 <div id="big4" style="display:none;">
-                    <img src="/images/小柯基4.jpg" />
+                    <img src="/images/小柯基4.jpg"/>
                 </div>
             </div>
 
             <div class="small-view">
                 <ul>
                     <li class="current">
-                        <a href="javascript:;"><img src="/images/小柯基1.jpg" /></a>
+                        <a href="javascript:"><img src="/images/小柯基1.jpg"/></a>
                     </li>
                     <li class="">
-                        <a href="javascript:;"><img src="/images/小柯基2.jpg" /></a>
+                        <a href="javascript:"><img src="/images/小柯基2.jpg"/></a>
                     </li>
                     <li class="">
-                        <a href="javascript:;"><img src="/images/小柯基3.jpg" /></a>
+                        <a href="javascript:"><img src="/images/小柯基3.jpg"/></a>
                     </li>
                     <li class="">
-                        <a href="javascript:;"><img src="/images/小柯基4.jpg" /></a>
+                        <a href="javascript:"><img src="/images/小柯基4.jpg"/></a>
                     </li>
                     <li class="">
-                        <a href="javascript:;">
+                        <a href="javascript:">
                             <div class="collection">
                                 <i class="fa fa-star"></i>
                                 <p>收藏</p>
@@ -270,41 +270,41 @@
                 <dl>
                     <dt class="dtitle">购物指南</dt>
                     <dd>
-                        <a href="javascript:;">物流流程</a>
-                        <a href="javascript:;">常见问题</a>
-                        <a href="javascript:;">联系客服</a>
+                        <a href="javascript:">物流流程</a>
+                        <a href="javascript:">常见问题</a>
+                        <a href="javascript:">联系客服</a>
                     </dd>
                 </dl>
                 <dl>
                     <dt class="dtitle">配送方式</dt>
                     <dd>
-                        <a href="javascript:;">包邮政策</a>
-                        <a href="javascript:;">快递说明</a>
-                        <a href="javascript:;">配送区域</a>
+                        <a href="javascript:">包邮政策</a>
+                        <a href="javascript:">快递说明</a>
+                        <a href="javascript:">配送区域</a>
                     </dd>
                 </dl>
                 <dl>
                     <dt class="dtitle">支付方式</dt>
                     <dd>
-                        <a href="javascript:;">货到付款</a>
-                        <a href="javascript:;">在线支付</a>
-                        <a href="javascript:;">邮局汇款</a>
+                        <a href="javascript:">货到付款</a>
+                        <a href="javascript:">在线支付</a>
+                        <a href="javascript:">邮局汇款</a>
                     </dd>
                 </dl>
                 <dl>
                     <dt class="dtitle">售后服务</dt>
                     <dd>
-                        <a href="javascript:;">签到说明</a>
-                        <a href="javascript:;">退/换货政策</a>
-                        <a href="javascript:;">隐私保护</a>
+                        <a href="javascript:">签到说明</a>
+                        <a href="javascript:">退/换货政策</a>
+                        <a href="javascript:">隐私保护</a>
                     </dd>
                 </dl>
                 <dl>
                     <dt class="dtitle">帮助中心</dt>
                     <dd>
-                        <a href="javascript:;">关于我们</a>
-                        <a href="javascript:;">注册协议</a>
-                        <a href="javascript:;">忘记密码</a>
+                        <a href="javascript:">关于我们</a>
+                        <a href="javascript:">注册协议</a>
+                        <a href="javascript:">忘记密码</a>
                     </dd>
                 </dl>
             </div>
@@ -314,11 +314,11 @@
     <div class="botten">
         <div class="w">
             <div class="b-top">
-                <a href="javascript:;">宠物乐园-</a>
-                <a href="javascript:;">关于我们-</a>
-                <a href="javascript:;">常见问题-</a>
-                <a href="javascript:;">全国宠物店-</a>
-                <a href="javascript:;">订宠物</a>
+                <a href="javascript:">宠物乐园-</a>
+                <a href="javascript:">关于我们-</a>
+                <a href="javascript:">常见问题-</a>
+                <a href="javascript:">全国宠物店-</a>
+                <a href="javascript:">订宠物</a>
             </div>
 
             <div class="t-container">
