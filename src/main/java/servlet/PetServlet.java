@@ -19,7 +19,7 @@ import java.util.Date;
 import java.util.List;
 
 @WebServlet(urlPatterns = "/PetServlet")
-public class PetServlet extends HttpServlet {
+public class PetServlet {
     private static final long serialVersionUID = 1L;
     private PetDao petDao = new PetDao();
     private TypeDao typeDao = new TypeDao();
